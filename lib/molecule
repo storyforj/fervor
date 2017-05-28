@@ -1,0 +1,9 @@
+#!/usr/bin/env node
+require('babel-polyfill');
+require('babel-register');
+
+if (process.argv[2]) {
+    require(`${process.cwd()}/${process.argv[2]}/app`);
+} else {
+    require(`${process.cwd()}/app`);
+}

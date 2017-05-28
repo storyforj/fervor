@@ -1,0 +1,34 @@
+{
+    "extends": "airbnb",
+    "parserOptions": {
+        "ecmaVersion": 8
+    },
+    "env": {
+        "browser": true,
+        "jasmine": true,
+        "amd": true
+    },
+    "rules": {
+        "arrow-parens": ["error", "always"],
+        "indent": ["error", 4],
+        "no-param-reassign": ["error", { "props": false }],
+        "react/jsx-filename-extension": [1, { "extensions": [".js"] }],
+        "react/jsx-indent": [2, 4],
+        "react/jsx-indent-props": [2, 4],
+        "react/no-multi-comp": [0],
+        "react/jsx-no-bind": [0],
+        "react/no-string-refs": [0],
+        "react/forbid-prop-types": [0],
+        "no-debugger": [1],
+        "import/no-extraneous-dependencies": [
+            "error",
+            {
+                "devDependencies": [
+                    "**/*.spec.js",
+                    "src/utils/testHelper.js"
+                ]
+            }
+        ],
+        "class-methods-use-this": [0]
+    }
+}
