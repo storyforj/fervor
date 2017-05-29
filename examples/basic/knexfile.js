@@ -1,5 +1,8 @@
+const path = require('path');
+
 if (!process.env.DATABASE_URL) {
-    require('dotenv').config({ path: `${__dirname}/.env` });
+    // eslint-disable-next-line global-require
+    require('dotenv').config({ path: path.join(__dirname, '.env') });
 }
 
 module.exports = {
@@ -11,5 +14,5 @@ module.exports = {
     },
     migrations: {
         tableName: 'knex_migrations',
-    }
+    },
 };

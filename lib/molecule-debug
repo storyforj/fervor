@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env node debug
 require('babel-polyfill');
 require('babel-register');
 

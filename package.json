@@ -19,8 +19,9 @@
     "kcors": "next",
     "koa": "next",
     "koa-bodyparser": "next",
-    "koa-bunyan-logger": "next",
-    "postgraphql": "^3.2.0"
+    "koa-logger-winston": "^0.0.2",
+    "postgraphql": "^3.2.0",
+    "winston": "^2.3.1"
   },
   "babel": {
     "presets": [

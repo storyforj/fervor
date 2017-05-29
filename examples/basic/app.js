@@ -1,7 +1,8 @@
+import dotenv from 'dotenv';
+import path from 'path';
 import startApp from '../../lib/server';
-import dotenv from 'dotenv'
 
-dotenv.config({ path: `${__dirname}/.env` });
+dotenv.config({ path: path.join(__dirname, '.env') });
 
 startApp({
     appName: process.env.APP_NAME,
