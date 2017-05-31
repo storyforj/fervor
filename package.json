@@ -5,7 +5,11 @@
   "main": "lib/molecule",
   "author": "Parris Khachi",
   "license": "MIT",
+  "scripts": {
+    "relay": "relay-compiler --src ./examples --schema examples/basic/.graphql.json"
+  },
   "dependencies": {
+    "babel-plugin-relay": "^1.0.1",
     "babel-plugin-transform-decorators": "^6.24.1",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-polyfill": "^6.23.0",
@@ -16,11 +20,24 @@
     "chalk": "^1.1.3",
     "core-decorators": "^0.19.0",
     "dotenv": "^4.0.0",
+    "graphql": "^0.10.1",
     "kcors": "next",
     "koa": "next",
     "koa-bodyparser": "next",
     "koa-logger-winston": "^0.0.2",
+    "koa-route": "next",
+    "koa-router": "7.2.0",
+    "pg-pool": "^1.7.1",
     "postgraphql": "^3.2.0",
+    "prop-types": "^15.5.10",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-html-document": "^3.1.0",
+    "react-relay": "^1.0.0",
+    "react-router": "^4.1.1",
+    "react-router-dom": "^4.1.1",
+    "relay-query-lookup-renderer": "^1.0.1",
+    "relay-runtime": "^1.0.0",
     "winston": "^2.3.1"
   },
   "babel": {
@@ -30,7 +47,8 @@
       "stage-0"
     ],
     "plugins": [
-      "transform-decorators-legacy"
+      "transform-decorators-legacy",
+      "relay"
     ]
   },
   "devDependencies": {
@@ -38,6 +56,7 @@
     "eslint-config-airbnb": "^15.0.1",
     "eslint-plugin-import": "^2.3.0",
     "eslint-plugin-jsx-a11y": "^5.0.3",
-    "eslint-plugin-react": "^7.0.1"
+    "eslint-plugin-react": "^7.0.1",
+    "relay-compiler": "^1.0.0"
   }
 }

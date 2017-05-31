@@ -1,3 +1,4 @@
+// currently considering using knex for migrations
 const path = require('path');
 
 if (!process.env.DATABASE_URL) {
