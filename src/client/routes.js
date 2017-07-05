@@ -9,7 +9,7 @@ import moleculeRoutes from 'moleculeAppRoutes';
 const Routes = () => (
   <Switch>
     {moleculeRoutes.map((route) => (
-      <Route key={route.path} {...route} />
+      <Route key={route.path} path={route.path} component={route.component()} />
     ))}
   </Switch>
 );

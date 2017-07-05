@@ -38,10 +38,8 @@ startApp({
 });
 
 watcher.on('ready', () => {
-  watcher.on('all', () => {
-    Object.keys(require.cache).forEach((id) => {
-      // eslint-disable-next-line
-      if (/[\/\\]app[\/\\]/.test(id)) delete require.cache[id];
-    });
+  watcher.on('all', (event, path) => {
+    delete require.cache[path];
   });
 });
+

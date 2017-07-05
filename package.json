@@ -1,6 +1,6 @@
 {
   "name": "molecule",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "description": "A framework for building apps",
   "main": "lib/molecule",
   "author": "Parris Khachi",

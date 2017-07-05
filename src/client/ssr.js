@@ -36,12 +36,9 @@ export default (routes, Doc = Document) => {
   const App = ({ ctx }) => (
     <StaticRouter location={ctx.req.url} context={ctx}>
       <Switch>
-        { routes.map((routeProps) => {
-          const p = Object.assign({}, routeProps);
-          delete p.query;
-          delete p.getVars;
-          return <Route key={p.path} {...p} />;
-        })}
+        { routes.map((route) => (
+          <Route key={route.path} path={route.path} component={route.component()} />
+        ))}
       </Switch>
     </StaticRouter>
   );
