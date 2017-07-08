@@ -1,22 +1,32 @@
 import React from 'react';
+import {
+    ApolloClient,
+    ApolloProvider,
+    createNetworkInterface,
+} from 'react-apollo';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { getUniversalState } from 'react-html-document';
-import { Provider } from 'react-redux';
 
 import initStore from './store';
 import Routes from './routes';
 
 const store = initStore(getUniversalState());
 
+const webClient = new ApolloClient({
+  networkInterface: createNetworkInterface({
+    uri: 'http://localhost:3000/graphql',
+  }),
+});
+
 const render = (Component) => {
   ReactDOM.render(
     (
-      <Provider store={store}>
+      <ApolloProvider client={webClient} store={store}>
         <BrowserRouter>
           <Component />
         </BrowserRouter>
-      </Provider>
+      </ApolloProvider>
     ),
     document.querySelectorAll('[data-reactroot]')[1],
   );

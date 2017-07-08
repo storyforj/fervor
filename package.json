@@ -1,6 +1,6 @@
 {
   "name": "molecule",
-  "version": "0.0.23",
+  "version": "0.0.30",
   "description": "A framework for building apps",
   "main": "lib/molecule",
   "author": "Parris Khachi",
@@ -9,10 +9,12 @@
     "build": "babel src -d lib"
   },
   "bin": {
-    "molecule": "./lib/main.js"
+    "molecule": "./lib/molecule.js",
+    "molecule-debug": "./lib/molecule-debug.js"
   },
   "dependencies": {
-    "babel-core": "^6.0.0",
+    "apollo-local-query": "^0.3.0",
+    "babel-core": "^6",
     "babel-loader": "^7.1.1",
     "babel-plugin-transform-decorators": "^6.24.1",
     "babel-polyfill": "^6.23.0",
@@ -26,12 +28,12 @@
     "dotenv": "^4.0.0",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^15.0.1",
-    "eslint-loader": "^1.8.0",
-    "eslint-plugin-import": "^2.3.0",
-    "eslint-plugin-jsx-a11y": "^5.0.3",
-    "eslint-plugin-react": "^7.0.1",
-    "graphql": "^0.10.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^5.1.1",
+    "eslint-plugin-react": "^7.1.0",
+    "graphql": "^0.10.0",
     "is-node": "^1.0.2",
+    "isomorphic-fetch": "^2.2.1",
     "json-loader": "^0.5.4",
     "kcors": "next",
     "koa": "next",
@@ -44,20 +46,17 @@
     "pg-pool": "^1.7.1",
     "postgraphql": "^3.2.0",
     "prop-types": "^15.5.10",
-    "react": "^15.5.4",
+    "react": "^15.0.0",
     "react-apollo": "^1.4.2",
-    "react-dom": "^15.5.4",
+    "react-dom": "^15.0.0",
     "react-hot-loader": "next",
     "react-html-document": "^3.1.0",
     "react-redux": "^5.0.5",
-    "react-relay": "^1.0.0",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
-    "redux": "^3.7.1",
+    "redux": "^3.0.0",
     "redux-act": "^1.3.0",
     "redux-thunk": "^2.2.0",
-    "relay-query-lookup-renderer": "^1.0.1",
-    "relay-runtime": "^1.0.0",
     "webpack": "^2.2.0",
     "webpack-dev-server": "^2.5.0",
     "winston": "^2.3.1"
@@ -69,8 +68,7 @@
       "stage-0"
     ],
     "plugins": [
-      "transform-decorators-legacy",
-      "relay"
+      "transform-decorators-legacy"
     ]
   }
 }

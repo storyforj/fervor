@@ -1,8 +1,7 @@
-#!/usr/bin/env node
-
 const path = require('path');
 const dotenv = require('dotenv');
 const chokidar = require('chokidar');
+require('isomorphic-fetch');
 require('babel-polyfill');
 require('babel-register')({
   presets: [
