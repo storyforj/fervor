@@ -18,7 +18,12 @@ export default (routes, Doc = Document) => {
     <StaticRouter location={ctx.req.url} context={ctx}>
       <Switch>
         { routes.map((route) => (
-          <Route key={route.path} path={route.path} component={route.component()} />
+          <Route
+            key={route.path}
+            path={route.path}
+            component={route.component()}
+            exact
+          />
         ))}
       </Switch>
     </StaticRouter>

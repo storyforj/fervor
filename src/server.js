@@ -22,7 +22,7 @@ export default async function startApp(options = {}) {
       // classicIds: true,
       graphiql: true,
       graphiqlRoute: '/admin/graphiql',
-      exportJsonSchemaPath: path.join(options.appLocation, '.graphql.json'),
+      // exportJsonSchemaPath: path.join(options.appLocation, '.graphql.json'),
     },
     options.postgraphql || {},
   );

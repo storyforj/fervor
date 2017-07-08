@@ -6,13 +6,21 @@ import {
 // eslint-disable-next-line
 import moleculeRoutes from 'moleculeAppRoutes';
 
-const Routes = () => (
-  <Switch>
-    {moleculeRoutes.map((route) => (
-      <Route key={route.path} path={route.path} component={route.component()} />
-    ))}
-  </Switch>
-);
+const Routes = () => {
+  const routes = moleculeRoutes.map((route) => (
+    <Route
+      exact
+      key={route.path}
+      path={route.path}
+      component={route.component()}
+    />
+  ));
 
+  return (
+    <Switch>
+      {routes}
+    </Switch>
+  );
+};
 
 export default Routes;
