@@ -4,19 +4,13 @@ const path = require('path');
 module.exports = (config) => ({
   entry: {
     app: [
-      'react-hot-loader/patch',
-      'webpack-dev-server/client?http://localhost:8080',
-      'webpack/hot/only-dev-server',
       config.appPath,
     ],
   },
   output: {
     path: path.join(config.appPath, 'build'),
-    publicPath: 'http://localhost:8080/build/',
     filename: 'app.js',
-    sourceMapFilename: '[name].js.map',
   },
-  devtool: 'inline-source-map',
   stats: {
     colors: true,
     reasons: true,
@@ -26,6 +20,7 @@ module.exports = (config) => ({
       __DEV__: JSON.stringify(JSON.parse(process.env.BUILD_DEV || true)),
       'process.env': {
         BROWSER: JSON.stringify(true),
+        HOST: JSON.stringify(process.env.HOST),
       },
     }),
     // new HtmlWebpackPlugin({

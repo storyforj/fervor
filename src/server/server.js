@@ -67,6 +67,7 @@ export default async function startApp(options = {}) {
           __DEV__: JSON.stringify(JSON.parse(process.env.BUILD_DEV || true)),
           'process.env': {
             BROWSER: JSON.stringify(true),
+            HOST: JSON.stringify(process.env.HOST),
           },
         }),
         new webpack.optimize.OccurrenceOrderPlugin(),

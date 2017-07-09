@@ -12,14 +12,16 @@ import {
 import initStore from '../shared/store';
 import Document from './components/Document';
 
-const serverClient = new ApolloClient({
-  ssrMode: true,
-  networkInterface: createNetworkInterface({
-    uri: 'http://localhost:3000/graphql',
-  }),
-});
+let serverClient;
 
 export default (routes, Doc = Document) => {
+  serverClient = new ApolloClient({
+    ssrMode: true,
+    networkInterface: createNetworkInterface({
+      uri: `${process.env.HOST}/graphql`,
+    }),
+  });
+
   const App = ({ ctx }) => (
     <StaticRouter location={ctx.req.url} context={ctx}>
       <Switch>

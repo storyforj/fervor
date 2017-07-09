@@ -15,7 +15,7 @@ const store = initStore(getUniversalState());
 
 const webClient = new ApolloClient({
   networkInterface: createNetworkInterface({
-    uri: 'http://localhost:3000/graphql',
+    uri: `${process.env.HOST}/graphql`,
   }),
 });
 
