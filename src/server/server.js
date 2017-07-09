@@ -53,7 +53,7 @@ export default async function startApp(options = {}) {
       entry: [
         'react-hot-loader/patch',
         'webpack-hot-middleware/client',
-        path.join(__dirname, 'client', 'main.js'),
+        path.join(__dirname, '..', 'client', 'main.js'),
       ],
       output: {
         path: options.appLocation,

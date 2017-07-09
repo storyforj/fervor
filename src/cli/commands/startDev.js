@@ -1,27 +1,26 @@
 /* eslint-disable global-require */
+const path = require('path');
+const dotenv = require('dotenv');
+const chokidar = require('chokidar');
+require('isomorphic-fetch');
+require('babel-polyfill');
+require('babel-register')({
+  presets: [
+    'es2015',
+    'react',
+    'stage-0',
+  ],
+});
+const startApp = require('../../server/server').default;
 
-export default async () => {
-  const path = require('path');
-  const dotenv = require('dotenv');
-  const chokidar = require('chokidar');
-  require('isomorphic-fetch');
-  require('babel-polyfill');
-  require('babel-register')({
-    presets: [
-      'es2015',
-      'react',
-      'stage-0',
-    ],
-  });
-  const startApp = require('../../server/server').default;
-
+module.exports = (args) => {
   let routes;
   let watcher;
 
-  if (process.argv[2]) {
+  if (args._[1]) {
     // eslint-disable-next-line global-require, import/no-dynamic-require
-    routes = require(`${process.cwd()}/${process.argv[2]}/apps/_routes`).default;
-    watcher = chokidar.watch(`${process.cwd()}/${process.argv[2]}`);
+    routes = require(`${process.cwd()}/${args._[1]}/apps/_routes`).default;
+    watcher = chokidar.watch(`${process.cwd()}/${args._[1]}`);
   } else {
     // eslint-disable-next-line global-require, import/no-dynamic-require
     routes = require(`${process.cwd()}/apps/_routes`).default;
