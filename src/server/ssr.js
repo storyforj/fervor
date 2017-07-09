@@ -23,11 +23,11 @@ export default (routes, Doc = Document) => {
   const App = ({ ctx }) => (
     <StaticRouter location={ctx.req.url} context={ctx}>
       <Switch>
-        { routes.map((route) => (
+        { Object.keys(routes).map((path) => (
           <Route
-            key={route.path}
-            path={route.path}
-            component={route.component()}
+            key={path}
+            path={path}
+            component={routes[path]}
             exact
           />
         ))}
@@ -65,8 +65,8 @@ export default (routes, Doc = Document) => {
   };
 
   const router = new KoaRouter();
-  routes.forEach((route) => {
-    router.get(route.path, processRoute);
+  Object.keys(routes).forEach((path) => {
+    router.get(path, processRoute);
   });
 
   return router.routes();

@@ -19,11 +19,11 @@ module.exports = (args) => {
 
   if (args._[1]) {
     // eslint-disable-next-line global-require, import/no-dynamic-require
-    routes = require(`${process.cwd()}/${args._[1]}/apps/_routes`).default;
+    routes = require(`${process.cwd()}/${args._[1]}/apps/__routes`).default;
     watcher = chokidar.watch(`${process.cwd()}/${args._[1]}`);
   } else {
     // eslint-disable-next-line global-require, import/no-dynamic-require
-    routes = require(`${process.cwd()}/apps/_routes`).default;
+    routes = require(`${process.cwd()}/apps/__routes`).default;
     watcher = chokidar.watch(`${process.cwd()}`);
   }
 

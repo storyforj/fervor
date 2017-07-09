@@ -7,12 +7,12 @@ import {
 import moleculeRoutes from 'moleculeAppRoutes';
 
 const Routes = () => {
-  const routes = moleculeRoutes.map((route) => (
+  const routes = Object.keys(moleculeRoutes).map((path) => (
     <Route
       exact
-      key={route.path}
-      path={route.path}
-      component={route.component()}
+      key={path}
+      path={path}
+      component={moleculeRoutes[path]}
     />
   ));
 
