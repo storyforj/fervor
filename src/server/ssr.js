@@ -1,7 +1,7 @@
 import KoaRouter from 'koa-router';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { ApolloProvider, getDataFromTree } from 'react-apollo';
+import { ApolloProvider, ApolloClient, createNetworkInterface, getDataFromTree } from 'react-apollo';
 import ReactDOMServer from 'react-dom/server';
 import { StaticRouter } from 'react-router';
 import {
@@ -9,9 +9,15 @@ import {
   Route,
 } from 'react-router-dom';
 
-import initStore from './store';
+import initStore from '../shared/store';
 import Document from './components/Document';
-import serverClient from './network';
+
+const serverClient = new ApolloClient({
+  ssrMode: true,
+  networkInterface: createNetworkInterface({
+    uri: 'http://localhost:3000/graphql',
+  }),
+});
 
 export default (routes, Doc = Document) => {
   const App = ({ ctx }) => (

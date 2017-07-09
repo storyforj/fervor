@@ -8,8 +8,8 @@ import postgraphql from 'postgraphql';
 import webpack from 'webpack';
 import webpackMiddleware from 'koa-webpack';
 
-import logger from './logger';
-import ssr from './client/ssr';
+import logger from '../shared/utils/logger';
+import ssr from './ssr';
 
 export default async function startApp(options = {}) {
   const app = new Koa();
@@ -40,7 +40,7 @@ export default async function startApp(options = {}) {
       noInfo: true,
     },
     hot: {
-      log: console.log,
+      log: logger.info,
       path: '/__webpack_hmr',
       heartbeat: 10 * 1000,
     },

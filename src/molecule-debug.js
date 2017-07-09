@@ -1,3 +1,3 @@
 #!/usr/bin/env node inspect
 
-require('./main');
+require('./cli/main');

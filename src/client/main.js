@@ -8,7 +8,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { getUniversalState } from 'react-html-document';
 
-import initStore from './store';
+import initStore from '../shared/store';
 import Routes from './routes';
 
 const store = initStore(getUniversalState());
