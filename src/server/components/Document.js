@@ -1,32 +1,32 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import HTMLDocument from 'react-html-document';
 
 // let cssFiles = ['/build/bundle.css'];
-const jsFiles = ['/build/bundle.js'];
 
 /* stylesheets={cssFiles} */
-export default function Document(props) {
+/* eslint-disable react/no-danger */
+export default function Document({ content, state, title }) {
   return (
-    <HTMLDocument
-      title={props.title}
-      metatags={[
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      ]}
-      universalState={props.state}
-      scripts={jsFiles}
-    >
-      {props.children}
-    </HTMLDocument>
+    <html lang="en">
+      <head>
+        <title>{title}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </head>
+      <body>
+        <div id="app" dangerouslySetInnerHTML={{ __html: content }} />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.APOLLO_STATE=${JSON.stringify(state).replace(/</g, '\\u003c')};`,
+          }}
+        />
+        <script src="/build/bundle.js" />
+      </body>
+    </html>
   );
 }
 
-Document.defaultProps = {
-  state: {},
-};
-
 Document.propTypes = {
-  children: PropTypes.element.isRequired,
-  state: React.PropTypes.object,
+  content: React.PropTypes.string.isRequired,
+  state: React.PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
 };

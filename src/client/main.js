@@ -6,14 +6,14 @@ import {
 } from 'react-apollo';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import { getUniversalState } from 'react-html-document';
 
 import initStore from '../shared/store';
 import Routes from './routes';
 
-const store = initStore(getUniversalState());
+const store = initStore(window.APOLLO_STATE);
 
 const webClient = new ApolloClient({
+  initialState: { apollo: window.APOLLO_STATE.apollo },
   networkInterface: createNetworkInterface({
     uri: `${process.env.HOST}/graphql`,
   }),
@@ -28,7 +28,7 @@ const render = (Component) => {
         </BrowserRouter>
       </ApolloProvider>
     ),
-    document.querySelectorAll('[data-reactroot]')[1],
+    document.querySelector('#app'),
   );
 };
 

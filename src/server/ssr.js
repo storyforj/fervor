@@ -1,7 +1,12 @@
 import KoaRouter from 'koa-router';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { ApolloProvider, ApolloClient, createNetworkInterface, getDataFromTree } from 'react-apollo';
+import {
+  ApolloClient,
+  ApolloProvider,
+  createNetworkInterface,
+  getDataFromTree,
+} from 'react-apollo';
 import ReactDOMServer from 'react-dom/server';
 import { StaticRouter } from 'react-router';
 import {
@@ -22,23 +27,26 @@ export default (routes, Doc = Document) => {
     }),
   });
 
-  const App = ({ ctx }) => (
-    <StaticRouter location={ctx.req.url} context={ctx}>
-      <Switch>
-        { Object.keys(routes).map((path) => (
-          <Route
-            key={path}
-            path={path}
-            component={routes[path]}
-            exact
-          />
-        ))}
-      </Switch>
-    </StaticRouter>
+  const App = ({ ctx, store }) => (
+    <ApolloProvider client={serverClient} store={store}>
+      <StaticRouter location={ctx.req.url} context={ctx}>
+        <Switch>
+          { Object.keys(routes).map((path) => (
+            <Route
+              key={path}
+              path={path}
+              component={routes[path]}
+              exact
+            />
+          ))}
+        </Switch>
+      </StaticRouter>
+    </ApolloProvider>
   );
 
   App.propTypes = {
     ctx: PropTypes.object.isRequired,
+    store: PropTypes.object.isRequired,
   };
 
   const processRoute = async (ctx, next) => {
@@ -50,18 +58,20 @@ export default (routes, Doc = Document) => {
       },
     });
 
-    const app = (
-      <ApolloProvider client={serverClient} store={store}>
-        <App ctx={ctx} state={store.getState()} />
-      </ApolloProvider>
-    );
+    const app = <App ctx={ctx} store={store} />;
 
     return getDataFromTree(app).then(() => {
-      ctx.body = ReactDOMServer.renderToString((
-        <Doc title={'Test'} state={store.getState()}>
-          { app }
-        </Doc>
-      ));
+      const state = store.getState();
+      state.apollo = serverClient.getInitialState();
+
+      ctx.body = `<!doctype html>\n${ReactDOMServer.renderToStaticMarkup((
+        <Doc
+          content={ReactDOMServer.renderToString(app)}
+          state={state}
+          title={'Test'}
+        />
+      ))}`;
+
       next();
     });
   };
