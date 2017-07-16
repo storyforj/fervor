@@ -1,6 +1,7 @@
 import bodyParser from 'koa-bodyparser';
 import chalk from 'chalk';
 import cors from 'kcors';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import requestLogger from 'koa-logger-winston';
 import Koa from 'koa';
 import path from 'path';
@@ -62,6 +63,42 @@ export default async function startApp(options = {}) {
         sourceMapFilename: 'bundle.js.map',
       },
       devtool: 'inline-source-map',
+      module: {
+        loaders: [
+          {
+            test: /\.json$/,
+            exclude: /node_modules/,
+            use: 'json-loader',
+          },
+          {
+            test: /\.jpe?g$|\.gif$|\.png$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$|\.html$/,
+            loader: 'file-loader',
+          },
+          {
+            test: /\.scss$/,
+            loader: 'style-loader!css-loader?modules&importLoaders=2&localIdentName=[name]__[local]___[hash:base64:5]!sass-loader',
+          },
+          {
+            test: /\.js$/,
+            use: [
+              { loader: 'react-hot-loader/webpack' },
+              {
+                loader: 'babel-loader',
+                options: {
+                  presets: ['es2015', 'react', 'stage-0'],
+                  plugins: [],
+                },
+              },
+            ],
+            exclude: [/node_modules/],
+          },
+          // {
+          //   test: /\.js$|\.jsx$/,
+          //   loader: 'eslint-loader',
+          //   exclude: [/node_modules/],
+          // },
+        ],
+      },
       plugins: [
         new webpack.DefinePlugin({
           __DEV__: JSON.stringify(JSON.parse(process.env.BUILD_DEV || true)),
@@ -75,29 +112,6 @@ export default async function startApp(options = {}) {
         new webpack.NoEmitOnErrorsPlugin(),
         new webpack.NamedModulesPlugin(),
       ],
-      module: {
-        loaders: [
-          {
-            test: /\.json$/,
-            exclude: /node_modules/,
-            use: 'json-loader',
-          },
-          {
-            test: /\.jpe?g$|\.gif$|\.png$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$|\.html$/,
-            loader: 'file-loader',
-          },
-          {
-            test: /\.js$/,
-            loaders: ['react-hot-loader/webpack', 'babel-loader'],
-            exclude: [/node_modules/],
-          },
-          // {
-          //   test: /\.js$|\.jsx$/,
-          //   loader: 'eslint-loader',
-          //   exclude: [/node_modules/],
-          // },
-        ],
-      },
     },
   }));
 

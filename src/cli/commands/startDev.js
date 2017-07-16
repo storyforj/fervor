@@ -10,6 +10,15 @@ require('babel-register')({
     'react',
     'stage-0',
   ],
+  plugins: [
+    [
+      'css-modules-transform',
+      {
+        generateScopedName: '[name]__[local]___[hash:base64:5]',
+        extensions: ['.scss'],
+      },
+    ],
+  ],
 });
 const startApp = require('../../server/server').default;
 

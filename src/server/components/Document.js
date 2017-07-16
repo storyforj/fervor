@@ -11,6 +11,7 @@ export default function Document({ content, state, title }) {
       <head>
         <title>{title}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script src="/build/bundle.css" />
       </head>
       <body>
         <div id="app" dangerouslySetInnerHTML={{ __html: content }} />

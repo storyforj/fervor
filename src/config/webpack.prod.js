@@ -1,5 +1,11 @@
 const webpack = require('webpack');
 const path = require('path');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+const extractSass = new ExtractTextPlugin({
+  filename: 'bundle.css',
+  disable: process.env.NODE_ENV === 'development',
+});
 
 module.exports = (config) => ({
   entry: {
@@ -31,6 +37,7 @@ module.exports = (config) => ({
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.NamedModulesPlugin(),
+    extractSass,
   ],
   module: {
     loaders: [
@@ -52,6 +59,18 @@ module.exports = (config) => ({
         test: /\.js$|\.jsx$/,
         loader: 'eslint-loader',
         exclude: [/node_modules/, /app\/core\/node_modules/],
+      },
+      {
+        test: /\.scss$/,
+        use: extractSass.extract({
+          use: [{
+            loader: 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
+          }, {
+            loader: 'sass-loader',
+          }],
+          // use style-loader in development
+          fallback: 'style-loader',
+        }),
       },
     ],
   },
