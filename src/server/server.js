@@ -1,7 +1,6 @@
 import bodyParser from 'koa-bodyparser';
 import chalk from 'chalk';
 import cors from 'kcors';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import requestLogger from 'koa-logger-winston';
 import Koa from 'koa';
 import path from 'path';
