@@ -1,8 +1,8 @@
 Molecule (name will change soon)
 ----
 
-*Current status*: Building core functionality
-Example Project: https://github.com/fervorous/goalboard
+*Current status*: Building core functionality  
+*Example Project*: https://github.com/fervorous/goalboard
 
 A batteries included fullstack framework to build modern apps and progressive web apps. 
 
