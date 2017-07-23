@@ -1,6 +1,6 @@
 {
   "name": "fervor",
-  "version": "0.0.46",
+  "version": "0.0.47",
   "description": "A framework for building apps",
   "main": "lib/fervor",
   "author": "Parris Khachi",
