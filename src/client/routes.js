@@ -4,15 +4,15 @@ import {
     Route,
 } from 'react-router-dom';
 // eslint-disable-next-line
-import moleculeRoutes from 'moleculeAppRoutes';
+import fervorRoutes from 'fervorAppRoutes';
 
 const Routes = () => {
-  const routes = Object.keys(moleculeRoutes).map((path) => (
+  const routes = Object.keys(fervorRoutes).map((path) => (
     <Route
       exact
       key={path}
       path={path}
-      component={moleculeRoutes[path]}
+      component={fervorRoutes[path]}
     />
   ));
 

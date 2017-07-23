@@ -47,7 +47,7 @@ export default async function startApp(options = {}) {
     config: {
       resolve: {
         alias: {
-          fervorAppRoutes: path.resolve(options.appLocation, 'apps', '__routes.js'),
+          fervorAppRoutes: path.resolve(options.appLocation, 'src', 'urls.js'),
         },
       },
       entry: [

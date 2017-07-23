@@ -28,12 +28,12 @@ module.exports = (args) => {
 
   if (args._[1]) {
     // eslint-disable-next-line global-require, import/no-dynamic-require
-    routes = require(`${process.cwd()}/${args._[1]}/apps/__routes`).default;
+    routes = require(`${process.cwd()}/${args._[1]}/src/urls`).default;
     // watcher = chokidar.watch(`${process.cwd()}/${args._[1]}`);
     dotenv.config({ path: path.join(process.cwd(), args._[1], '.env') });
   } else {
     // eslint-disable-next-line global-require, import/no-dynamic-require
-    routes = require(`${process.cwd()}/apps/__routes`).default;
+    routes = require(`${process.cwd()}/src/urls`).default;
     // watcher = chokidar.watch(`${process.cwd()}`);
     dotenv.config({ path: path.join(process.cwd(), '.env') });
   }

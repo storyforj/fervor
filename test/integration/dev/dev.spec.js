@@ -1,13 +1,13 @@
 import { expect } from 'chai';
 import path from 'path';
 import dotenv from 'dotenv';
-import startApp from '../../../src/server/server';
 import superagent from 'superagent';
+import startApp from '../../../src/server/server';
 
 describe('Dev server', function() {
   before(async () => {
     dotenv.config({ path: path.join(process.cwd(), 'test', 'integration', 'dev', 'testApp', '.env') });
-    const routes = require(`${process.cwd()}/test/integration/dev/testApp/apps/__routes`).default;
+    const routes = require(`${process.cwd()}/test/integration/dev/testApp/src/urls`).default;
     await startApp({
       appName: process.env.APP_NAME,
       db: process.env.DATABASE_URL,
