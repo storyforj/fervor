@@ -1,44 +1,20 @@
 const webpack = require('webpack');
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-const extractSass = new ExtractTextPlugin({
-  filename: 'bundle.css',
-  disable: process.env.NODE_ENV === 'development',
-});
-
-module.exports = (config) => ({
-  entry: {
-    app: [
-      config.appPath,
-    ],
+module.exports = () => ({
+  resolve: {
+    alias: {
+      fervorAppRoutes: path.resolve(process.cwd(), 'src', 'urls.js'),
+    },
   },
-  output: {
-    path: path.join(config.appPath, 'build'),
-    filename: 'app.js',
-  },
-  stats: {
-    colors: true,
-    reasons: true,
-  },
-  plugins: [
-    new webpack.DefinePlugin({
-      __DEV__: JSON.stringify(JSON.parse(process.env.BUILD_DEV || true)),
-      'process.env': {
-        BROWSER: JSON.stringify(true),
-        HOST: JSON.stringify(process.env.HOST),
-      },
-    }),
-    // new HtmlWebpackPlugin({
-    //   template: __dirname + '/src/client/index.html',
-    //   filename: 'index.html'
-    // }),
-    new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
-    new webpack.NamedModulesPlugin(),
-    extractSass,
+  entry: [
+    path.join(__dirname, '..', 'client', 'main.js'),
   ],
+  output: {
+    path: path.join(process.cwd(), 'build'),
+    publicPath: '/build/',
+    filename: 'bundle.js',
+  },
   module: {
     loaders: [
       {
@@ -51,34 +27,39 @@ module.exports = (config) => ({
         loader: 'file-loader',
       },
       {
-        test: /\.js$/,
-        loaders: ['react-hot-loader/webpack', 'babel-loader'],
-        exclude: [/node_modules/, /app\/core\/node_modules/],
-      },
-      {
-        test: /\.js$|\.jsx$/,
-        loader: 'eslint-loader',
-        exclude: [/node_modules/, /app\/core\/node_modules/],
-      },
-      {
         test: /\.scss$/,
-        use: extractSass.extract({
-          use: [{
-            loader: 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
-          }, {
-            loader: 'sass-loader',
-          }],
-          // use style-loader in development
-          fallback: 'style-loader',
-        }),
+        loader: 'style-loader!css-loader?modules&importLoaders=2&localIdentName=[name]__[local]___[hash:base64:5]!sass-loader',
       },
+      {
+        test: /\.js$/,
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: ['es2015', 'react', 'stage-0'],
+              plugins: [],
+            },
+          },
+        ],
+        exclude: [/node_modules/],
+      },
+      // {
+      //   test: /\.js$|\.jsx$/,
+      //   loader: 'eslint-loader',
+      //   exclude: [/node_modules/],
+      // },
     ],
   },
-  externals: {},
-  devServer: {
-    host: 'localhost',
-    port: 8080,
-    hot: true,
-    publicPath: '/build/',
-  },
+  plugins: [
+    new webpack.DefinePlugin({
+      __DEV__: JSON.stringify(JSON.parse(process.env.BUILD_DEV || true)),
+      'process.env': {
+        BROWSER: JSON.stringify(true),
+        HOST: JSON.stringify(process.env.HOST),
+      },
+    }),
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.NamedModulesPlugin(),
+  ],
 });

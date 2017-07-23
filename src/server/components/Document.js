@@ -1,9 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-// let cssFiles = ['/build/bundle.css'];
-
-/* stylesheets={cssFiles} */
 /* eslint-disable react/no-danger */
 export default function Document({ content, state, title }) {
   return (
