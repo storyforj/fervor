@@ -1,16 +1,16 @@
 {
-  "name": "molecule",
+  "name": "fervor",
   "version": "0.0.42",
   "description": "A framework for building apps",
-  "main": "lib/molecule",
+  "main": "lib/fervor",
   "author": "Parris Khachi",
   "license": "MIT",
   "scripts": {
     "build": "babel src -d lib"
   },
   "bin": {
-    "molecule": "./lib/molecule.js",
-    "molecule-debug": "./lib/molecule-debug.js"
+    "fervor": "./lib/fervor.js",
+    "fervor-debug": "./lib/fervor-debug.js"
   },
   "dependencies": {
     "apollo-local-query": "^0.3.0",

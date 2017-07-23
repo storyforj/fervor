@@ -47,7 +47,7 @@ export default async function startApp(options = {}) {
     config: {
       resolve: {
         alias: {
-          moleculeAppRoutes: path.resolve(options.appLocation, 'apps', '__routes.js'),
+          fervorAppRoutes: path.resolve(options.appLocation, 'apps', '__routes.js'),
         },
       },
       entry: [

@@ -4,6 +4,6 @@ runCommands([
   {
     name: 'startDev',
     options: null, // can be an array of objects containing name and description
-    description: 'Starts the molecule dev server. Run this while you are building your app to have hot reloading type features.',
+    description: 'Starts the fervor dev server. Run this while you are building your app to have hot reloading type features.',
   },
 ]);

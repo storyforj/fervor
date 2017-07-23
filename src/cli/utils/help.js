@@ -32,17 +32,17 @@ module.exports = (commands, args) => {
     }
 
     console.log(`
-  Welcome to Molecule
+  Welcome to Fervor
 
   Here's more info about the "${command.name}" command.
 
   ${command.name} - ${command.description}${options}
 `);
   } else if (args._[1]) {
-    console.log('Molecule - Invalid command. Type `molecule help` for more info.');
+    console.log('Fervor - Invalid command. Type `fervor help` for more info.');
   } else {
     console.log(`
-  Welcome to Molecule
+  Welcome to Fervor
 
   Here's what you can do:
 
