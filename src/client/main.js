@@ -10,6 +10,8 @@ import { BrowserRouter } from 'react-router-dom';
 import initStore from '../shared/store';
 import Routes from './routes';
 
+require('offline-plugin/runtime').install();
+
 const store = initStore(window.APOLLO_STATE);
 
 const webClient = new ApolloClient({

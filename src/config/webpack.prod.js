@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-// const OfflinePlugin = require('offline-plugin');
+const OfflinePlugin = require('offline-plugin');
 const autoprefixer = require('autoprefixer');
 const flexbugs = require('postcss-flexbugs-fixes');
 
@@ -96,21 +96,21 @@ module.exports = () => ({
       workers: 5,
       ecma: 8,
     }),
-    // new OfflinePlugin({
-    //   relativePaths: false,
-    //   AppCache: false,
-    //   excludes: ['_redirects'],
-    //   ServiceWorker: {
-    //     events: true,
-    //   },
-    //   cacheMaps: [
-    //     {
-    //       match: /.*/,
-    //       to: '/',
-    //       requestTypes: ['navigate'],
-    //     },
-    //   ],
-    //   publicPath: '/build/',
-    // }),
+    new OfflinePlugin({
+      relativePaths: false,
+      AppCache: false,
+      excludes: ['_redirects'],
+      ServiceWorker: {
+        events: true,
+      },
+      cacheMaps: [
+        {
+          match: /.*/,
+          to: '/',
+          requestTypes: ['navigate'],
+        },
+      ],
+      publicPath: '/build/',
+    }),
   ],
 });
