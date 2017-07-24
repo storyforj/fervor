@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = () => ({
   resolve: {
@@ -28,7 +29,10 @@ module.exports = () => ({
       },
       {
         test: /\.scss$/,
-        loader: 'style-loader!css-loader?modules&importLoaders=2&localIdentName=[name]__[local]___[hash:base64:5]!sass-loader',
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: 'css-loader?modules&importLoaders=2&localIdentName=[name]__[local]___[hash:base64:5]!sass-loader',
+        }),
       },
       {
         test: /\.js$/,
@@ -51,6 +55,7 @@ module.exports = () => ({
     ],
   },
   plugins: [
+    new ExtractTextPlugin('bundle.css'),
     new webpack.DefinePlugin({
       __DEV__: JSON.stringify(JSON.parse(process.env.BUILD_DEV || true)),
       'process.env': {

@@ -118,7 +118,7 @@ export default async function startApp(options = {}) {
       },
     }));
   }
-  app.use(koaStatic(path.join(options.appLocation), { gzip: true }));
+  app.use(koaStatic(options.appLocation));
 
   await app.listen(options.port);
   logger.info(chalk.green(`Server started on: ${options.host}`));
