@@ -2,11 +2,12 @@ Fervor
 ----
 
 *Current status*: Building core functionality
+
 *Example Project*: https://github.com/fervorous/goalboard
 
-A batteries included fullstack framework to build modern apps and progressive web apps.
+A batteries included fullstack framework to build modern, progressive web apps.
 
-Feature (so far):
+Features (so far):
 ----
 
 1. Universal React
@@ -14,14 +15,19 @@ Feature (so far):
 3. Server and client rendered GraphQL
 4. CSS Modules
 5. Hot reloading
+6. Migrations
+7. CLI
+8. Offline requests via Service Workers
 
-How to develop?
+How to contribute?
 ---
 
-1. create a database in postgres, copy the migration from the example project and run it
-2. add a couple rows in the db for the person table
-3. Clone both this repo and the example project
-4. `yarn install` in both
-5. `yarn link` in the fervor directory
-6. `yarn link fervor` in the example project directory
-7. run `node_modules/.bin/fervor` or `node_modules/.bin/fervor-debug` in the example app
+1. Create a database called 'example' in postgres
+2. Clone both this repo and the example project
+3. `yarn install` in both
+4. `yarn link` in the fervor directory, `yarn link fervor` in the example project directory
+5. `fervor migrate:latest` in the example project
+
+Next you should decide if you're going to iterate on the prod setup or the dev setup.
+
+6. `yarn build; yarn start:prod` or `yarn start:dev`
