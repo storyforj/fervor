@@ -4,7 +4,6 @@ import cors from 'kcors';
 import requestLogger from 'koa-logger-winston';
 import Koa from 'koa';
 import koaStatic from 'koa-static';
-import path from 'path';
 import postgraphql from 'postgraphql';
 
 import logger from '../shared/utils/logger';

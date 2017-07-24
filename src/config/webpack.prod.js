@@ -1,6 +1,9 @@
 const webpack = require('webpack');
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+// const OfflinePlugin = require('offline-plugin');
+const autoprefixer = require('autoprefixer');
+const flexbugs = require('postcss-flexbugs-fixes');
 
 module.exports = () => ({
   resolve: {
@@ -31,7 +34,30 @@ module.exports = () => ({
         test: /\.scss$/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
-          use: 'css-loader?modules&importLoaders=2&localIdentName=[name]__[local]___[hash:base64:5]!sass-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                modules: true,
+                importLoaders: 2,
+                localIdentName: '[name]__[local]___[hash:base64:5]',
+              },
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                plugins() {
+                  return [autoprefixer, flexbugs];
+                },
+              },
+            },
+            {
+              loader: 'sass-loader',
+              options: {
+                outputStyle: 'compressed',
+              },
+            },
+          ],
         }),
       },
       {
@@ -47,18 +73,17 @@ module.exports = () => ({
         ],
         exclude: [/node_modules/],
       },
-      // {
-      //   test: /\.js$|\.jsx$/,
-      //   loader: 'eslint-loader',
-      //   exclude: [/node_modules/],
-      // },
     ],
   },
   plugins: [
-    new ExtractTextPlugin('bundle.css'),
+    new ExtractTextPlugin({
+      allChunks: true,
+      filename: 'bundle.css',
+    }),
     new webpack.DefinePlugin({
-      __DEV__: JSON.stringify(JSON.parse(process.env.BUILD_DEV || true)),
+      __DEV__: JSON.stringify(false),
       'process.env': {
+        NODE_ENV: JSON.stringify('production'),
         BROWSER: JSON.stringify(true),
         HOST: JSON.stringify(process.env.HOST),
       },
@@ -66,5 +91,26 @@ module.exports = () => ({
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.NamedModulesPlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      parallel: true,
+      workers: 5,
+      ecma: 8,
+    }),
+    // new OfflinePlugin({
+    //   relativePaths: false,
+    //   AppCache: false,
+    //   excludes: ['_redirects'],
+    //   ServiceWorker: {
+    //     events: true,
+    //   },
+    //   cacheMaps: [
+    //     {
+    //       match: /.*/,
+    //       to: '/',
+    //       requestTypes: ['navigate'],
+    //     },
+    //   ],
+    //   publicPath: '/build/',
+    // }),
   ],
 });
