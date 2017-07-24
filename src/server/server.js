@@ -33,7 +33,7 @@ export default async function startApp(options = {}) {
     // eslint-disable-next-line global-require
     require('../config/webpack.dev').default(app, options);
   }
-  app.use(koaStatic(options.appLocation));
+  app.use(koaStatic(options.appLocation, { gzip: true }));
 
   await app.listen(options.port);
   logger.info(chalk.green(`Server started on: ${options.host}`));
