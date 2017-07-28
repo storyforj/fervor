@@ -46,7 +46,7 @@ export default (routes, Doc = Document) => {
     const serverClient = new ApolloClient({
       ssrMode: true,
       networkInterface: createNetworkInterface({
-        uri: `${process.env.HOST}/graphql`,
+        uri: `${process.env.HOST || ctx.request.origin}/graphql`,
       }),
     });
     const store = initStore({
