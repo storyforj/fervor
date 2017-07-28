@@ -3,7 +3,7 @@ Fervor
 
 *Current status*: Building core functionality
 
-*Example Project*: https://github.com/fervorous/goalboard
+*TodoMVC Example*: https://github.com/fervorous/fervor-todo-mvc
 
 A batteries included fullstack framework to build modern, progressive web apps.
 
