@@ -9,8 +9,6 @@ module.exports = () => ({
   resolve: {
     alias: {
       fervorAppRoutes: path.resolve(process.cwd(), 'src', 'urls.js'),
-      react: 'preact-compat',
-      'react-dom': 'preact-compat',
     },
   },
   entry: [

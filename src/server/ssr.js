@@ -17,39 +17,38 @@ import {
 import initStore from '../shared/store';
 import Document from './components/Document';
 
-let serverClient;
+const App = ({ ctx, routes, serverClient, store }) => (
+  <ApolloProvider client={serverClient} store={store}>
+    <StaticRouter location={ctx.req.url} context={ctx}>
+      <Switch>
+        { Object.keys(routes).map((path) => (
+          <Route
+            key={path}
+            path={path}
+            component={routes[path]}
+            exact
+          />
+        ))}
+      </Switch>
+    </StaticRouter>
+  </ApolloProvider>
+);
+
+App.propTypes = {
+  ctx: PropTypes.object.isRequired,
+  routes: PropTypes.object.isRequired,
+  serverClient: PropTypes.object.isRequired,
+  store: PropTypes.object.isRequired,
+};
 
 export default (routes, Doc = Document) => {
-  serverClient = new ApolloClient({
-    ssrMode: true,
-    networkInterface: createNetworkInterface({
-      uri: `${process.env.HOST}/graphql`,
-    }),
-  });
-
-  const App = ({ ctx, store }) => (
-    <ApolloProvider client={serverClient} store={store}>
-      <StaticRouter location={ctx.req.url} context={ctx}>
-        <Switch>
-          { Object.keys(routes).map((path) => (
-            <Route
-              key={path}
-              path={path}
-              component={routes[path]}
-              exact
-            />
-          ))}
-        </Switch>
-      </StaticRouter>
-    </ApolloProvider>
-  );
-
-  App.propTypes = {
-    ctx: PropTypes.object.isRequired,
-    store: PropTypes.object.isRequired,
-  };
-
   const processRoute = async (ctx, next) => {
+    const serverClient = new ApolloClient({
+      ssrMode: true,
+      networkInterface: createNetworkInterface({
+        uri: `${process.env.HOST}/graphql`,
+      }),
+    });
     const store = initStore({
       location: { pathname: ctx.req.url, search: '', hash: '' },
       session: {
@@ -58,7 +57,14 @@ export default (routes, Doc = Document) => {
       },
     });
 
-    const app = <App ctx={ctx} store={store} />;
+    const app = (
+      <App
+        ctx={ctx}
+        routes={routes}
+        store={store}
+        serverClient={serverClient}
+      />
+    );
 
     return getDataFromTree(app).then(() => {
       const state = store.getState();

@@ -168,8 +168,9 @@ exports.config = {
    * @param {Array.<Object>} capabilities list of capabilities details
    * @param {Array.<String>} specs List of spec file paths that are to be run
    */
-  before: function (capabilities, specs) {
+  before: function () {
     require('isomorphic-fetch');
+    require('babel-polyfill');
     require('babel-core/register')({
       presets: [
         'es2015',
@@ -184,16 +185,8 @@ exports.config = {
             extensions: ['.scss'],
           },
         ],
-        [
-          'transform-runtime',
-          {
-            polyfill: false,
-            regenerator: true,
-          },
-        ],
       ],
     });
-    require('babel-polyfill');
   },
   //
   /**

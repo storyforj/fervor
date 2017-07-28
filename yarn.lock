@@ -1042,7 +1042,7 @@ babel-register@^6.24.1:
     mkdirp "^0.5.1"
     source-map-support "^0.4.2"
 
-babel-runtime@6.23.0, babel-runtime@^6.11.6, babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.23.0, babel-runtime@~6.23.0:
+babel-runtime@6.23.0, "babel-runtime@>=6 <7", babel-runtime@^6.11.6, babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.23.0, babel-runtime@~6.23.0:
   version "6.23.0"
   resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.23.0.tgz#0a9489f144de70efb3ce4300accdb329e2fc543b"
   dependencies:
@@ -1314,13 +1314,6 @@ callsites@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/callsites/-/callsites-0.2.0.tgz#afab96262910a7f33c19a5775825c69f34e350ca"
 
-camel-case@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/camel-case/-/camel-case-3.0.0.tgz#ca3c3688a4e9cf3a4cda777dc4dcbc713249cf73"
-  dependencies:
-    no-case "^2.2.0"
-    upper-case "^1.1.1"
-
 camelcase-keys@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/camelcase-keys/-/camelcase-keys-2.1.0.tgz#308beeaffdf28119051efa1d932213c91b8f92e7"
@@ -1418,29 +1411,6 @@ chalk@^2.0.1:
     ansi-styles "^3.1.0"
     escape-string-regexp "^1.0.5"
     supports-color "^4.0.0"
-
-change-case@^3.0.0:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/change-case/-/change-case-3.0.1.tgz#ee5f5ad0415ad1ad9e8072cf49cd4cfa7660a554"
-  dependencies:
-    camel-case "^3.0.0"
-    constant-case "^2.0.0"
-    dot-case "^2.1.0"
-    header-case "^1.0.0"
-    is-lower-case "^1.1.0"
-    is-upper-case "^1.1.0"
-    lower-case "^1.1.1"
-    lower-case-first "^1.0.0"
-    no-case "^2.2.0"
-    param-case "^2.1.0"
-    pascal-case "^2.0.0"
-    path-case "^2.1.0"
-    sentence-case "^2.1.0"
-    snake-case "^2.1.0"
-    swap-case "^1.1.0"
-    title-case "^2.1.0"
-    upper-case "^1.1.1"
-    upper-case-first "^1.1.0"
 
 check-error@^1.0.1:
   version "1.0.2"
@@ -1661,13 +1631,6 @@ console-control-strings@^1.0.0, console-control-strings@~1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/console-control-strings/-/console-control-strings-1.1.0.tgz#3d7cf4464db6446ea644bf4b39507f9851008e8e"
 
-constant-case@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/constant-case/-/constant-case-2.0.0.tgz#4175764d389d3fa9c8ecd29186ed6005243b6a46"
-  dependencies:
-    snake-case "^2.1.0"
-    upper-case "^1.1.1"
-
 constants-browserify@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/constants-browserify/-/constants-browserify-1.0.0.tgz#c20b96d8c617748aaf1c16021760cd27fcb8cb75"
@@ -1773,7 +1736,7 @@ create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-create-react-class@^15.5.3, create-react-class@^15.6.0:
+create-react-class@^15.5.3:
   version "15.6.0"
   resolved "https://registry.yarnpkg.com/create-react-class/-/create-react-class-15.6.0.tgz#ab448497c26566e1e29413e883207d57cfe7bed4"
   dependencies:
@@ -1965,7 +1928,7 @@ date-now@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/date-now/-/date-now-0.1.4.tgz#eaf439fd4d4848ad74e5cc7dbef200672b9e345b"
 
-debug@*, debug@2, debug@2.6.8, debug@^2.1.3, debug@^2.2.0, debug@^2.3.3, debug@^2.6.3, debug@^2.6.8:
+debug@*, debug@2, debug@2.6.8, "debug@>=2 <3", debug@^2.1.3, debug@^2.2.0, debug@^2.3.3, debug@^2.6.3, debug@^2.6.8:
   version "2.6.8"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.8.tgz#e731531ca2ede27d188222427da17821d68ff4fc"
   dependencies:
@@ -2158,12 +2121,6 @@ dom-walk@^0.1.0:
 domain-browser@^1.1.1:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/domain-browser/-/domain-browser-1.1.7.tgz#867aa4b093faa05f1de08c06f4d7b21fdf8698bc"
-
-dot-case@^2.1.0:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/dot-case/-/dot-case-2.1.1.tgz#34dcf37f50a8e93c2b3bca8bb7fb9155c7da3bee"
-  dependencies:
-    no-case "^2.2.0"
 
 dotenv@^4.0.0:
   version "4.0.0"
@@ -3012,9 +2969,48 @@ graphql-anywhere@^3.0.0, graphql-anywhere@^3.0.1:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/graphql-anywhere/-/graphql-anywhere-3.1.0.tgz#3ea0d8e8646b5cee68035016a9a7557c15c21e96"
 
+graphql-build-pg@^0.0.1-alpha11.0:
+  version "0.0.1-alpha9.3"
+  resolved "https://registry.yarnpkg.com/graphql-build-pg/-/graphql-build-pg-0.0.1-alpha9.3.tgz#b80aa7126ced150c4b262586045d82f8a476afc6"
+  dependencies:
+    babel-runtime ">=6 <7"
+    debug ">=2 <3"
+    graphql-iso-date "^3.2.0"
+    graphql-type-json "^0.1.4"
+    jsonwebtoken "^7.4.1"
+    lodash ">=4 <5"
+    lru-cache "4.1.1"
+    pg-range-parser "^1.0.0"
+    pg-sql2 "1.0.0-alpha1.0"
+    pluralize "^5.0.0"
+
+graphql-build@^0.0.1-alpha11.0:
+  version "0.0.1-alpha9.3"
+  resolved "https://registry.yarnpkg.com/graphql-build/-/graphql-build-0.0.1-alpha9.3.tgz#5add832a92512c0b181bd6be97fe2862cad9713e"
+  dependencies:
+    babel-runtime ">=6 <7"
+    debug ">=2 <3"
+    graphql-parse-resolve-info "^0.0.1-alpha9.3"
+    graphql-type-json "^0.1.4"
+
+graphql-iso-date@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/graphql-iso-date/-/graphql-iso-date-3.2.0.tgz#21f9352d165e624599ec4ea249e806966197f1dc"
+
+graphql-parse-resolve-info@^0.0.1-alpha9.3:
+  version "0.0.1-alpha9.3"
+  resolved "https://registry.yarnpkg.com/graphql-parse-resolve-info/-/graphql-parse-resolve-info-0.0.1-alpha9.3.tgz#81dc4bf8ca94d8002c512bfed1f0ba739c26efa7"
+  dependencies:
+    babel-runtime ">=6 <7"
+    debug ">=2 <3"
+
 graphql-tag@^2.0.0:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.4.2.tgz#6a63297d8522d03a2b72d26f1b239aab343840cd"
+
+graphql-type-json@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/graphql-type-json/-/graphql-type-json-0.1.4.tgz#89f13f5d32ce08c9a76c79fdf9c1968384d81a4e"
 
 "graphql@>=0.6.0 <1.0.0", graphql@^0.10.0:
   version "0.10.3"
@@ -3095,13 +3091,6 @@ hawk@~3.1.3:
     cryptiles "2.x.x"
     hoek "2.x.x"
     sntp "1.x.x"
-
-header-case@^1.0.0:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/header-case/-/header-case-1.0.1.tgz#9535973197c144b09613cd65d317ef19963bd02d"
-  dependencies:
-    no-case "^2.2.0"
-    upper-case "^1.1.3"
 
 history@^4.5.1, history@^4.6.0:
   version "4.6.3"
@@ -3260,12 +3249,6 @@ ieee754@^1.1.4:
 ignore@^3.2.0:
   version "3.3.3"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.3.3.tgz#432352e57accd87ab3110e82d3fea0e47812156d"
-
-immutability-helper@^2.1.2:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/immutability-helper/-/immutability-helper-2.3.0.tgz#e897741c1da29541a861ea16bdbf909265e2eb55"
-  dependencies:
-    invariant "^2.2.0"
 
 imurmurhash@^0.1.4:
   version "0.1.4"
@@ -3476,12 +3459,6 @@ is-glob@^3.1.0:
   dependencies:
     is-extglob "^2.1.0"
 
-is-lower-case@^1.1.0:
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/is-lower-case/-/is-lower-case-1.1.3.tgz#7e147be4768dc466db3bfb21cc60b31e6ad69393"
-  dependencies:
-    lower-case "^1.1.0"
-
 is-my-json-valid@^2.10.0, is-my-json-valid@^2.12.4:
   version "2.16.0"
   resolved "https://registry.yarnpkg.com/is-my-json-valid/-/is-my-json-valid-2.16.0.tgz#f079dd9bfdae65ee2038aae8acbc86ab109e3693"
@@ -3582,12 +3559,6 @@ is-symbol@^1.0.1:
 is-typedarray@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/is-typedarray/-/is-typedarray-1.0.0.tgz#e479c80858df0c1b11ddda6940f96011fcda4a9a"
-
-is-upper-case@^1.1.0:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/is-upper-case/-/is-upper-case-1.1.2.tgz#8d0b1fa7e7933a1e58483600ec7d9661cbaf756f"
-  dependencies:
-    upper-case "^1.1.0"
 
 is-utf8@^0.2.0:
   version "0.2.1"
@@ -3729,7 +3700,7 @@ jsonpointer@^4.0.0:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/jsonpointer/-/jsonpointer-4.0.1.tgz#4fd92cb34e0e9db3c89c8622ecf51f9b978c6cb9"
 
-jsonwebtoken@^7.1.9:
+jsonwebtoken@^7.1.9, jsonwebtoken@^7.4.1:
   version "7.4.1"
   resolved "https://registry.yarnpkg.com/jsonwebtoken/-/jsonwebtoken-7.4.1.tgz#7ca324f5215f8be039cd35a6c45bb8cb74a448fb"
   dependencies:
@@ -4138,7 +4109,7 @@ lodash@3.9.3:
   version "3.9.3"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.9.3.tgz#0159e86832feffc6d61d852b12a953b99496bd32"
 
-lodash@^4.0.0, lodash@^4.14.0, lodash@^4.16.6, lodash@^4.17.2, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.6.0, lodash@^4.6.1, lodash@^4.8.0, lodash@~4.17.4:
+"lodash@>=3.5 <5", "lodash@>=4 <5", lodash@^4.0.0, lodash@^4.14.0, lodash@^4.16.6, lodash@^4.17.2, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.6.0, lodash@^4.6.1, lodash@^4.8.0, lodash@~4.17.4:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
@@ -4159,17 +4130,7 @@ loud-rejection@^1.0.0:
     currently-unhandled "^0.4.1"
     signal-exit "^3.0.0"
 
-lower-case-first@^1.0.0:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/lower-case-first/-/lower-case-first-1.0.2.tgz#e5da7c26f29a7073be02d52bac9980e5922adfa1"
-  dependencies:
-    lower-case "^1.1.2"
-
-lower-case@^1.1.0, lower-case@^1.1.1, lower-case@^1.1.2:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/lower-case/-/lower-case-1.1.4.tgz#9a2cabd1b9e8e0ae993a4bf7d5875c39c42e8eac"
-
-lru-cache@^4.0.1:
+lru-cache@4.1.1, lru-cache@^4.0.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-4.1.1.tgz#622e32e82488b49279114a4f9ecf45e7cd6bba55"
   dependencies:
@@ -4396,12 +4357,6 @@ natural-compare@^1.4.0:
 negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
-
-no-case@^2.2.0:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/no-case/-/no-case-2.3.1.tgz#7aeba1c73a52184265554b7dc03baf720df80081"
-  dependencies:
-    lower-case "^1.1.1"
 
 node-fetch@^1.0.1:
   version "1.7.1"
@@ -4720,12 +4675,6 @@ pako@~0.2.0:
   version "0.2.9"
   resolved "https://registry.yarnpkg.com/pako/-/pako-0.2.9.tgz#f3f7522f4ef782348da8161bad9ecfd51bf83a75"
 
-param-case@^2.1.0:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/param-case/-/param-case-2.1.1.tgz#df94fd8cf6531ecf75e6bef9a0858fbc72be2247"
-  dependencies:
-    no-case "^2.2.0"
-
 parse-asn1@^5.0.0:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/parse-asn1/-/parse-asn1-5.1.0.tgz#37c4f9b7ed3ab65c74817b5f2480937fbf97c712"
@@ -4759,22 +4708,9 @@ parseurl@^1.3.0, parseurl@^1.3.1, parseurl@~1.3.1:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/parseurl/-/parseurl-1.3.1.tgz#c8ab8c9223ba34888aa64a297b28853bec18da56"
 
-pascal-case@^2.0.0:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/pascal-case/-/pascal-case-2.0.1.tgz#2d578d3455f660da65eca18ef95b4e0de912761e"
-  dependencies:
-    camel-case "^3.0.0"
-    upper-case-first "^1.1.0"
-
 path-browserify@0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/path-browserify/-/path-browserify-0.0.0.tgz#a0b870729aae214005b7d5032ec2cbbb0fb4451a"
-
-path-case@^2.1.0:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/path-case/-/path-case-2.1.1.tgz#94b8037c372d3fe2906e465bb45e25d226e8eea5"
-  dependencies:
-    no-case "^2.2.0"
 
 path-exists@^2.0.0:
   version "2.1.0"
@@ -4859,6 +4795,22 @@ pg-pool@1.*, pg-pool@^1.7.1:
     generic-pool "2.4.3"
     object-assign "4.1.0"
 
+pg-range-parser@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/pg-range-parser/-/pg-range-parser-1.0.0.tgz#561e8c4c3dee98a1caa8288c5c7e4300861819bb"
+
+pg-sql2@1.0.0-alpha1.0:
+  version "1.0.0-alpha1.0"
+  resolved "https://registry.yarnpkg.com/pg-sql2/-/pg-sql2-1.0.0-alpha1.0.tgz#13c34041f82fa895bb1fb94eed7ed70a060c394d"
+  dependencies:
+    debug ">=2 <3"
+
+pg-sql2@^1.0.0-alpha1.0:
+  version "1.0.0-alpha1.4"
+  resolved "https://registry.yarnpkg.com/pg-sql2/-/pg-sql2-1.0.0-alpha1.4.tgz#a2b8ffd396a746020879281d16a3cd976c854c37"
+  dependencies:
+    debug ">=2 <3"
+
 pg-types@1.*:
   version "1.12.0"
   resolved "https://registry.yarnpkg.com/pg-types/-/pg-types-1.12.0.tgz#8ad3b7b897e3fd463e62de241ad5fc640b4a66f0"
@@ -4924,6 +4876,10 @@ pluralize@^1.2.1:
 pluralize@^3.0.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-3.1.0.tgz#84213d0a12356069daa84060c559242633161368"
+
+pluralize@^5.0.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-5.1.0.tgz#586a3944a76c481f89774f755652779f61d692b2"
 
 portfinder@^1.0.9:
   version "1.0.13"
@@ -5231,13 +5187,20 @@ postcss@^6.0.1, postcss@^6.0.2, postcss@^6.0.3, postcss@^6.0.6:
     source-map "^0.5.6"
     supports-color "^4.1.0"
 
-postgraphql@^3.3.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/postgraphql/-/postgraphql-3.3.0.tgz#db67915148a843c96277f48200b22da45b019cb2"
+postgraphql-build@0.0.1-alpha11.0:
+  version "0.0.1-alpha11.0"
+  resolved "https://registry.yarnpkg.com/postgraphql-build/-/postgraphql-build-0.0.1-alpha11.0.tgz#f354d89d4923a79efb1842cfea060e975e698a39"
+  dependencies:
+    babel-runtime ">=6 <7"
+    graphql-build "^0.0.1-alpha11.0"
+    graphql-build-pg "^0.0.1-alpha11.0"
+
+postgraphql@4.0.0-alpha2.0:
+  version "4.0.0-alpha2.0"
+  resolved "https://registry.yarnpkg.com/postgraphql/-/postgraphql-4.0.0-alpha2.0.tgz#f487af1ca7e4917fd8d8e3ce8b89ca21acdace27"
   dependencies:
     body-parser "^1.15.2"
     chalk "1.1.3"
-    change-case "^3.0.0"
     commander "2.9.0"
     dataloader "^1.2.0"
     debug "^2.3.3"
@@ -5245,11 +5208,14 @@ postgraphql@^3.3.0:
     graphql ">=0.6.0 <1.0.0"
     http-errors "^1.5.1"
     jsonwebtoken "^7.1.9"
+    lodash ">=3.5 <5"
     parseurl "^1.3.1"
     pg "^6.1.0"
     pg-connection-string "^0.1.3"
     pg-minify "^0.4.1"
+    pg-sql2 "^1.0.0-alpha1.0"
     pluralize "^3.0.0"
+    postgraphql-build "0.0.1-alpha11.0"
     postgres-interval "^1.0.2"
     send "^0.14.1"
     tslib "^1.5.0"
@@ -5272,30 +5238,6 @@ postgres-interval@^1.0.2, postgres-interval@^1.1.0:
   dependencies:
     xtend "^4.0.0"
 
-preact-compat@^3.16.0:
-  version "3.16.0"
-  resolved "https://registry.yarnpkg.com/preact-compat/-/preact-compat-3.16.0.tgz#cf2bc1b2f8fca14900d68094f9e10b8b329cc41e"
-  dependencies:
-    immutability-helper "^2.1.2"
-    preact-render-to-string "^3.6.0"
-    preact-transition-group "^1.1.0"
-    prop-types "^15.5.8"
-    standalone-react-addons-pure-render-mixin "^0.1.1"
-
-preact-render-to-string@^3.6.0:
-  version "3.6.3"
-  resolved "https://registry.yarnpkg.com/preact-render-to-string/-/preact-render-to-string-3.6.3.tgz#481d0d5bdac9192d3347557437d5cd00aa312043"
-  dependencies:
-    pretty-format "^3.5.1"
-
-preact-transition-group@^1.1.0:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/preact-transition-group/-/preact-transition-group-1.1.1.tgz#f0a49327ea515ece34ea2be864c4a7d29e5d6e10"
-
-preact@^8.2.1:
-  version "8.2.1"
-  resolved "https://registry.yarnpkg.com/preact/-/preact-8.2.1.tgz#674243df0c847884d019834044aa2fcd311e72ed"
-
 prelude-ls@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.1.2.tgz#21932a549f5e52ffd9a827f570e04be62a97da54"
@@ -5307,10 +5249,6 @@ prepend-http@^1.0.0:
 preserve@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
-
-pretty-format@^3.5.1:
-  version "3.8.0"
-  resolved "https://registry.yarnpkg.com/pretty-format/-/pretty-format-3.8.0.tgz#bfbed56d5e9a776645f4b1ff7aa1a3ac4fa3c385"
 
 private@^0.1.6:
   version "0.1.7"
@@ -5338,7 +5276,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.8:
+prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.8:
   version "15.5.10"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.10.tgz#2797dfc3126182e3a95e3dfbb2e893ddd7456154"
   dependencies:
@@ -5485,14 +5423,14 @@ react-deep-force-update@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/react-deep-force-update/-/react-deep-force-update-2.0.1.tgz#4f7f6c12c3e7de42f345992a3c518236fa1ecad3"
 
-"react-dom@0.14.x || 15.* || ^15.0.0 || ^16.0.0-alpha", react-dom@^15.0.0:
-  version "15.6.1"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-15.6.1.tgz#2cb0ed4191038e53c209eb3a79a23e2a4cf99470"
+"react-dom@0.14.x || 15.* || ^15.0.0 || ^16.0.0-alpha", react-dom@16.0.0-beta.1:
+  version "16.0.0-beta.1"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.0.0-beta.1.tgz#be3e958578dae850884f7abd7ba559f9dfb39815"
   dependencies:
     fbjs "^0.8.9"
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
-    prop-types "^15.5.10"
+    prop-types "^15.5.6"
 
 react-hot-loader@next:
   version "3.0.0-beta.7"
@@ -5544,15 +5482,14 @@ react-router@^4.1.1:
     prop-types "^15.5.4"
     warning "^3.0.0"
 
-react@^15.0.0:
-  version "15.6.1"
-  resolved "https://registry.yarnpkg.com/react/-/react-15.6.1.tgz#baa8434ec6780bde997cdc380b79cd33b96393df"
+react@^16.0.0:
+  version "16.0.0-beta.1"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.0.0-beta.1.tgz#c02171171e9638b0c506f5a26b90e918f76909ab"
   dependencies:
-    create-react-class "^15.6.0"
     fbjs "^0.8.9"
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
-    prop-types "^15.5.10"
+    prop-types "^15.5.6"
 
 read-pkg-up@^1.0.1:
   version "1.0.1"
@@ -6038,13 +5975,6 @@ send@^0.14.1:
     range-parser "~1.2.0"
     statuses "~1.3.1"
 
-sentence-case@^2.1.0:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/sentence-case/-/sentence-case-2.1.1.tgz#1f6e2dda39c168bf92d13f86d4a918933f667ed4"
-  dependencies:
-    no-case "^2.2.0"
-    upper-case-first "^1.1.2"
-
 serve-index@^1.7.2:
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/serve-index/-/serve-index-1.9.0.tgz#d2b280fc560d616ee81b48bf0fa82abed2485ce7"
@@ -6120,12 +6050,6 @@ slash@^1.0.0:
 slice-ansi@0.0.4:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/slice-ansi/-/slice-ansi-0.0.4.tgz#edbf8903f66f7ce2f8eafd6ceed65e264c831b35"
-
-snake-case@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/snake-case/-/snake-case-2.1.0.tgz#41bdb1b73f30ec66a04d4e2cad1b76387d4d6d9f"
-  dependencies:
-    no-case "^2.2.0"
 
 sntp@1.x.x:
   version "1.0.9"
@@ -6279,10 +6203,6 @@ stackframe@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/stackframe/-/stackframe-0.3.1.tgz#33aa84f1177a5548c8935533cbfeb3420975f5a4"
 
-standalone-react-addons-pure-render-mixin@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/standalone-react-addons-pure-render-mixin/-/standalone-react-addons-pure-render-mixin-0.1.1.tgz#3c7409f4c79c40de9ac72c616cf679a994f37551"
-
 "statuses@>= 1.3.1 < 2", statuses@^1.2.0, statuses@~1.3.1:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/statuses/-/statuses-1.3.1.tgz#faf51b9eb74aaef3b3acf4ad5f61abf24cb7b93e"
@@ -6431,13 +6351,6 @@ svgo@^0.7.0:
     sax "~1.2.1"
     whet.extend "~0.9.9"
 
-swap-case@^1.1.0:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/swap-case/-/swap-case-1.1.2.tgz#c39203a4587385fad3c850a0bd1bcafa081974e3"
-  dependencies:
-    lower-case "^1.1.1"
-    upper-case "^1.1.1"
-
 symbol-observable@^1.0.2, symbol-observable@^1.0.3:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-1.0.4.tgz#29bf615d4aa7121bdd898b22d4b3f9bc4e2aa03d"
@@ -6530,13 +6443,6 @@ timers-browserify@^2.0.2:
   resolved "https://registry.yarnpkg.com/timers-browserify/-/timers-browserify-2.0.2.tgz#ab4883cf597dcd50af211349a00fbca56ac86b86"
   dependencies:
     setimmediate "^1.0.4"
-
-title-case@^2.1.0:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/title-case/-/title-case-2.1.1.tgz#3e127216da58d2bc5becf137ab91dae3a7cd8faa"
-  dependencies:
-    no-case "^2.2.0"
-    upper-case "^1.0.3"
 
 tmp@^0.0.31:
   version "0.0.31"
@@ -6669,16 +6575,6 @@ uniqs@^2.0.0:
 unpipe@1.0.0, unpipe@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/unpipe/-/unpipe-1.0.0.tgz#b2bf4ee8514aae6165b4817829d21b2ef49904ec"
-
-upper-case-first@^1.1.0, upper-case-first@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/upper-case-first/-/upper-case-first-1.1.2.tgz#5d79bedcff14419518fd2edb0a0507c9b6859115"
-  dependencies:
-    upper-case "^1.1.1"
-
-upper-case@^1.0.3, upper-case@^1.1.0, upper-case@^1.1.1, upper-case@^1.1.3:
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/upper-case/-/upper-case-1.1.3.tgz#f6b4501c2ec4cdd26ba78be7222961de77621598"
 
 urijs@1.16.1:
   version "1.16.1"

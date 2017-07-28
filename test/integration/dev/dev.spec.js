@@ -1,12 +1,14 @@
 import { expect } from 'chai';
+/* globals before, browser */
 import path from 'path';
 import dotenv from 'dotenv';
 import superagent from 'superagent';
 import startApp from '../../../src/server/server';
 
-describe('Dev server', function() {
+describe('Dev server', () => {
   before(async () => {
     dotenv.config({ path: path.join(process.cwd(), 'test', 'integration', 'dev', 'testApp', '.env') });
+    // eslint-disable-next-line
     const routes = require(`${process.cwd()}/test/integration/dev/testApp/src/urls`).default;
     await startApp({
       appName: process.env.APP_NAME,

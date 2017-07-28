@@ -24,7 +24,7 @@ export default function Document({ content, state, title }) {
 }
 
 Document.propTypes = {
-  content: React.PropTypes.string.isRequired,
-  state: React.PropTypes.object.isRequired,
+  content: PropTypes.string.isRequired,
+  state: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
 };
