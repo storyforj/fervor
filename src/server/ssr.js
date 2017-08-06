@@ -70,11 +70,14 @@ export default (routes, Doc = Document) => {
       const state = store.getState();
       state.apollo = serverClient.getInitialState();
 
+      // TODO: app.props.title is not accessible on the server-side.
+      // For now we'll just rely on it getting set client side.
+
       ctx.body = `<!doctype html>\n${ReactDOMServer.renderToStaticMarkup((
         <Doc
           content={ReactDOMServer.renderToString(app)}
           state={state}
-          title={'Test'}
+          title={app.props.title}
         />
       ))}`;
 
