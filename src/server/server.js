@@ -16,11 +16,8 @@ export default async function startApp(options = {}) {
 
   const pgqlOpts = Object.assign(
     {
-      // watchPg: true,
-      // classicIds: true,
       graphiql: true,
       graphiqlRoute: '/admin/graphiql',
-      // exportJsonSchemaPath: path.join(options.appLocation, '.graphql.json'),
     },
     options.postgraphql || {},
   );

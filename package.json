@@ -6,11 +6,22 @@
   "author": "Parris Khachi",
   "license": "MIT",
   "scripts": {
-    "build": "babel src -d lib"
+    "build": "babel src -d lib",
+    "test": "jest",
+    "test:debug": "node debug ./node_modules/.bin/jest --runInBand"
   },
   "bin": {
     "fervor": "./lib/fervor.js",
     "fervor-debug": "./lib/fervor-debug.js"
+  },
+  "jest": {
+    "testMatch": [
+      "**/test/unit/**/*.spec.js"
+    ],
+    "setupFiles": [
+      "./test/unit/jestSetup.js"
+    ],
+    "setupTestFrameworkScriptFile": "./test/unit/beforeEach.js"
   },
   "dependencies": {
     "apollo-local-query": "^0.3.0",
@@ -37,6 +48,7 @@
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.1.0",
     "extract-text-webpack-plugin": "^2.1.2",
+    "form-data-to-object": "^0.2.0",
     "graphql": "^0.10.0",
     "is-node": "^1.0.2",
     "isomorphic-fetch": "^2.2.1",
@@ -93,6 +105,8 @@
     "chai": "^4.1.0",
     "enzyme": "^2.9.1",
     "jest": "^20.0.4",
+    "jest-environment-node-debug": "^2.0.0",
+    "jest-fetch-mock": "^1.2.1",
     "superagent": "^3.5.2",
     "wdio": "^0.3.3",
     "wdio-mocha-framework": "^0.5.10",

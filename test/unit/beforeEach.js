@@ -1,0 +1,3 @@
+beforeEach(() => {
+  fetch.resetMocks();
+});

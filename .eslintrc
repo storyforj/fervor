@@ -5,7 +5,7 @@
     },
     "env": {
         "browser": true,
-        "jasmine": true,
+        "jest": true,
         "amd": true
     },
     "rules": {
