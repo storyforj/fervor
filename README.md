@@ -1,3 +1,5 @@
+![Build Status](https://circleci.com/gh/fervorous/fervor.svg?style=shield)
+
 Fervor
 ----
 
