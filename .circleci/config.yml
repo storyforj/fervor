@@ -24,6 +24,7 @@ jobs:
             wget https://saucelabs.com/downloads/sc-latest-linux.tar.gz
             tar -xzf sc-latest-linux.tar.gz
 
+      - run: CFLAGS=-std=gnu11 yarn install
 
       # run tests!
       - run: yarn test
