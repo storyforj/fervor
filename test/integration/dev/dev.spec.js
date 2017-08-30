@@ -27,11 +27,15 @@ describe('Dev server', () => {
 
   it('renders client side with CSS', () => {
     browser.url('http://localhost:3001/');
-    expect(
-      browser.getCssProperty('div[class*="component"]', 'background').value
-    ).to.contain('rgb(0,0,0)');
-    expect(
-      browser.getCssProperty('div[class*="component"]', 'color').value
-    ).to.contain('rgba(255,255,255,1)');
+    browser.waitUntil(() => (
+      browser
+        .getCssProperty('div[class*="component"]', 'background')
+        .value.indexOf('rgb(0,0,0)') >= -1
+    ), 10000);
+    browser.waitUntil(() => (
+      browser
+        .getCssProperty('div[class*="component"]', 'color')
+        .value.indexOf('rgba(255,255,255,1)') >= -1
+    ), 10000);
   });
 });

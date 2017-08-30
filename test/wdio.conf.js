@@ -1,5 +1,4 @@
 exports.config = {
-
   //
   // =================
   // Service Providers
@@ -8,10 +7,10 @@ exports.config = {
   // should work too though). These services define specific user and key (or access key)
   // values you need to put in here in order to connect to these services.
   //
-  user: process.env.SAUCE_USERNAME,
-  key: process.env.SAUCE_ACCESS_KEY,
-  sauceConnect: true,
-  services: ['sauce'],
+  // user: process.env.SAUCE_USERNAME,
+  // key: process.env.SAUCE_ACCESS_KEY,
+  // sauceConnect: true,
+  services: process.env.IS_CIRCLE_CI ? [] : ['selenium-standalone'], // ['sauce']
 
   //
   // ==================
@@ -23,7 +22,7 @@ exports.config = {
   // directory is where your package.json resides, so `wdio` will be called from there.
   //
   specs: [
-    './test/**/*.spec.js',
+    './test/integration/**/*.spec.js',
   ],
   // Patterns to exclude.
   exclude: [
@@ -137,6 +136,7 @@ exports.config = {
   // See the full list at http://mochajs.org/
   mochaOpts: {
     ui: 'bdd',
+    require: ['./test/integration/helper.js'],
   },
   //
   // =====
@@ -168,26 +168,8 @@ exports.config = {
    * @param {Array.<Object>} capabilities list of capabilities details
    * @param {Array.<String>} specs List of spec file paths that are to be run
    */
-  before: function () {
-    require('isomorphic-fetch');
-    require('babel-polyfill');
-    require('babel-core/register')({
-      presets: [
-        'es2015',
-        'react',
-        'stage-0',
-      ],
-      plugins: [
-        [
-          'css-modules-transform',
-          {
-            generateScopedName: '[name]__[local]___[hash:base64:5]',
-            extensions: ['.scss'],
-          },
-        ],
-      ],
-    });
-  },
+  // before() {
+  // },
   //
   /**
    * Hook that gets executed before the suite starts

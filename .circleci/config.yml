@@ -5,11 +5,13 @@ jobs:
       - image: circleci/node:8.4.0
         environment:
           DATABASE_URL_TEST: postgres://test_user@localhost:5432/test_db
+          IS_CIRCLE_CI: true
       - image: circleci/postgres:latest
         environment:
           POSTGRES_USER: test_user
           POSTGRES_DB: test_db
           POSTGRES_PASSWORD: ""
+      - image: selenium/standalone-chrome:3.1.0
 
     working_directory: ~/repo
 
@@ -22,7 +24,7 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v3-dependencies-
 
-      - run: SAUCE_CONNECT_DOWNLOAD_ON_INSTALL=true CFLAGS=-std=gnu11 yarn install
+      - run: CFLAGS=-std=gnu11 yarn install
 
       - save_cache:
           paths:

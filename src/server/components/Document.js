@@ -23,8 +23,12 @@ export default function Document({ content, state, title }) {
   );
 }
 
+Document.defaultProps = {
+  title: '',
+};
+
 Document.propTypes = {
   content: PropTypes.string.isRequired,
   state: PropTypes.object.isRequired,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
 };
