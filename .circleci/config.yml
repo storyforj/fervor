@@ -24,19 +24,6 @@ jobs:
             wget https://saucelabs.com/downloads/sc-latest-linux.tar.gz
             tar -xzf sc-latest-linux.tar.gz
 
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-
-      - run: CFLAGS=-std=gnu11 yarn install
-
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
 
       # run tests!
       - run: yarn test
