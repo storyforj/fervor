@@ -7,7 +7,7 @@ jobs:
           POSTGRES_USER: test_user
           POSTGRES_DB: test_db
           POSTGRES_PASSWORD: ""
-      - image: circleci/node:latest
+      - image: circleci/node:8.4.0
         environment:
           DATABASE_URL_TEST: postgres://test_user@localhost:5432/test_db
 
