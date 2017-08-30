@@ -18,6 +18,11 @@ jobs:
 
     steps:
       - checkout
+      - run:
+          name: Install Sauce Connect
+          command: |
+            wget https://saucelabs.com/downloads/sc-latest-linux.tar.gz
+            tar -xzf sc-latest-linux.tar.gz
 
       # Download and cache dependencies
       - restore_cache:
