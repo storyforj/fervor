@@ -3,11 +3,9 @@
 Fervor
 ----
 
-*Current status*: Building core functionality
-
 *TodoMVC Example*: https://github.com/fervorous/fervor-todo-mvc
 
-A batteries included fullstack framework to build modern, progressive web apps.
+A batteries included, config free, fullstack framework to build modern web apps. Write migrations, throw some components together and you have your app. With Fervor you'll write less code and get a lot more done. 
 
 Features (so far):
 ----
