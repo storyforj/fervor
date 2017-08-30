@@ -8,6 +8,7 @@
   "scripts": {
     "build": "babel src -d lib",
     "integration": "node_modules/.bin/wdio test/wdio.conf.js",
+    "integration:debug": "node_modules/.bin/wdio test/wdio.conf.js",
     "test": "jest",
     "test:debug": "node debug ./node_modules/.bin/jest --runInBand"
   },
