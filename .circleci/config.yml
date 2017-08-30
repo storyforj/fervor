@@ -2,14 +2,14 @@ version: 2
 jobs:
   build:
     docker:
+      - image: circleci/node:8.4.0
+        environment:
+          DATABASE_URL_TEST: postgres://test_user@localhost:5432/test_db
       - image: circleci/postgres:latest
         environment:
           POSTGRES_USER: test_user
           POSTGRES_DB: test_db
           POSTGRES_PASSWORD: ""
-      - image: circleci/node:8.4.0
-        environment:
-          DATABASE_URL_TEST: postgres://test_user@localhost:5432/test_db
 
     working_directory: ~/repo
 
