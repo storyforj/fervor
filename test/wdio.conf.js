@@ -23,7 +23,7 @@ exports.config = {
   // directory is where your package.json resides, so `wdio` will be called from there.
   //
   specs: [
-    './test/**/*.spec.js'
+    './test/**/*.spec.js',
   ],
   // Patterns to exclude.
   exclude: [
@@ -57,7 +57,7 @@ exports.config = {
     // 5 instances get started at a time.
     maxInstances: 5,
     //
-    browserName: 'chrome'
+    browserName: 'chrome',
   }],
   //
   // ===================
@@ -71,7 +71,7 @@ exports.config = {
   sync: true,
   //
   // Level of logging verbosity: silent | verbose | command | data | result | error
-  logLevel: 'result',
+  logLevel: 'verbose',
   //
   // Enables colors for log output.
   coloredLogs: true,
@@ -136,7 +136,7 @@ exports.config = {
   // Options to be passed to Mocha.
   // See the full list at http://mochajs.org/
   mochaOpts: {
-    ui: 'bdd'
+    ui: 'bdd',
   },
   //
   // =====

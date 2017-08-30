@@ -12,7 +12,7 @@ describe('Dev server', () => {
     const routes = require(`${process.cwd()}/test/integration/dev/testApp/src/urls`).default;
     await startApp({
       appName: process.env.APP_NAME,
-      db: process.env.DATABASE_URL,
+      db: process.env.DATABASE_URL_TEST,
       host: process.env.HOST || 'http://localhost:3001',
       port: process.env.PORT || 3001,
       appLocation: path.join(process.cwd(), 'test', 'integration', 'dev', 'testApp'),
