@@ -22,12 +22,19 @@ Features (so far):
 How to contribute?
 ---
 
-1. Create a database called 'example' in postgres
-2. Clone both this repo and the example project
-3. `yarn install` in both
-4. `yarn link` in the fervor directory, `yarn link fervor` in the example project directory
-5. `fervor migrate:latest` in the example project
+1. Create a database called 'example' and 'example_test' in postgres
+2. Clone this repo
+3. `yarn install`
+4. You can use unit tests and integration tests to simulate prod vs dev
 
-Next you should decide if you're going to iterate on the prod setup or the dev setup.
+Note - for integration tests you'll need Java. The test runner will auto-setup selenium though.
 
-6. `yarn build; yarn start:prod` or `yarn start:dev`
+### Testing with the Example Repo
+
+1. Clone the example repo - https://github.com/fervorous/fervor-todo-mvc
+2. `yarn install` in the example repo, and this repo
+3. `yarn link` in the fervor directory, `yarn link fervor` in the example project directory
+4. `fervor migrate:latest` in the example project
+5. `yarn build; yarn start:prod` or `yarn start:dev` depending if you're trying to test prod or dev.
+
+Note - everytime you install a dependency in fervor, you'll need to do all of the above, and maybe `rm -rf node_modules` in the example project. This is unfortunate, but somewhat required due the way we're trying to bootstrap applications. Does anyone have ideas to improve this?
