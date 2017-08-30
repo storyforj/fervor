@@ -5,7 +5,7 @@ Fervor
 
 *TodoMVC Example*: https://github.com/fervorous/fervor-todo-mvc
 
-A batteries included, config free, fullstack framework to build modern web apps. Write migrations, throw some components together and you have your app. With Fervor you'll write less code and get a lot more done. 
+A batteries included, config free, fullstack framework to build modern web apps. Just write your data migrations, throw some components together and we'll handle the rest. We know you want universal rendering, we know you want to *own* your own data, we know you don't really want to write your own APIs that just move some data from one place to another. We've automated all that away, integrated with all the best libraries in the node community. Now all you need to do is solve some killer world problem.
 
 Features (so far):
 ----
