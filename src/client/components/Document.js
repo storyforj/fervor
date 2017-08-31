@@ -17,9 +17,6 @@ export default class Document extends React.Component {
 }
 
 Document.propTypes = {
-  children: PropTypes.oneOf([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
+  children: PropTypes.node.isRequired,
   title: PropTypes.string.isRequired,
 };
