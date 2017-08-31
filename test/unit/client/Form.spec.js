@@ -6,6 +6,7 @@ import {
     createNetworkInterface,
 } from 'react-apollo';
 import { mount } from 'enzyme';
+import initStore from '../../../src/shared/store';
 import Form from '../../../src/client/components/Form';
 
 describe('Form Component', () => {
@@ -15,6 +16,7 @@ describe('Form Component', () => {
         uri: '/graphql',
       }),
     });
+    const store = initStore({ location: { pathname: '/' }, session: {} });
 
     const mutation = gql`query {
       __schema {
@@ -26,7 +28,7 @@ describe('Form Component', () => {
     }`;
 
     const component = mount(
-      <ApolloProvider client={webClient}>
+      <ApolloProvider client={webClient} store={store}>
         <Form mutation={mutation}>
           <div>Hello World</div>
         </Form>

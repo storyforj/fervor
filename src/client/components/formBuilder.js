@@ -17,7 +17,7 @@ export default (mutation) => {
         variables: formToObj.toObj(new FormData(e.target)),
         refetchQueries: this.props.refetchQueries,
       });
-      this.onSubmit(e);
+      this.props.onSubmit(e);
     }
 
     render() {
@@ -32,7 +32,7 @@ export default (mutation) => {
         <form method="POST" action="/form-post" {...formProps} onSubmit={this.handleSubmit}>
           {this.props.children}
           <input type="hidden" name="redirectTo" defaultValue={this.props.redirectTo} />
-          <input type="hidden" name="query" defaultValue={mutation} />
+          <input type="hidden" name="query" defaultValue={mutation.query} />
         </form>
       );
     }
@@ -40,7 +40,8 @@ export default (mutation) => {
 
   // get everything after the host name, at minimum a "/"
   Form.defaultProps = {
-    redirectTo: document.location.href.split(document.location.host)[1],
+    mutate: () => {},
+    onSubmit: () => {},
     refetchQueries: [],
   };
 
@@ -49,9 +50,10 @@ export default (mutation) => {
       PropTypes.arrayOf(PropTypes.node),
       PropTypes.node,
     ]).isRequired,
-    redirectTo: PropTypes.string,
+    onSubmit: PropTypes.func,
+    redirectTo: PropTypes.string.isRequired,
     // mutate gets passed in from the graphql function, from apollo
-    mutate: PropTypes.func.isRequired,
+    mutate: PropTypes.func,
     refetchQueries: PropTypes.array,
   };
 

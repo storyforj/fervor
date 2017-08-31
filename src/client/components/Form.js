@@ -1,18 +1,37 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
 
 import formBuilder from './formBuilder';
 
-export default class Form extends React.PureComponent {
-
+class Form extends React.PureComponent {
   render() {
     const GeneratedForm = formBuilder(this.props.mutation);
+
+    const redirectTo = this.props.redirectTo || this.props.location.pathname || '/';
+    const generatedFormProps = { ...this.props };
+    delete generatedFormProps.mutation;
+    delete generatedFormProps.location;
+    delete generatedFormProps.dispatch;
+
     return (
-      <GeneratedForm {...this.props} />
+      <GeneratedForm {...generatedFormProps} redirectTo={redirectTo} />
     );
   }
 }
 
-Form.propTypes = {
-  mutation: PropTypes.object.isRequired,
+Form.defaultProps = {
+  redirectTo: null,
 };
+
+Form.propTypes = {
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+  }).isRequired,
+  mutation: PropTypes.object.isRequired,
+  redirectTo: PropTypes.string,
+};
+
+export default connect((state) => ({
+  location: state.location,
+}))(Form);
