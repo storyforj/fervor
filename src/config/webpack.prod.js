@@ -88,6 +88,12 @@ module.exports = () => ({
         HOST: JSON.stringify(process.env.HOST),
       },
     }),
+    new webpack.DllReferencePlugin({
+      context: path.join(__dirname, '..'),
+      // the next line requires a yarn build
+      // eslint-disable-next-line
+      manifest: require('../../lib/fervorVendors-manifest.json'),
+    }),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.NamedModulesPlugin(),

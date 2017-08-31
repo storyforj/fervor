@@ -6,7 +6,7 @@
   "author": "Parris Khachi",
   "license": "MIT",
   "scripts": {
-    "build": "babel src -d lib",
+    "build": "babel src -d lib; webpack --config=./lib/config/webpack.dll.js",
     "integration": "./node_modules/.bin/wdio ./test/wdio.conf.js",
     "integration:debug": "./node_modules/.bin/wdio ./test/wdio.conf.js",
     "test": "jest",
