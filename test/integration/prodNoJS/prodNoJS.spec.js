@@ -6,7 +6,7 @@ import superagent from 'superagent';
 import buildApp from '../../../src/cli/commands/build';
 import startApp from '../../../src/server/server';
 
-describe('Prod server', () => {
+describe('Prod w/o JS', () => {
   before(async () => {
     dotenv.config({ path: path.join(process.cwd(), 'test', 'integration', 'prod', 'testApp', '.env') });
     await buildApp({
@@ -20,21 +20,32 @@ describe('Prod server', () => {
     await startApp({
       appName: process.env.APP_NAME,
       db: process.env.DATABASE_URL_TEST,
-      host: 'http://localhost:3003',
-      port: 3003,
+      host: 'http://localhost:3004',
+      port: 3004,
       appLocation: path.join(process.cwd(), 'test', 'integration', 'prod', 'testApp'),
       disableWebpack: true,
       routes,
     });
+    browser.settings({
+      chromeOptions: {
+        javascriptEnabled: false,
+      },
+    });
+  });
+
+  // TODO: Get this part to run
+  it('should not run JS', () => {
+    const result = browser.execute(() => 'testing').value;
+    // expect(result).not.to.equal('testing');
   });
 
   it('renders server side', async () => {
-    const response = await superagent.get('http://localhost:3003/');
+    const response = await superagent.get('http://localhost:3004/');
     expect(response.text).to.contain('Hello World');
   });
 
   it('renders client side with CSS', () => {
-    browser.url('http://localhost:3003/');
+    browser.url('http://localhost:3004/');
     browser.waitUntil(() => (
       browser
         .getCssProperty('div[class*="component"]', 'background')

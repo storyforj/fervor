@@ -36,6 +36,8 @@ jspm_packages
 # Optional REPL history
 .node_repl_history
 
+# repo specific stuff
 lib
-
 errorShots
+test/integration/prod/testApp/build
+test/integration/prodNoJS/testApp/build

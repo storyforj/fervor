@@ -13,20 +13,20 @@ describe('Dev server', () => {
     await startApp({
       appName: process.env.APP_NAME,
       db: process.env.DATABASE_URL_TEST,
-      host: process.env.HOST || 'http://localhost:3001',
-      port: process.env.PORT || 3001,
+      host: 'http://localhost:3002',
+      port: 3002,
       appLocation: path.join(process.cwd(), 'test', 'integration', 'dev', 'testApp'),
       routes,
     });
   });
 
   it('renders server side', async () => {
-    const response = await superagent.get('http://localhost:3001/');
+    const response = await superagent.get('http://localhost:3002/');
     expect(response.text).to.contain('Hello World');
   });
 
   it('renders client side with CSS', () => {
-    browser.url('http://localhost:3001/');
+    browser.url('http://localhost:3002/');
     browser.waitUntil(() => (
       browser
         .getCssProperty('div[class*="component"]', 'background')
