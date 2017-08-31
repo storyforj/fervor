@@ -17,6 +17,7 @@ module.exports = {
       name: '[name]',
       context: path.resolve(__dirname),
     }),
+    new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       parallel: true,

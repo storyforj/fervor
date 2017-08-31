@@ -94,6 +94,7 @@ module.exports = () => ({
       // eslint-disable-next-line
       manifest: require('../../lib/fervorVendors-manifest.json'),
     }),
+    new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.NamedModulesPlugin(),
