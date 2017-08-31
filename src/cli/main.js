@@ -3,7 +3,9 @@ const runCommands = require('./utils/runCommands');
 runCommands([
   {
     name: 'build',
-    options: null, // can be an array of objects containing name and description
+    options: {
+      directory: 'Defaults to process.cwd(). This is the directory for your app, it expects a `src` directory at it\'s root.',
+    },
     description: 'Creates a built version of the app for web/node use.',
   },
   {
