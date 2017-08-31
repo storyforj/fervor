@@ -26,6 +26,7 @@ export default (mutation) => {
       delete formProps.mutate;
       delete formProps.mutation;
       delete formProps.refetchQueries;
+      delete formProps.redirectTo;
 
       return (
         <form method="POST" action="/form-post" {...formProps} onSubmit={this.handleSubmit}>
@@ -40,6 +41,7 @@ export default (mutation) => {
   // get everything after the host name, at minimum a "/"
   Form.defaultProps = {
     redirectTo: document.location.href.split(document.location.host)[1],
+    refetchQueries: [],
   };
 
   Form.propTypes = {
@@ -48,8 +50,9 @@ export default (mutation) => {
       PropTypes.node,
     ]).isRequired,
     redirectTo: PropTypes.string,
-    mutate: PropTypes.string.isRequired,
-    refetchQueries: PropTypes.array.isRequired,
+    // mutate gets passed in from the graphql function, from apollo
+    mutate: PropTypes.func.isRequired,
+    refetchQueries: PropTypes.array,
   };
 
   return graphql(mutation)(Form);
