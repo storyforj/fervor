@@ -33,6 +33,6 @@ describe('Form Component', () => {
       </ApolloProvider>,
     );
     expect(component.contains(<div>Hello World</div>)).toBeTruthy();
-    expect(component.contains(<form method="POST" action="/form-post" />)).toBeTruthy();
+    expect(component.find('form').length).toBe(1);
   });
 });

@@ -100,7 +100,7 @@
     "jest": "^20.0.4",
     "jest-environment-node-debug": "^2.0.0",
     "jest-fetch-mock": "^1.2.1",
-    "react-addons-test-utils": "^15.6.0",
+    "react-addons-test-utils": "^16.0.0-alpha.3",
     "superagent": "^3.5.2",
     "wdio": "^0.3.3",
     "wdio-mocha-framework": "^0.5.10",
