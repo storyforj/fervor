@@ -4,6 +4,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const OfflinePlugin = require('offline-plugin');
 const autoprefixer = require('autoprefixer');
 const flexbugs = require('postcss-flexbugs-fixes');
+const ChunkManifestPlugin = require('./ChunkManifestPlugin');
 
 module.exports = () => ({
   resolve: {
@@ -11,13 +12,13 @@ module.exports = () => ({
       fervorAppRoutes: path.resolve(process.cwd(), 'src', 'urls.js'),
     },
   },
-  entry: [
-    path.join(__dirname, '..', 'client', 'main.js'),
-  ],
+  entry: {
+    bundle: path.join(__dirname, '..', 'client', 'main.js'),
+  },
   output: {
     path: path.join(process.cwd(), 'build'),
     publicPath: '/build/',
-    filename: 'bundle.js',
+    filename: '[name]-[hash:6].js',
   },
   module: {
     loaders: [
@@ -76,9 +77,10 @@ module.exports = () => ({
     ],
   },
   plugins: [
+    new ChunkManifestPlugin(),
     new ExtractTextPlugin({
       allChunks: true,
-      filename: 'bundle.css',
+      filename: 'bundle-[hash:6].css',
     }),
     new webpack.DefinePlugin({
       __DEV__: JSON.stringify(false),

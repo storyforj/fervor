@@ -41,7 +41,7 @@ App.propTypes = {
   store: PropTypes.object.isRequired,
 };
 
-export default (routes, Doc = Document) => {
+export default (routes, appLocation, Doc = Document) => {
   const processRoute = async (ctx, next) => {
     const serverClient = new ApolloClient({
       ssrMode: true,
@@ -75,6 +75,7 @@ export default (routes, Doc = Document) => {
 
       ctx.body = `<!doctype html>\n${ReactDOMServer.renderToStaticMarkup((
         <Doc
+          appLocation={appLocation}
           content={ReactDOMServer.renderToString(app)}
           state={state}
           title={app.props.title}

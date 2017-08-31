@@ -25,7 +25,7 @@ export default async function startApp(options = {}) {
 
   app.use(cors());
   app.use(bodyParser());
-  app.use(ssr(options.routes));
+  app.use(ssr(options.routes, options.appLocation));
   if (!options.disableWebpack) {
     // eslint-disable-next-line global-require
     require('../config/webpack.dev').default(app, options);
