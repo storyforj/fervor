@@ -22,7 +22,7 @@ const webClient = new ApolloClient({
 });
 
 const render = (Component) => {
-  ReactDOM.render(
+  ReactDOM.hydrate(
     (
       <ApolloProvider client={webClient} store={store}>
         <BrowserRouter>
