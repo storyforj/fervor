@@ -11,10 +11,33 @@ export default (mutation) => {
       this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    serializeForm(form) {
+      const inputs = form.querySelectorAll('input, select, checkbox, textarea');
+      const result = {};
+
+      inputs.forEach((input) => {
+        const key = input.name;
+        const value = input.value;
+        if (result[key]) {
+          if (result[key] instanceof Array) {
+            result[key].push(value);
+          } else {
+            result[key] = [result[key]];
+            result[key].push(value);
+          }
+        } else {
+          result[key] = value;
+        }
+      });
+      return result;
+    }
+
     handleSubmit(e) {
       e.preventDefault();
       this.props.mutate({
-        variables: formToObj.toObj(new FormData(e.target)),
+        variables: formToObj.toObj(
+          this.serializeForm(e.target),
+        ),
         refetchQueries: this.props.refetchQueries,
       });
       this.props.onSubmit(e);
