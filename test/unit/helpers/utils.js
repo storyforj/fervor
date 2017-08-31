@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import flatten from 'lodash/flatten';
 import createMountWrapper from './createMountWrapper';
 import createRenderWrapper from './createRenderWrapper';
