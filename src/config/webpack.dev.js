@@ -34,7 +34,7 @@ export default (app, options) => {
       output: {
         path: options.appLocation,
         publicPath: '/build/',
-        filename: 'bundle-[hash:6].js',
+        filename: 'bundle.js',
         sourceMapFilename: 'bundle.js.map',
       },
       devtool: 'inline-source-map',
