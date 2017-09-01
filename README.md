@@ -1,9 +1,7 @@
-![Build Status](https://circleci.com/gh/fervorous/fervor.svg?style=shield)
-
 Fervor
 ----
 
-[![Join the chat at https://gitter.im/fervorous/fervor](https://badges.gitter.im/fervorous/fervor.svg)](https://gitter.im/fervorous/fervor?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at https://gitter.im/fervorous/fervor](https://badges.gitter.im/fervorous/fervor.svg)](https://gitter.im/fervorous/fervor?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) ![Build Status](https://circleci.com/gh/fervorous/fervor.svg?style=shield)
 
 *TodoMVC Example*: https://github.com/fervorous/fervor-todo-mvc
 
