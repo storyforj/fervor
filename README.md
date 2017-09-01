@@ -26,11 +26,11 @@ How to Start
 
 Docs and some more CLI tools are in progress, but here's how you can get started right now.
 
-Step 1: `npm install -g fervor`
-Step 2: Copy our TodoMVC example (app creation command coming soon)
-Step 3: Create some migrations using `fervor migrate:make`
-Step 4: Run the migrations using `fervor migrate:latest`
-Step 5: Write some react components, have some fun with your auto generated graphql.
+1. `npm install -g fervor`
+2. Copy our TodoMVC example (app creation command coming soon)
+3. Create some migrations using `fervor migrate:make`
+4. Run the migrations using `fervor migrate:latest`
+5. Write some react components, have some fun with your auto generated graphql.
 
 You can start the dev server either by using `yarn start:dev` or `fervor startDev`.
 
