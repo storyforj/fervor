@@ -7,16 +7,36 @@ Fervor
 
 **Example App**: https://github.com/fervorous/fervor-todo-mvc
 
-A batteries included, config free, fullstack framework to build modern web apps. Just write your data migrations, throw some components together and we'll handle the rest. We know you want universal rendering, we know you want to *own* your own data, we know you don't really want to write your own APIs that just move some data from one place to another. We've automated all that away, integrated with all the best libraries in the node community. Now all you need to do is solve some killer world problem.
+A batteries included, config free, fullstack framework to build modern web apps. Just write your data migrations, throw some components together and we'll handle the rest. We know you want universal rendering, we know you want to *own* your own data, we know you don't really want to write your own APIs that just move some data from one place to another. We've automated all that away, integrated with all the best libraries in the node community. 
 
-Features (so far):
+Major Features:
 ----
 
 1. Universal React
-2. Auto generated GraphQL based on your postgres schema
+2. Auto generated GraphQL based on your Postgres schema
+3. Data Migrations
 3. Server and client rendered GraphQL
-4. CSS Modules
-5. Hot reloading
-6. Migrations
+5. CSS Modules
+6. Hot reloading
 7. CLI
-8. Offline requests via Service Workers
+8. Service Workers (WIP)
+
+How to Start
+----
+
+Docs and some more CLI tools are in progress, but here's how you can get started right now.
+
+Step 1: `npm install -g fervor`
+Step 2: Copy our TodoMVC example (app creation command coming soon)
+Step 3: Create some migrations using `fervor migrate:make`
+Step 4: Run the migrations using `fervor migrate:latest`
+Step 5: Write some react components, have some fun with your auto generated graphql.
+
+You can start the dev server either by using `yarn start:dev` or `fervor startDev`.
+
+Contributors
+----
+
+Your name could be here too! Read CONTRIBUTING.md for more details
+
+[<img alt="parris" src="https://avatars0.githubusercontent.com/u/202664?v=4&s=117" width="117">](https://github.com/parris)
