@@ -7,7 +7,7 @@ Fervor
 
 **Example App**: https://github.com/fervorous/fervor-todo-mvc
 
-A batteries included, config free, fullstack framework to build modern web apps. Just write your data migrations, throw some components together and we'll handle the rest. We know you want universal rendering, we know you want to *own* your own data, we know you don't really want to write your own APIs that just move some data from one place to another. We've automated all that away, integrated with all the best libraries in the node community. 
+A batteries included, config free, fullstack framework to build modern web apps. Just write your data migrations, throw some components together and we'll handle the rest. We know you want universal rendering, we know you want to *own* your own data, we know you don't really want to write your own APIs that just move some data from one place to another. We've automated all that away, integrated with all the best libraries in the node community.
 
 Major Features:
 ----
@@ -26,13 +26,22 @@ How to Start
 
 Docs and some more CLI tools are in progress, but here's how you can get started right now.
 
-1. `npm install -g fervor`
-2. Copy our TodoMVC example (app creation command coming soon)
-3. Create some migrations using `fervor migrate:make`
-4. Run the migrations using `fervor migrate:latest`
-5. Write some react components, have some fun with your auto generated graphql.
+Pre-requisites: postgres installed and running, nodejs installed, and yarn or npm installed
 
-You can start the dev server either by using `yarn start:dev` or `fervor startDev`.
+1. `yarn global add fervor` or `npm install -g fervor`
+2. `fervor create --directory [your app name]` or `fervor create`, which will create an app in the current directory.
+3. `cd [your app name]`
+4. `yarn install` or `npm install`
+5. Make sure you update .env with the name of your database, you can create one by typing `createdb [appname]`
+6. `yarn start:dev` or `npm start:dev`
+
+### Some next steps
+
+- Create some migrations using `fervor migrate:make`
+- Run the migrations using `fervor migrate:latest`
+- Have some fun with your auto generated graphql.
+- Write some react components
+- Deploy to heroku copying `app.json` from our example app. Also copy the heroku prebuild step from package.json
 
 Contributors
 ----

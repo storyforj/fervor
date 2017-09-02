@@ -1,0 +1,20 @@
+{
+  "name": "[appname]",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "engines": {
+    "node": "8.2.1"
+  },
+  "scripts": {
+    "build": "fervor migrate:latest; fervor build",
+    "start": "fervor start",
+    "start:dev": "fervor startDev",
+    "start:dev:debug": "fervor-debug startDev",
+    "start:prod": "NODE_ENV=production fervor start"
+  },
+  "dependencies": {
+    "classnames": "^2.2.5",
+    "fervor": "^0.1.3"
+  }
+}
