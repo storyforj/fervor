@@ -24,24 +24,30 @@ Major Features:
 How to Start
 ----
 
-Docs and some more CLI tools are in progress, but here's how you can get started right now.
+### Pre-requisites
+  
+1. PostgreSQL installed and running ([OSX guide](https://www.codementor.io/devops/tutorial/getting-started-postgresql-server-mac-osx), [Linux guide](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-16-04))
+2. NodeJS installed - take a look at [NVM](https://github.com/creationix/nvm)
+3. Optionally - [Install Yarn](https://yarnpkg.com/en/docs/install)
 
-Pre-requisites: postgres installed and running, nodejs installed, and yarn or npm installed
+### Create a new app
 
-1. `yarn global add fervor` or `npm install -g fervor`
-2. `fervor create --directory [your app name]` or `fervor create`, which will create an app in the current directory.
-3. `cd [your app name]`
-4. `yarn install` or `npm install`
-5. Make sure you update .env with the name of your database, you can create one by typing `createdb [appname]`
-6. `yarn start:dev` or `npm start:dev`
+1. `yarn global add fervor`
+2. `fervor create --directory [your app name]; cd [your app name]`
+3. `yarn install`
+4. Create a database (`createdb [appname]`), or update the .env file
+5. `yarn start:dev`
+
+Note - `fervor create` will create an app in the current directory, and use the current directory name as the name of the app.
 
 ### Some next steps
 
-- Create some migrations using `fervor migrate:make`
-- Run the migrations using `fervor migrate:latest`
-- Have some fun with your auto generated graphql.
-- Write some react components
+- Create some migrations using `fervor migrate:make [migration name]`
+- Run the migrations using `fervor migrate:latest`, rollback using `fervor migrate:rollback`
+- Have some fun with your auto generated graphql. Inspect by visiting `http://localhost:3000/admin/graphiql`
+- Write some React components, and make your app look great!
 - Deploy to heroku copying `app.json` from our example app. Also copy the heroku prebuild step from package.json
+- Try out the production build locally by running `yarn build; yarn start:prod`
 
 Contributors
 ----
