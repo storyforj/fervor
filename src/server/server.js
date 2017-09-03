@@ -20,6 +20,8 @@ export default async function startApp(options = {}) {
     },
     options.postgraphileOptions || {},
   );
+  // prevent graphqlRoute from being changed
+  pgqlOpts.graphqlRoute = '/graphql';
   app.use(postgraphile(options.db, 'public', pgqlOpts));
 
   app.use(cors());
