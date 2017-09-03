@@ -4,7 +4,7 @@ import cors from 'kcors';
 import requestLogger from 'koa-logger-winston';
 import Koa from 'koa';
 import koaStatic from 'koa-static';
-import postgraphql from 'postgraphql';
+import postgraphile from 'postgraphile';
 
 import logger from '../shared/utils/logger';
 import ssr from './ssr';
@@ -16,12 +16,11 @@ export default async function startApp(options = {}) {
 
   const pgqlOpts = Object.assign(
     {
-      graphiql: true,
-      graphiqlRoute: '/admin/graphiql',
+      graphiql: false,
     },
-    options.postgraphql || {},
+    options.postgraphileOptions || {},
   );
-  app.use(postgraphql(options.db, 'public', pgqlOpts));
+  app.use(postgraphile(options.db, 'public', pgqlOpts));
 
   app.use(cors());
   app.use(bodyParser());

@@ -74,7 +74,7 @@
     "postcss-flexbugs-fixes": "^3.0.0",
     "postcss-loader": "^2.0.6",
     "postcss-scss": "^1.0.2",
-    "postgraphql": "4.0.0-alpha2.0",
+    "postgraphile": "4.0.0-alpha2.12",
     "prop-types": "^15.5.10",
     "react": "16.0.0-beta.5",
     "react-apollo": "^1.4.2",
