@@ -1,12 +1,46 @@
-const path = require('path');
-const autoprefixer = require('autoprefixer');
-const ChunkManifestPlugin = require('./ChunkManifestPlugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const flexbugs = require('postcss-flexbugs-fixes');
-const webpack = require('webpack');
-const WorkboxPlugin = require('workbox-webpack-plugin');
+import path from 'path';
+import autoprefixer from 'autoprefixer';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import globToRegExp from 'glob-to-regexp';
+import flexbugs from 'postcss-flexbugs-fixes';
+import webpack from 'webpack';
+import WorkboxPlugin from 'workbox-webpack-plugin';
+
+import ChunkManifestPlugin from './ChunkManifestPlugin';
+
+require('babel-register')({
+  presets: [
+    'es2015',
+    'react',
+    'stage-0',
+  ],
+  plugins: [
+    [
+      'css-modules-transform',
+      {
+        generateScopedName: '[name]__[local]___[hash:base64:5]',
+        extensions: ['.scss'],
+      },
+    ],
+  ],
+});
 
 const buildDir = path.join(process.cwd(), 'build');
+
+// eslint-disable-next-line import/no-dynamic-require
+const urls = require(`${process.cwd()}/src/urls`).default;
+const runtimeCaching = Object.keys(urls).map((urlGlob) => ({
+  urlPattern: globToRegExp(urlGlob),
+  handler: 'staleWhileRevalidate',
+  options: {
+    cacheName: 'pages',
+    cacheExpiration: {
+      maxEntries: 100,
+      maxAgeSeconds: 72 * 60 * 60,
+    },
+    cacheableResponse: { statuses: [200] },
+  },
+}));
 
 module.exports = () => ({
   resolve: {
@@ -109,8 +143,10 @@ module.exports = () => ({
     }),
     new WorkboxPlugin({
       globDirectory: buildDir,
-      globPatterns: ['**/*.{html,js,css}'],
+      globPatterns: ['**/bundle-*.{js,css}'],
       swDest: path.join(buildDir, 'sw.js'),
+      handleFetch: true,
+      runtimeCaching,
     }),
   ],
 });
