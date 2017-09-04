@@ -16,7 +16,7 @@ export default function Document({ content, state, title, appLocation }) {
       <link key={cssFile} rel="stylesheet" type="text/css" href={`/build/${cssFile}`} />
     ));
     jsFiles = Object.keys(manifestJSON.jsChunks).map((jsFile) => (
-      <link key={jsFile} rel="stylesheet" type="text/css" href={`/build/${jsFile}`} />
+      <script async defer src={`/build/${jsFile}`} />
     ));
   }
 
