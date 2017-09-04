@@ -1,10 +1,12 @@
-const webpack = require('webpack');
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const OfflinePlugin = require('offline-plugin');
 const autoprefixer = require('autoprefixer');
-const flexbugs = require('postcss-flexbugs-fixes');
 const ChunkManifestPlugin = require('./ChunkManifestPlugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const flexbugs = require('postcss-flexbugs-fixes');
+const webpack = require('webpack');
+const WorkboxPlugin = require('workbox-webpack-plugin');
+
+const buildDir = path.join(process.cwd(), 'build');
 
 module.exports = () => ({
   resolve: {
@@ -16,7 +18,7 @@ module.exports = () => ({
     bundle: path.join(__dirname, '..', 'client', 'main.js'),
   },
   output: {
-    path: path.join(process.cwd(), 'build'),
+    path: buildDir,
     publicPath: '/build/',
     filename: '[name]-[hash:6].js',
   },
@@ -105,21 +107,10 @@ module.exports = () => ({
       workers: 5,
       ecma: 8,
     }),
-    new OfflinePlugin({
-      relativePaths: false,
-      AppCache: false,
-      excludes: ['_redirects'],
-      ServiceWorker: {
-        events: true,
-      },
-      cacheMaps: [
-        {
-          match: /.*/,
-          to: '/',
-          requestTypes: ['navigate'],
-        },
-      ],
-      publicPath: '/build/',
+    new WorkboxPlugin({
+      globDirectory: buildDir,
+      globPatterns: ['**/*.{html,js,css}'],
+      swDest: path.join(buildDir, 'sw.js'),
     }),
   ],
 });

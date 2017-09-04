@@ -68,7 +68,6 @@
     "loader-utils": "^1.1.0",
     "minimist": "^1.2.0",
     "node-sass": "^4.5.3",
-    "offline-plugin": "^4.8.3",
     "pg": "^6.4.0",
     "pg-pool": "^1.7.1",
     "postcss-flexbugs-fixes": "^3.0.0",
@@ -91,7 +90,8 @@
     "style-loader": "^0.18.2",
     "webpack": "^3.5.5",
     "webpack-dev-server": "^2.7.1",
-    "winston": "^2.3.1"
+    "winston": "^2.3.1",
+    "workbox-webpack-plugin": "^2.0.0"
   },
   "devDependencies": {
     "babel-jest": "^20.0.3",

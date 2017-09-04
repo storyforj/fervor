@@ -19,13 +19,13 @@ Major Features:
 5. CSS Modules
 6. Hot reloading
 7. CLI
-8. Service Workers (WIP)
+8. Service Worker Caching
 
 How to Start
 ----
 
 ### Pre-requisites
-  
+
 1. PostgreSQL installed and running ([OSX guide](https://www.codementor.io/devops/tutorial/getting-started-postgresql-server-mac-osx), [Linux guide](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-16-04))
 2. NodeJS installed - take a look at [NVM](https://github.com/creationix/nvm)
 3. Optionally - [Install Yarn](https://yarnpkg.com/en/docs/install)
