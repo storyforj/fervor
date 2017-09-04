@@ -38,9 +38,13 @@ function generateCacheSettings(globUrl) {
   };
 }
 
-// eslint-disable-next-line import/no-dynamic-require
-const urls = require(`${process.cwd()}/src/urls`).default;
-const runtimeCaching = Object.keys(urls).map(generateCacheSettings);
+let runtimeCaching = [];
+
+if (process.env.TEST_ENV !== 'integration') {
+  // eslint-disable-next-line import/no-dynamic-require, global-require
+  const urls = require(`${process.cwd()}/src/urls`).default;
+  runtimeCaching = Object.keys(urls).map(generateCacheSettings);
+}
 
 module.exports = () => ({
   resolve: {

@@ -15,6 +15,7 @@ xdescribe('Prod w/o JS', () => {
       directory: path.join(__dirname, 'testApp'),
       fervorDir: process.cwd(),
       webpack: path.join(process.cwd(), 'node_modules', 'webpack', 'bin', 'webpack.js'),
+      isIntegrationTest: true,
     });
     // eslint-disable-next-line
     const routes = require(`${process.cwd()}/test/integration/prod/testApp/build/urls`).default;
