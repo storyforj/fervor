@@ -1,6 +1,24 @@
 require('isomorphic-fetch');
 require('babel-polyfill');
-require('babel-register')();
+require('babel-register')({
+  presets: [
+    'es2015',
+    'react',
+    'stage-0',
+  ],
+  plugins: [
+    [
+      'css-modules-transform',
+      {
+        generateScopedName: '[name]__[local]___[hash:base64:5]',
+        extensions: ['.scss'],
+      },
+    ],
+    [
+      'transform-runtime',
+    ],
+  ],
+});
 
 const path = require('path');
 const autoprefixer = require('autoprefixer');
