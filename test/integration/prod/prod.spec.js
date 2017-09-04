@@ -48,10 +48,13 @@ describe('Prod server', () => {
   });
 
   it('registers a service worker', () => {
+    browser.timeoutsAsyncScript(5000);
     const result = browser.executeAsync((done) => {
-      navigator.serviceWorker.getRegistrations().then((workers) => {
-        done(workers.length);
-      });
+      setTimeout(() => {
+        navigator.serviceWorker.getRegistrations().then((workers) => {
+          done(workers.length);
+        });
+      }, 2000);
     });
     expect(result.value).to.equal(1);
   });
