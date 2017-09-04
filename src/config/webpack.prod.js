@@ -1,12 +1,50 @@
+require('isomorphic-fetch');
+require('babel-polyfill');
+require('babel-register')({
+  presets: [
+    'es2015',
+    'react',
+    'stage-0',
+  ],
+  plugins: [
+    [
+      'css-modules-transform',
+      {
+        generateScopedName: '[name]__[local]___[hash:base64:5]',
+        extensions: ['.scss'],
+      },
+    ],
+    [
+      'transform-runtime',
+    ],
+  ],
+});
+
 const path = require('path');
 const autoprefixer = require('autoprefixer');
-const ChunkManifestPlugin = require('./ChunkManifestPlugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const globToRegExp = require('glob-to-regexp');
 const flexbugs = require('postcss-flexbugs-fixes');
 const webpack = require('webpack');
 const WorkboxPlugin = require('workbox-webpack-plugin');
+const ChunkManifestPlugin = require('./ChunkManifestPlugin');
 
 const buildDir = path.join(process.cwd(), 'build');
+
+function generateCacheSettings(globUrl) {
+  return {
+    urlPattern: globToRegExp(`*${globUrl}`),
+    handler: 'staleWhileRevalidate',
+  };
+}
+
+let runtimeCaching = [];
+
+if (process.env.TEST_ENV !== 'integration') {
+  // eslint-disable-next-line import/no-dynamic-require, global-require
+  const urls = require(`${process.cwd()}/src/urls`).default;
+  runtimeCaching = Object.keys(urls).map(generateCacheSettings);
+}
 
 module.exports = () => ({
   resolve: {
@@ -109,8 +147,10 @@ module.exports = () => ({
     }),
     new WorkboxPlugin({
       globDirectory: buildDir,
-      globPatterns: ['**/*.{html,js,css}'],
+      globPatterns: ['**/bundle-*.{js,css}'],
       swDest: path.join(buildDir, 'sw.js'),
+      handleFetch: true,
+      runtimeCaching,
     }),
   ],
 });

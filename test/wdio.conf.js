@@ -88,6 +88,7 @@ exports.config = {
   //
   // Default timeout for all waitFor* commands.
   waitforTimeout: 30000,
+  timeout: 30000,
   //
   // Default timeout in milliseconds for request
   // if Selenium Grid doesn't send response
@@ -137,6 +138,7 @@ exports.config = {
   mochaOpts: {
     ui: 'bdd',
     require: ['./test/integration/helper.js'],
+    timeout: 30000,
   },
   //
   // =====

@@ -11,7 +11,7 @@ jobs:
           POSTGRES_USER: test_user
           POSTGRES_DB: test_db
           POSTGRES_PASSWORD: ""
-      - image: selenium/standalone-chrome:3.1.0
+      - image: selenium/standalone-chrome:3.5.2
 
     working_directory: ~/repo
 

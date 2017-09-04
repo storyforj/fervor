@@ -6,6 +6,7 @@ module.exports = ({
   fervorDir = path.join(directory, 'node_modules', 'fervor'),
   babel = path.join(directory, 'node_modules', 'babel-cli', 'bin', 'babel.js'),
   webpack = path.join(directory, 'node_modules', 'webpack', 'bin', 'webpack.js'),
+  isIntegrationTest = false,
 }) => {
   // build for server, using babel
   const srcFolder = path.join(directory, 'src');
@@ -18,5 +19,6 @@ module.exports = ({
 
   // build for web, using webpack
   const webpackConfig = path.join(__dirname, '../../../lib', 'config', 'webpack.prod.js');
-  execSync(`cd ${directory}; ${webpack} --config ${webpackConfig}`);
+  const testEnv = (isIntegrationTest) ? 'integration' : 'null';
+  execSync(`cd ${directory}; TEST_ENV=${testEnv} ${webpack} --config ${webpackConfig}`);
 };
