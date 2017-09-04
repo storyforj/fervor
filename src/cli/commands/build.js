@@ -18,5 +18,5 @@ module.exports = ({
 
   // build for web, using webpack
   const webpackConfig = path.join(__dirname, '../../../lib', 'config', 'webpack.prod.js');
-  execSync(`cd ${directory}; ${webpack} --config ${webpackConfig}`);
+  execSync(`DIRECTORY=${directory} cd ${directory}; ${webpack} --config ${webpackConfig}`);
 };

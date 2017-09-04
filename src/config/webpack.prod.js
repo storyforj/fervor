@@ -1,29 +1,15 @@
-import path from 'path';
-import autoprefixer from 'autoprefixer';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import globToRegExp from 'glob-to-regexp';
-import flexbugs from 'postcss-flexbugs-fixes';
-import webpack from 'webpack';
-import WorkboxPlugin from 'workbox-webpack-plugin';
+require('isomorphic-fetch');
+require('babel-polyfill');
+require('babel-register')();
 
-import ChunkManifestPlugin from './ChunkManifestPlugin';
-
-require('babel-register')({
-  presets: [
-    'es2015',
-    'react',
-    'stage-0',
-  ],
-  plugins: [
-    [
-      'css-modules-transform',
-      {
-        generateScopedName: '[name]__[local]___[hash:base64:5]',
-        extensions: ['.scss'],
-      },
-    ],
-  ],
-});
+const path = require('path');
+const autoprefixer = require('autoprefixer');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const globToRegExp = require('glob-to-regexp');
+const flexbugs = require('postcss-flexbugs-fixes');
+const webpack = require('webpack');
+const WorkboxPlugin = require('workbox-webpack-plugin');
+const ChunkManifestPlugin = require('./ChunkManifestPlugin');
 
 const buildDir = path.join(process.cwd(), 'build');
 
