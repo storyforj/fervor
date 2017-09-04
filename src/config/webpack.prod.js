@@ -27,20 +27,16 @@ require('babel-register')({
 
 const buildDir = path.join(process.cwd(), 'build');
 
+function generateCacheSettings(globUrl) {
+  return {
+    urlPattern: globToRegExp(`*${globUrl}`),
+    handler: 'staleWhileRevalidate',
+  };
+}
+
 // eslint-disable-next-line import/no-dynamic-require
 const urls = require(`${process.cwd()}/src/urls`).default;
-const runtimeCaching = Object.keys(urls).map((urlGlob) => ({
-  urlPattern: globToRegExp(urlGlob),
-  handler: 'staleWhileRevalidate',
-  options: {
-    cacheName: 'pages',
-    cacheExpiration: {
-      maxEntries: 100,
-      maxAgeSeconds: 72 * 60 * 60,
-    },
-    cacheableResponse: { statuses: [200] },
-  },
-}));
+const runtimeCaching = Object.keys(urls).map(generateCacheSettings);
 
 module.exports = () => ({
   resolve: {

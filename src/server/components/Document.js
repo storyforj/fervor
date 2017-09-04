@@ -21,7 +21,7 @@ export default function Document({ content, state, title, appLocation }) {
     scripts.unshift(
       <script
         dangerouslySetInnerHTML={{
-          __html: 'if ("serviceWorker" in navigator) {navigator.serviceWorker.register("/build/sw.js") }',
+          __html: 'if ("serviceWorker" in navigator) {navigator.serviceWorker.register("/sw.js") }',
         }}
       />,
     );
