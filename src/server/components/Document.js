@@ -3,7 +3,7 @@ import React from 'react';
 
 /* eslint-disable react/no-danger */
 export default function Document({ content, state, title, appLocation }) {
-  let jsFiles = <script src="/build/bundle.js" />;
+  let scripts = <script src="/build/bundle.js" />;
   let cssFiles = null;
 
   if (process.env.NODE_ENV.indexOf('prod') > -1) {
@@ -15,9 +15,16 @@ export default function Document({ content, state, title, appLocation }) {
     cssFiles = Object.keys(manifestJSON.cssChunks).map((cssFile) => (
       <link key={cssFile} rel="stylesheet" type="text/css" href={`/build/${cssFile}`} />
     ));
-    jsFiles = Object.keys(manifestJSON.jsChunks).map((jsFile) => (
+    scripts = Object.keys(manifestJSON.jsChunks).map((jsFile) => (
       <script async defer src={`/build/${jsFile}`} />
     ));
+    scripts.unshift(
+      <script
+        dangerouslySetInnerHTML={{
+          __html: 'if ("serviceWorker" in navigator) {navigator.serviceWorker.register("/build/sw.js") }',
+        }}
+      />,
+    );
   }
 
   return (
@@ -34,7 +41,7 @@ export default function Document({ content, state, title, appLocation }) {
             __html: `window.APOLLO_STATE=${JSON.stringify(state).replace(/</g, '\\u003c')};`,
           }}
         />
-        { jsFiles }
+        { scripts }
       </body>
     </html>
   );
