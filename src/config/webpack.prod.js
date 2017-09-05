@@ -34,7 +34,9 @@ const buildDir = path.join(process.cwd(), 'build');
 function generateCacheSettings(globUrl) {
   return {
     urlPattern: globToRegExp(`*${globUrl}`),
-    handler: 'staleWhileRevalidate',
+    // opt'ing to not cache for right now
+    // perhaps we should allow routes to define this
+    handler: 'networkFirst',
   };
 }
 
@@ -152,7 +154,6 @@ module.exports = () => ({
         'assets/**/*.{png,jpg,jpeg,gif,woff,woff2,svg,js,css}',
       ],
       swDest: path.join(buildDir, 'sw.js'),
-      handleFetch: true,
       runtimeCaching,
     }),
   ],
