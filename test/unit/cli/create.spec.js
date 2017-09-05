@@ -52,6 +52,9 @@ describe('Create App CLI', () => {
       fs.statSync(path.join(__dirname, 'build', 'testDir', 'assets', 'icon_32x32.png')).isFile(),
     ).toBeTruthy();
     expect(
+      fs.statSync(path.join(__dirname, 'build', 'testDir', 'assets', 'icon_144x144.png')).isFile(),
+    ).toBeTruthy();
+    expect(
       fs.statSync(path.join(__dirname, 'build', 'testDir', 'assets', 'icon_512x512.png')).isFile(),
     ).toBeTruthy();
   });
