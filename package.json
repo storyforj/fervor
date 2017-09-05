@@ -6,7 +6,10 @@
   "author": "Parris Khachi",
   "license": "MIT",
   "scripts": {
-    "build": "rm -rf lib; babel src --ignore src/templates src/templates -d lib; cp -a src/templates lib/templates; webpack --config=./lib/config/webpack.dll.js",
+    "build:babel": "babel src --ignore src/templates src/templates -d lib",
+    "build:clean": "rm -rf lib",
+    "build:vendor": "cp -a src/templates lib/templates; webpack --config=./lib/config/webpack.dll.js",
+    "build": "yarn build:clean; yarn build:babel; yarn build:vendor;",
     "integration": "./node_modules/.bin/wdio ./test/wdio.conf.js",
     "test": "jest",
     "test:debug": "node debug ./node_modules/.bin/jest --runInBand"
