@@ -41,7 +41,7 @@ App.propTypes = {
   store: PropTypes.object.isRequired,
 };
 
-export default (routes, appLocation, Doc = Document) => {
+export default (options, Doc = Document) => {
   const processRoute = async (ctx, next) => {
     const serverClient = new ApolloClient({
       ssrMode: true,
@@ -60,7 +60,7 @@ export default (routes, appLocation, Doc = Document) => {
     const app = (
       <App
         ctx={ctx}
-        routes={routes}
+        routes={options.routes}
         store={store}
         serverClient={serverClient}
       />
@@ -75,7 +75,10 @@ export default (routes, appLocation, Doc = Document) => {
 
       ctx.body = `<!doctype html>\n${ReactDOMServer.renderToStaticMarkup((
         <Doc
-          appLocation={appLocation}
+          appLocation={options.appLocation}
+          appIcons={options.appIcons}
+          appFavicon={options.appFavicon}
+          appThemeColor={options.appThemeColor}
           content={ReactDOMServer.renderToString(app)}
           state={state}
           title={app.props.title}
@@ -87,7 +90,7 @@ export default (routes, appLocation, Doc = Document) => {
   };
 
   const router = new KoaRouter();
-  Object.keys(routes).forEach((path) => {
+  Object.keys(options.routes).forEach((path) => {
     router.get(path, processRoute);
   });
 

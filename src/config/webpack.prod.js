@@ -146,8 +146,11 @@ module.exports = () => ({
       ecma: 8,
     }),
     new WorkboxPlugin({
-      globDirectory: buildDir,
-      globPatterns: ['**/bundle-*.{js,css}'],
+      globDirectory: process.cwd(),
+      globPatterns: [
+        'build/**/bundle-*.{js,css}',
+        'assets/**/*.{png,jpg,jpeg,gif,woff,woff2,svg,js,css}',
+      ],
       swDest: path.join(buildDir, 'sw.js'),
       handleFetch: true,
       runtimeCaching,

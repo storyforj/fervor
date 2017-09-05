@@ -2,7 +2,15 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 /* eslint-disable react/no-danger */
-export default function Document({ content, state, title, appLocation }) {
+export default function Document({
+  appFavicon,
+  appIcons,
+  appLocation,
+  appThemeColor,
+  content,
+  state,
+  title,
+}) {
   let scripts = <script src="/build/bundle.js" />;
   let cssFiles = null;
 
@@ -27,10 +35,34 @@ export default function Document({ content, state, title, appLocation }) {
     );
   }
 
+  const pwaMeta = [];
+  if (appIcons.length) {
+    Object.keys(appIcons).forEach((icon) => {
+      pwaMeta.push(
+        <link
+          href={icon.src}
+          key={icon.src}
+          rel="apple-touch-icon-precomposed"
+          sizes={icon.size}
+        />,
+      );
+    });
+  }
+  if (appFavicon) {
+    pwaMeta.push(
+      <link key="appFavicon" rel="shortcut icon" href={appFavicon} />,
+    );
+  }
+  if (appThemeColor) {
+    pwaMeta.push(<meta key="appThemeColor" name="theme-color" content={appThemeColor} />);
+  }
+
   return (
     <html lang="en">
       <head>
         <title>{title}</title>
+        { pwaMeta }
+        <link rel="manifest" href="/pwamanifest.json" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         { cssFiles }
       </head>
@@ -48,11 +80,16 @@ export default function Document({ content, state, title, appLocation }) {
 }
 
 Document.defaultProps = {
+  appIcons: [],
+  appFavicon: null,
   title: '',
 };
 
 Document.propTypes = {
   appLocation: PropTypes.string.isRequired,
+  appIcons: PropTypes.array,
+  appFavicon: PropTypes.string,
+  appThemeColor: PropTypes.string,
   content: PropTypes.string.isRequired,
   state: PropTypes.object.isRequired,
   title: PropTypes.string,

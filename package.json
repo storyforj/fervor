@@ -68,7 +68,6 @@
     "koa-route": "next",
     "koa-router": "7.2.0",
     "koa-send": "^4.1.0",
-    "koa-static": "^4.0.1",
     "koa-webpack": "^1.0.0",
     "loader-utils": "^1.1.0",
     "minimist": "^1.2.0",
