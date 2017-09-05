@@ -20,6 +20,7 @@ Major Features:
 6. Hot reloading
 7. CLI
 8. Service Worker Caching
+9. Progressive Web App Ready
 
 How to Start
 ----
