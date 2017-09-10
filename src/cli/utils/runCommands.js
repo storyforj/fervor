@@ -5,8 +5,8 @@ module.exports = (docs) => {
   const command = args._[0];
 
   if (command === 'help') {
-    require('./help')(docs, args);
+    require(`${__dirname}/help`)(docs, args);
   } else {
-    require(`../commands/${command}`)(args);
+    require(`${__dirname}/../commands/${command}`)(args);
   }
 };

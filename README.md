@@ -34,7 +34,7 @@ How to Start
 ### Create a new app
 
 1. `yarn global add fervor`
-2. `fervor create --directory [your app name]; cd [your app name]`
+2. `fervor create [your app name]; cd [your app name]`
 3. `yarn install`
 4. Create a database (`createdb [appname]`), or update the .env file
 5. `yarn start:dev`
