@@ -11,6 +11,7 @@
     "build:vendor": "cp -a src/templates lib/templates; webpack --config=./lib/config/webpack.dll.js",
     "build": "yarn build:clean; yarn build:babel; yarn build:vendor;",
     "integration": "./node_modules/.bin/wdio ./test/wdio.conf.js",
+    "prepublishOnly": "npm run build",
     "test": "jest",
     "test:debug": "node debug ./node_modules/.bin/jest --runInBand"
   },
