@@ -15,6 +15,6 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
-    "fervor": "^0.2.1"
+    "fervor": "^0.3.0"
   }
 }
