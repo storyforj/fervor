@@ -1,6 +1,8 @@
 import { expect } from 'chai';
 /* globals before, browser */
+import fs from 'fs';
 import path from 'path';
+import rimraf from 'rimraf';
 import dotenv from 'dotenv';
 import superagent from 'superagent';
 import buildApp from '../../../src/cli/commands/build';
@@ -8,6 +10,7 @@ import startApp from '../../../src/server/server';
 
 describe('Prod server', () => {
   before(async () => {
+    rimraf.sync(path.join(__dirname, 'testApp', 'build'));
     dotenv.config({ path: path.join(process.cwd(), 'test', 'integration', 'prod', 'testApp', '.env') });
     await buildApp({
       babel: path.join(process.cwd(), 'node_modules', 'babel-cli', 'bin', 'babel.js'),
@@ -46,5 +49,11 @@ describe('Prod server', () => {
         .getCssProperty('div[class*="component"]', 'color')
         .value.indexOf('rgba(255,255,255,1)') >= -1
     ), 20000);
+  });
+
+  it('respects the custom webpack config', () => {
+    expect(
+      fs.statSync(path.join(__dirname, 'testApp', 'build', 'test123.js')).isFile(),
+    ).to.equal(true);
   });
 });
