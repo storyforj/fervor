@@ -1,6 +1,7 @@
 import bodyParser from 'koa-bodyparser';
 import chalk from 'chalk';
 import cors from 'kcors';
+import fs from 'fs';
 import requestLogger from 'koa-logger-winston';
 import Koa from 'koa';
 import postgraphile from 'postgraphile';
@@ -24,9 +25,25 @@ export default async function startApp(options = {}) {
   // prevent graphqlRoute from being changed
   pgqlOpts.graphqlRoute = '/graphql';
   app.use(postgraphile(options.db, 'public', pgqlOpts));
-
   app.use(cors());
   app.use(bodyParser());
+
+  // add middleware from the user's app if it exists
+  // we need to load it from a different place in "prod" vs "dev"
+  if (options.disableWebpack && (
+    fs.existsSync(`${options.appLocation}/build/middleware.js`) ||
+    fs.existsSync(`${options.appLocation}/build/middleware/index.js`)
+  )) {
+    // eslint-disable-next-line global-require, import/no-dynamic-require
+    require(`${options.appLocation}/build/middleware`).default({ app, logger, options });
+  } else if (
+    fs.existsSync(`${options.appLocation}/src/middleware.js`) ||
+    fs.existsSync(`${options.appLocation}/src/middleware/index.js`)
+  ) {
+    // eslint-disable-next-line global-require, import/no-dynamic-require
+    require(`${options.appLocation}/src/middleware`).default({ app, logger, options });
+  }
+
   app.use(pwaManifest(options));
   app.use(ssr(options));
   if (!options.disableWebpack) {
