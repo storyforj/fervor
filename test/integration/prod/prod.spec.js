@@ -56,4 +56,9 @@ describe('Prod server', () => {
       fs.statSync(path.join(__dirname, 'testApp', 'build', 'test123.js')).isFile(),
     ).to.equal(true);
   });
+
+  it('renders custom middleware', async () => {
+    const response = await superagent.get('http://localhost:3003/pizza');
+    expect(response.text).to.contain('Pizza World');
+  });
 });

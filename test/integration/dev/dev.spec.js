@@ -38,4 +38,9 @@ describe('Dev server', () => {
         .value.indexOf('rgba(255,255,255,1)') >= -1
     ), 10000);
   });
+
+  it('renders custom middleware', async () => {
+    const response = await superagent.get('http://localhost:3002/pizza');
+    expect(response.text).to.contain('Pizza World');
+  });
 });
