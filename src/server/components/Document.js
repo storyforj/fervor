@@ -36,7 +36,7 @@ export default function Document({
 
   const pwaMeta = [];
   if (manifest.icons.length) {
-    Object.keys(manifest.icons).forEach((icon, i) => {
+    Object.keys(manifest.icons).forEach((icon) => {
       pwaMeta.push(
         <link
           href={icon.src}
