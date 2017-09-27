@@ -1,6 +1,6 @@
 require('isomorphic-fetch');
 require('babel-polyfill');
-require('babel-register')(require('./babelrcHelper').default(true));
+require('babel-register')(require('./babelrcHelper').default(true, false));
 
 const fs = require('fs');
 const path = require('path');
@@ -11,7 +11,7 @@ const flexbugs = require('postcss-flexbugs-fixes');
 const webpack = require('webpack');
 const WorkboxPlugin = require('workbox-webpack-plugin');
 const ChunkManifestPlugin = require('./ChunkManifestPlugin');
-const clientSideBabelConfig = require('./babelrcHelper').default(false);
+const clientSideBabelConfig = require('./babelrcHelper').default(false, process.cwd(), true);
 
 const buildDir = path.join(process.cwd(), 'build');
 

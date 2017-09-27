@@ -1,9 +1,10 @@
 const { execSync } = require('child_process');
+const fs = require('fs');
 const path = require('path');
+const babelrcHelper = require('../../config/babelrcHelper').default;
 
 module.exports = ({
   directory = process.cwd(),
-  fervorDir = path.join(directory, 'node_modules', 'fervor'),
   babel = path.join(directory, 'node_modules', 'babel-cli', 'bin', 'babel.js'),
   webpack = path.join(directory, 'node_modules', 'webpack', 'bin', 'webpack.js'),
   isIntegrationTest = false,
@@ -11,9 +12,10 @@ module.exports = ({
   // build for server, using babel
   const srcFolder = path.join(directory, 'src');
   const builtFolder = path.join(directory, 'build');
-  const babelrcFervor = path.join(fervorDir, '.babelrc');
   const babelrcSrc = path.join(directory, '.babelrc');
-  execSync(`cp ${babelrcFervor} ${babelrcSrc}`);
+  const config = babelrcHelper(true, directory, true);
+
+  fs.writeFileSync(babelrcSrc, JSON.stringify(config), 'utf8');
   execSync(`${babel} ${srcFolder} -d ${builtFolder}`);
   execSync(`rm ${babelrcSrc}`);
 

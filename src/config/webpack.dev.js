@@ -72,7 +72,11 @@ export default (app, options) => {
             {
               loader: 'babel-loader',
               // eslint-disable-next-line global-require
-              options: require('./babelrcHelper').default(false),
+              options: require('./babelrcHelper').default(
+                false,
+                options.appLocation,
+                true,
+              ),
             },
           ],
           exclude: [/node_modules/],

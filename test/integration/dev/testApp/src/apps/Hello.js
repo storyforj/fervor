@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 import React from 'react';
-import styles from './hello.scss';
 
+import styles from './hello.scss';
 import Form from '../../../../../../lib/client/components/Form';
 
 export default () => {

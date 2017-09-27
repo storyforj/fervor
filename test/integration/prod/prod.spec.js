@@ -49,6 +49,11 @@ describe('Prod server', () => {
         .getCssProperty('div[class*="component"]', 'color')
         .value.indexOf('rgba(255,255,255,1)') >= -1
     ), 20000);
+    browser.waitUntil(() => (
+      browser
+        .getCssProperty('body', 'background')
+        .value.indexOf('rgba(0,255,0,1)') >= -1
+    ), 20000);
   });
 
   it('respects the custom webpack config', () => {

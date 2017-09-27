@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 // const chokidar = require('chokidar');
 require('isomorphic-fetch');
 require('babel-polyfill');
-require('babel-register')(require('../../config/babelrcHelper').default(true));
+require('babel-register')(require('../../config/babelrcHelper').default(true, process.cwd(), true));
 const startApp = require('../../server/server').default;
 
 module.exports = (args) => {

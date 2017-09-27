@@ -1,5 +1,8 @@
-export default (isServer) => {
-  const output = {
+import fs from 'fs';
+import path from 'path';
+
+export default (isServer, appLocation, useSrc) => {
+  let config = {
     presets: [
       ['env', { targets: { browsers: ['last 2 versions', 'safari >= 7'] } }],
       'react',
@@ -9,7 +12,7 @@ export default (isServer) => {
   };
 
   if (isServer) {
-    output.plugins = [
+    config.plugins = [
       [
         'css-modules-transform',
         {
@@ -23,5 +26,19 @@ export default (isServer) => {
     ];
   }
 
-  return output;
+  if (appLocation === false) {
+    return config;
+  }
+
+  const customConfigPathSrc = path.join(appLocation, 'src', 'config', 'babel.js');
+  const customConfigPathBuild = path.join(appLocation, 'build', 'config', 'babel.js');
+  if (useSrc && fs.existsSync(customConfigPathSrc)) {
+    // eslint-disable-next-line global-require, import/no-dynamic-require
+    config = require(`${appLocation}/src/config/babel`).default(config, isServer);
+  } else if (fs.existsSync(customConfigPathBuild)) {
+    // eslint-disable-next-line global-require, import/no-dynamic-require
+    config = require(`${appLocation}/build/config/babel`).default(config, isServer);
+  }
+
+  return config;
 };
