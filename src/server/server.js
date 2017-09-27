@@ -16,30 +16,30 @@ export default async function startApp(options = {}) {
 
   app.use(requestLogger(logger));
 
-  const pgqlOpts = Object.assign(
-    {
-      graphiql: false,
-    },
-    options.postgraphileOptions || {},
-  );
-  // prevent graphqlRoute from being changed
-  pgqlOpts.graphqlRoute = '/graphql';
-
-  let graphileBuildPlugins = {};
+  const pgqlOpts = { graphiql: false };
+  let graphOptions = {};
   if (options.disableWebpack && (
-    fs.existsSync(`${options.appLocation}/build/graphilePlugins.js`) ||
-    fs.existsSync(`${options.appLocation}/build/graphilePlugins/index.js`)
+    fs.existsSync(`${options.appLocation}/build/graph.js`) ||
+    fs.existsSync(`${options.appLocation}/build/graph/index.js`)
   )) {
     // eslint-disable-next-line global-require, import/no-dynamic-require
-    graphileBuildPlugins = require(`${options.appLocation}/build/graphilePlugins`).default();
+    graphOptions = require(`${options.appLocation}/build/graph`).default();
   } else if (
-    fs.existsSync(`${options.appLocation}/src/graphilePlugins.js`) ||
-    fs.existsSync(`${options.appLocation}/src/graphilePlugins/index.js`)
+    fs.existsSync(`${options.appLocation}/src/graph.js`) ||
+    fs.existsSync(`${options.appLocation}/src/graph/index.js`)
   ) {
     // eslint-disable-next-line global-require, import/no-dynamic-require
-    graphileBuildPlugins = require(`${options.appLocation}/src/graphilePlugins`).default();
+    graphOptions = require(`${options.appLocation}/src/graph`).default();
   }
-  Object.assign(pgqlOpts, graphileBuildPlugins);
+
+  if (graphOptions.graphqlRoute) {
+    logger.warn('Changing the graphqlRoute is disabled. We\'ve reverted it back to /graphql');
+  }
+  Object.assign(
+    pgqlOpts,
+    graphOptions,
+    { graphqlRoute: '/graphql' },
+  );
 
   app.use(postgraphile(options.db, 'public', pgqlOpts));
   app.use(cors());
