@@ -57,6 +57,9 @@ describe('Create App CLI', () => {
     expect(
       fs.statSync(path.join(__dirname, 'build', 'testDir', 'assets', 'icon_512x512.png')).isFile(),
     ).toBeTruthy();
+    expect(
+      fs.statSync(path.join(__dirname, 'build', 'testDir', 'src', 'config', 'appmanifest.json')).isFile(),
+    ).toBeTruthy();
   });
 
   it('replaces [appname] from every file', () => {

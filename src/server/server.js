@@ -5,7 +5,7 @@ import fs from 'fs';
 import requestLogger from 'koa-logger-winston';
 import Koa from 'koa';
 import postgraphile from 'postgraphile';
-import pwaManifest from './pwaManifest';
+import appManifest from './appManifest';
 
 import logger from '../shared/utils/logger';
 import ssr from './ssr';
@@ -44,7 +44,7 @@ export default async function startApp(options = {}) {
     require(`${options.appLocation}/src/middleware`).default({ app, logger, options });
   }
 
-  app.use(pwaManifest(options));
+  app.use(appManifest(options));
   app.use(ssr(options));
   if (!options.disableWebpack) {
     // eslint-disable-next-line global-require

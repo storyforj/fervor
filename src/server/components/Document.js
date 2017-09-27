@@ -4,10 +4,9 @@ import React from 'react';
 /* eslint-disable react/no-danger */
 export default function Document({
   appFavicon,
-  appIcons,
   appLocation,
-  appThemeColor,
   content,
+  manifest,
   state,
   title,
 }) {
@@ -36,8 +35,8 @@ export default function Document({
   }
 
   const pwaMeta = [];
-  if (appIcons.length) {
-    Object.keys(appIcons).forEach((icon) => {
+  if (manifest.icons.length) {
+    Object.keys(manifest.icons).forEach((icon) => {
       pwaMeta.push(
         <link
           href={icon.src}
@@ -53,8 +52,8 @@ export default function Document({
       <link key="appFavicon" rel="shortcut icon" href={appFavicon} />,
     );
   }
-  if (appThemeColor) {
-    pwaMeta.push(<meta key="appThemeColor" name="theme-color" content={appThemeColor} />);
+  if (manifest.theme_color) {
+    pwaMeta.push(<meta key="appThemeColor" name="theme-color" content={manifest.theme_color} />);
   }
 
   return (
@@ -62,7 +61,7 @@ export default function Document({
       <head>
         <title>{title}</title>
         { pwaMeta }
-        <link rel="manifest" href="/pwamanifest.json" />
+        <link rel="manifest" href="/appmanifest.json" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         { cssFiles }
       </head>
@@ -82,14 +81,14 @@ export default function Document({
 Document.defaultProps = {
   appIcons: [],
   appFavicon: null,
+  manifest: {},
   title: '',
 };
 
 Document.propTypes = {
   appLocation: PropTypes.string.isRequired,
-  appIcons: PropTypes.array,
   appFavicon: PropTypes.string,
-  appThemeColor: PropTypes.string,
+  manifest: PropTypes.object,
   content: PropTypes.string.isRequired,
   state: PropTypes.object.isRequired,
   title: PropTypes.string,
