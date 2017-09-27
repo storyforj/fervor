@@ -1,9 +1,9 @@
 /* eslint-disable import/no-extraneous-dependencies, import/first */
 import fetch from 'jest-fetch-mock';
 import 'react-dom';
-import { configure } from 'enzyme';
-import Adapter from './helpers/react16adapter';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 
-configure({ adapter: new Adapter() });
+Enzyme.configure({ adapter: new Adapter() });
 
 global.fetch = fetch;
