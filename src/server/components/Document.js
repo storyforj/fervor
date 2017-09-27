@@ -20,10 +20,10 @@ export default function Document({
     const manifestJSON = require(`${appLocation}/build/manifest.json`);
 
     cssFiles = Object.keys(manifestJSON.cssChunks).map((cssFile) => (
-      <link key={cssFile} rel="stylesheet" type="text/css" href={`/build/${cssFile}`} />
+      <link key={`/build/${cssFile}`} rel="stylesheet" type="text/css" href={`/build/${cssFile}`} />
     ));
     scripts = Object.keys(manifestJSON.jsChunks).map((jsFile) => (
-      <script async defer src={`/build/${jsFile}`} />
+      <script key={`/build/${jsFile}`} async defer src={`/build/${jsFile}`} />
     ));
     scripts.unshift(
       <script
@@ -36,11 +36,11 @@ export default function Document({
 
   const pwaMeta = [];
   if (manifest.icons.length) {
-    Object.keys(manifest.icons).forEach((icon) => {
+    Object.keys(manifest.icons).forEach((icon, i) => {
       pwaMeta.push(
         <link
           href={icon.src}
-          key={icon.src}
+          key={`appIcon${icon.size}`}
           rel="apple-touch-icon-precomposed"
           sizes={icon.size}
         />,
@@ -61,7 +61,7 @@ export default function Document({
       <head>
         <title>{title}</title>
         { pwaMeta }
-        <link rel="manifest" href="/appmanifest.json" />
+        <link key="appManifest" rel="manifest" href="/appmanifest.json" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         { cssFiles }
       </head>
