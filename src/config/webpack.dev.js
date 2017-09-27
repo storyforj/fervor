@@ -72,7 +72,11 @@ export default (app, options) => {
             {
               loader: 'babel-loader',
               options: {
-                presets: ['es2015', 'react', 'stage-0'],
+                presets: [
+                  ['env', { targets: { browsers: ['last 2 versions', 'safari >= 7'] } }],
+                  'react',
+                  'stage-0',
+                ],
                 plugins: [],
               },
             },

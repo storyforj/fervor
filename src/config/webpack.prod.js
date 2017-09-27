@@ -2,7 +2,7 @@ require('isomorphic-fetch');
 require('babel-polyfill');
 require('babel-register')({
   presets: [
-    'es2015',
+    ['env', { targets: { browsers: ['last 2 versions', 'safari >= 7'] } }],
     'react',
     'stage-0',
   ],
@@ -111,7 +111,11 @@ module.exports = () => {
             {
               loader: 'babel-loader',
               options: {
-                presets: ['es2015', 'react', 'stage-0'],
+                presets: [
+                  ['env', { targets: { browsers: ['last 2 versions', 'safari >= 7'] } }],
+                  'react',
+                  'stage-0',
+                ],
                 plugins: [],
               },
             },
