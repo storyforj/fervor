@@ -79,7 +79,6 @@ export default function Document({
 }
 
 Document.defaultProps = {
-  appIcons: [],
   appFavicon: null,
   manifest: {},
   title: '',
