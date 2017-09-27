@@ -1,0 +1,12 @@
+{
+  "name": "[appname]",
+  "short_name": "[appname]",
+  "icons": [
+    { "src": "/assets/icon_144x144.png", "type": "image/png", "sizes": "144x144" },
+    { "src": "/assets/icon_512x512.png", "type": "image/png", "sizes": "512x512" }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#E2CFFF",
+  "theme_color": "#FFD826"
+}

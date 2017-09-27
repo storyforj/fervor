@@ -76,9 +76,9 @@ export default (options, Doc = Document) => {
       ctx.body = `<!doctype html>\n${ReactDOMServer.renderToStaticMarkup((
         <Doc
           appLocation={options.appLocation}
-          appIcons={options.appIcons}
           appFavicon={options.appFavicon}
-          appThemeColor={options.appThemeColor}
+          // eslint-disable-next-line
+          manifest={require(`${options.appLocation}/src/config/appmanifest.json`)}
           content={ReactDOMServer.renderToString(app)}
           state={state}
           title={app.props.title}

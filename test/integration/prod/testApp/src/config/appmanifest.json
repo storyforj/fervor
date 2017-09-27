@@ -1,0 +1,11 @@
+{
+  "name": "[appname]",
+  "short_name": "[appname]",
+  "icons": [
+    { "src": "/assets/icon_32x32.png", "type": "image/png", "sizes": "32x32" }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#E2CFFF",
+  "theme_color": "#FFD826"
+}
