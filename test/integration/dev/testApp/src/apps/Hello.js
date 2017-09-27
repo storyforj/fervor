@@ -7,7 +7,8 @@ import Form from '../../../../../../lib/client/components/Form';
 export default () => {
   const query = gql`
     query {
-      nodeId
+      nodeId,
+      random
     }
   `;
   return (

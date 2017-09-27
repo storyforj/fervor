@@ -21,7 +21,6 @@ module.exports = () => {
     port: process.env.PORT || 3000,
     appLocation: process.cwd(),
     disableWebpack: true,
-    postgraphileOptions: JSON.parse(process.env.POSTGRAPHILE_OPTS || '{}'),
     routes,
   });
 };

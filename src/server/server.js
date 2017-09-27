@@ -16,14 +16,31 @@ export default async function startApp(options = {}) {
 
   app.use(requestLogger(logger));
 
-  const pgqlOpts = Object.assign(
-    {
-      graphiql: false,
-    },
-    options.postgraphileOptions || {},
+  const pgqlOpts = { graphiql: false };
+  let graphOptions = {};
+  if (options.disableWebpack && (
+    fs.existsSync(`${options.appLocation}/build/graph.js`) ||
+    fs.existsSync(`${options.appLocation}/build/graph/index.js`)
+  )) {
+    // eslint-disable-next-line global-require, import/no-dynamic-require
+    graphOptions = require(`${options.appLocation}/build/graph`).default();
+  } else if (
+    fs.existsSync(`${options.appLocation}/src/graph.js`) ||
+    fs.existsSync(`${options.appLocation}/src/graph/index.js`)
+  ) {
+    // eslint-disable-next-line global-require, import/no-dynamic-require
+    graphOptions = require(`${options.appLocation}/src/graph`).default();
+  }
+
+  if (graphOptions.graphqlRoute) {
+    logger.warn('Changing the graphqlRoute is disabled. We\'ve reverted it back to /graphql');
+  }
+  Object.assign(
+    pgqlOpts,
+    graphOptions,
+    { graphqlRoute: '/graphql' },
   );
-  // prevent graphqlRoute from being changed
-  pgqlOpts.graphqlRoute = '/graphql';
+
   app.use(postgraphile(options.db, 'public', pgqlOpts));
   app.use(cors());
   app.use(bodyParser());

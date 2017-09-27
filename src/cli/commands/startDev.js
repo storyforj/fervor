@@ -38,7 +38,6 @@ module.exports = (args) => {
     host: process.env.HOST || 'http://localhost:3000',
     port: process.env.PORT || 3000,
     appLocation: process.cwd(),
-    postgraphileOptions: JSON.parse(process.env.POSTGRAPHILE_OPTS || '{}'),
     routes,
   });
 };
