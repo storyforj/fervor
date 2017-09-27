@@ -71,14 +71,8 @@ export default (app, options) => {
             { loader: 'react-hot-loader/webpack' },
             {
               loader: 'babel-loader',
-              options: {
-                presets: [
-                  ['env', { targets: { browsers: ['last 2 versions', 'safari >= 7'] } }],
-                  'react',
-                  'stage-0',
-                ],
-                plugins: [],
-              },
+              // eslint-disable-next-line global-require
+              options: require('./babelrcHelper').default(false),
             },
           ],
           exclude: [/node_modules/],

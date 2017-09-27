@@ -4,22 +4,7 @@ const dotenv = require('dotenv');
 // const chokidar = require('chokidar');
 require('isomorphic-fetch');
 require('babel-polyfill');
-require('babel-register')({
-  presets: [
-    ['env', { targets: { browsers: ['last 2 versions', 'safari >= 7'] } }],
-    'react',
-    'stage-0',
-  ],
-  plugins: [
-    [
-      'css-modules-transform',
-      {
-        generateScopedName: '[name]__[local]___[hash:base64:5]',
-        extensions: ['.scss'],
-      },
-    ],
-  ],
-});
+require('babel-register')(require('../../config/babelrcHelper').default(true));
 const startApp = require('../../server/server').default;
 
 module.exports = (args) => {
