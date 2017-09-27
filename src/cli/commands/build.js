@@ -16,7 +16,7 @@ module.exports = ({
   const config = babelrcHelper(true, directory, true);
 
   fs.writeFileSync(babelrcSrc, JSON.stringify(config), 'utf8');
-  execSync(`${babel} ${srcFolder} -d ${builtFolder}`);
+  execSync(`${babel} ${srcFolder} -d ${builtFolder} --copy-files`);
   execSync(`rm ${babelrcSrc}`);
 
   // build for web, using webpack
