@@ -24,6 +24,23 @@ export default async function startApp(options = {}) {
   );
   // prevent graphqlRoute from being changed
   pgqlOpts.graphqlRoute = '/graphql';
+
+  let graphileBuildPlugins = {};
+  if (options.disableWebpack && (
+    fs.existsSync(`${options.appLocation}/build/graphilePlugins.js`) ||
+    fs.existsSync(`${options.appLocation}/build/graphilePlugins/index.js`)
+  )) {
+    // eslint-disable-next-line global-require, import/no-dynamic-require
+    graphileBuildPlugins = require(`${options.appLocation}/build/graphilePlugins`).default();
+  } else if (
+    fs.existsSync(`${options.appLocation}/src/graphilePlugins.js`) ||
+    fs.existsSync(`${options.appLocation}/src/graphilePlugins/index.js`)
+  ) {
+    // eslint-disable-next-line global-require, import/no-dynamic-require
+    graphileBuildPlugins = require(`${options.appLocation}/src/graphilePlugins`).default();
+  }
+  Object.assign(pgqlOpts, graphileBuildPlugins);
+
   app.use(postgraphile(options.db, 'public', pgqlOpts));
   app.use(cors());
   app.use(bodyParser());
