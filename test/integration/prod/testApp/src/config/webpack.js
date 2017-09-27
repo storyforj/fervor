@@ -5,5 +5,12 @@ export default (config) => {
     { from: `${__dirname}/test123.js` },
   ]));
 
+  config.module.loaders.push({
+    test: /\.css$/,
+    loaders: [
+      'style-loader', 'css-loader',
+    ],
+  });
+
   return config;
 };
