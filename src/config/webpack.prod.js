@@ -1,24 +1,6 @@
 require('isomorphic-fetch');
 require('babel-polyfill');
-require('babel-register')({
-  presets: [
-    ['env', { targets: { browsers: ['last 2 versions', 'safari >= 7'] } }],
-    'react',
-    'stage-0',
-  ],
-  plugins: [
-    [
-      'css-modules-transform',
-      {
-        generateScopedName: '[name]__[local]___[hash:base64:5]',
-        extensions: ['.scss'],
-      },
-    ],
-    [
-      'transform-runtime',
-    ],
-  ],
-});
+require('babel-register')(require('./babelrcHelper').default(true));
 
 const fs = require('fs');
 const path = require('path');
@@ -29,6 +11,7 @@ const flexbugs = require('postcss-flexbugs-fixes');
 const webpack = require('webpack');
 const WorkboxPlugin = require('workbox-webpack-plugin');
 const ChunkManifestPlugin = require('./ChunkManifestPlugin');
+const clientSideBabelConfig = require('./babelrcHelper').default(false);
 
 const buildDir = path.join(process.cwd(), 'build');
 
@@ -110,14 +93,7 @@ module.exports = () => {
           use: [
             {
               loader: 'babel-loader',
-              options: {
-                presets: [
-                  ['env', { targets: { browsers: ['last 2 versions', 'safari >= 7'] } }],
-                  'react',
-                  'stage-0',
-                ],
-                plugins: [],
-              },
+              options: clientSideBabelConfig,
             },
           ],
           exclude: [/node_modules/],
