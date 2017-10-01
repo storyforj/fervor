@@ -36,12 +36,21 @@ export default function Document({
 
   const pwaMeta = [];
   if (manifest.icons.length) {
-    Object.keys(manifest.icons).forEach((icon) => {
+    Object.keys(manifest.icons).forEach((key) => {
+      const icon = manifest.icons[key];
+      pwaMeta.push(
+        <link
+          href={icon.src}
+          key={`appAppleIcon${icon.size}`}
+          rel="apple-touch-icon-precomposed"
+          sizes={icon.size}
+        />,
+      );
       pwaMeta.push(
         <link
           href={icon.src}
           key={`appIcon${icon.size}`}
-          rel="apple-touch-icon-precomposed"
+          rel="icon"
           sizes={icon.size}
         />,
       );

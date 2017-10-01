@@ -66,4 +66,17 @@ describe('Prod server', () => {
     const response = await superagent.get('http://localhost:3003/pizza');
     expect(response.text).to.contain('Pizza World');
   });
+
+  it('renders pwa html tags', async () => {
+    const response = await superagent.get('http://localhost:3003/');
+    expect(response.text).to.contain('<link href="/assets/icon_32x32.png" rel="apple-touch-icon-precomposed"');
+    expect(response.text).to.contain('<link href="/assets/icon_32x32.png" rel="icon"');
+    expect(response.text).to.contain('<meta name="theme-color" content="#FFD826"/>');
+    expect(response.text).to.contain('<link rel="manifest" href="/appmanifest.json"/>');
+  });
+
+  it('renders appmanifest', async () => {
+    const response = await superagent.get('http://localhost:3003/appmanifest.json');
+    expect(response.text).to.contain('/assets/icon_32x32.png');
+  });
 });
