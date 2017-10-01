@@ -41,6 +41,10 @@ export default (mutation) => {
         refetchQueries: this.props.refetchQueries,
       })
       .then((res) => {
+        if (this.props.redirectOnClient) {
+          this.props.pushAction(this.props.redirectTo);
+        }
+
         this.props.onSuccess(res);
       })
       .catch((res) => {
@@ -56,8 +60,10 @@ export default (mutation) => {
       delete formProps.mutation;
       delete formProps.onFailure;
       delete formProps.onSuccess;
+      delete formProps.pushAction;
       delete formProps.refetchQueries;
       delete formProps.redirectTo;
+      delete formProps.redirectOnClient;
 
       return (
         <form method="POST" action="/form-post" {...formProps} onSubmit={this.handleSubmit}>
@@ -86,7 +92,9 @@ export default (mutation) => {
     onFailure: PropTypes.func,
     onSubmit: PropTypes.func,
     onSuccess: PropTypes.func,
+    pushAction: PropTypes.func.isRequired,
     redirectTo: PropTypes.string.isRequired,
+    redirectOnClient: PropTypes.bool.isRequired,
     // mutate gets passed in from the graphql function, from apollo
     mutate: PropTypes.func,
     refetchQueries: PropTypes.array,

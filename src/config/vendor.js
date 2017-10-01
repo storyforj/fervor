@@ -1,3 +1,6 @@
+import 'cookies-js';
+import 'form-data-to-object';
+import 'history/createBrowserHistory';
 import 'prop-types';
 import 'react-dom';
 import 'react';
@@ -8,3 +11,4 @@ import 'redux-thunk';
 import 'react-redux';
 import 'react-router';
 import 'react-router-dom';
+import 'react-router-redux';

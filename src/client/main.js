@@ -6,12 +6,21 @@ import {
     createNetworkInterface,
 } from 'react-apollo';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
+import createBrowserHistory from 'history/createBrowserHistory';
+import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
 
 import initStore from '../shared/store';
 import Routes from './routes';
 
-const store = initStore(window.APOLLO_STATE);
+const browserHistory = createBrowserHistory();
+const pathname = `${document.location.pathname}${document.location.search}`;
+browserHistory.push(`${document.location.pathname}${document.location.search}`);
+const store = initStore(
+  { router: { location: { pathname } } },
+  [
+    routerMiddleware(browserHistory),
+  ],
+);
 
 const networkInterface = createNetworkInterface({ uri: '/graphql' });
 networkInterface.use([{
@@ -36,9 +45,9 @@ const render = (Component) => {
   ReactDOM.hydrate(
     (
       <ApolloProvider client={webClient} store={store}>
-        <BrowserRouter>
+        <ConnectedRouter history={browserHistory}>
           <Component />
-        </BrowserRouter>
+        </ConnectedRouter>
       </ApolloProvider>
     ),
     document.querySelector('#app'),
