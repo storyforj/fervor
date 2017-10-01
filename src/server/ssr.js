@@ -50,7 +50,7 @@ export default (options, Doc = Document) => {
       applyMiddleware(req, nextNIMiddleware) {
         if (!req.options.headers) { req.options.headers = {}; }
 
-        if (ctx.cookie.authJWT) {
+        if (ctx.cookie && ctx.cookie.authJWT) {
           req.options.headers.Authorization = `Bearer ${ctx.cookie.authJWT}`;
         }
 
