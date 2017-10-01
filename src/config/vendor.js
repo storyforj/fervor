@@ -1,3 +1,6 @@
+import 'cookies-js';
+import 'form-data-to-object';
+import 'history/createBrowserHistory';
 import 'prop-types';
 import 'react-dom';
 import 'react';
