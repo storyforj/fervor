@@ -43,11 +43,23 @@ App.propTypes = {
 
 export default (options, Doc = Document) => {
   const processRoute = async (ctx, next) => {
+    const networkInterface = createNetworkInterface({
+      uri: `${process.env.HOST || ctx.request.origin}/graphql`,
+    });
+    networkInterface.use([{
+      applyMiddleware(req, nextNIMiddleware) {
+        if (!req.options.headers) { req.options.headers = {}; }
+
+        if (ctx.cookie.authJWT) {
+          req.options.headers.Authorization = `Bearer ${ctx.cookie.authJWT}`;
+        }
+
+        nextNIMiddleware();
+      },
+    }]);
     const serverClient = new ApolloClient({
       ssrMode: true,
-      networkInterface: createNetworkInterface({
-        uri: `${process.env.HOST || ctx.request.origin}/graphql`,
-      }),
+      networkInterface,
     });
     const store = initStore({
       location: { pathname: ctx.req.url, search: '', hash: '' },

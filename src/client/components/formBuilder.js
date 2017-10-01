@@ -39,6 +39,12 @@ export default (mutation) => {
           this.serializeForm(e.target),
         ),
         refetchQueries: this.props.refetchQueries,
+      })
+      .then((res) => {
+        this.props.onSuccess(res);
+      })
+      .catch((res) => {
+        this.props.onFailure(res);
       });
       this.props.onSubmit(e);
     }
@@ -48,6 +54,8 @@ export default (mutation) => {
       delete formProps.children;
       delete formProps.mutate;
       delete formProps.mutation;
+      delete formProps.onFailure;
+      delete formProps.onSuccess;
       delete formProps.refetchQueries;
       delete formProps.redirectTo;
 
@@ -64,7 +72,9 @@ export default (mutation) => {
   // get everything after the host name, at minimum a "/"
   Form.defaultProps = {
     mutate: () => {},
+    onFailure: () => {},
     onSubmit: () => {},
+    onSuccess: () => {},
     refetchQueries: [],
   };
 
@@ -73,7 +83,9 @@ export default (mutation) => {
       PropTypes.arrayOf(PropTypes.node),
       PropTypes.node,
     ]).isRequired,
+    onFailure: PropTypes.func,
     onSubmit: PropTypes.func,
+    onSuccess: PropTypes.func,
     redirectTo: PropTypes.string.isRequired,
     // mutate gets passed in from the graphql function, from apollo
     mutate: PropTypes.func,

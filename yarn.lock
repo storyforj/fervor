@@ -1812,6 +1812,10 @@ cookiejar@^2.1.0:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/cookiejar/-/cookiejar-2.1.1.tgz#41ad57b1b555951ec171412a81942b1e8200d34a"
 
+cookies-js@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/cookies-js/-/cookies-js-1.2.3.tgz#03315049e7c52bee3f73186a69167eab0ddb2d31"
+
 cookies@~0.6.1:
   version "0.6.2"
   resolved "https://registry.yarnpkg.com/cookies/-/cookies-0.6.2.tgz#6ac1b052895208e8fc4c4f5f86a9ed31b9cb5ccf"
@@ -4654,6 +4658,10 @@ koa-convert@^1.2.0:
   dependencies:
     co "^4.6.0"
     koa-compose "^3.0.0"
+
+koa-cookie@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/koa-cookie/-/koa-cookie-1.0.0.tgz#7c79723dd03b97abcfe430028b700bd47a36dafb"
 
 koa-is-json@^1.0.0:
   version "1.0.0"

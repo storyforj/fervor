@@ -1,3 +1,4 @@
+import cookie from 'cookies-js';
 import React from 'react';
 import {
     ApolloClient,
@@ -12,12 +13,24 @@ import Routes from './routes';
 
 const store = initStore(window.APOLLO_STATE);
 
+const networkInterface = createNetworkInterface({ uri: '/graphql' });
+networkInterface.use([{
+  applyMiddleware(req, next) {
+    if (!req.options.headers) { req.options.headers = {}; }
+
+    const authJWT = cookie.get('authJWT');
+    if (authJWT) {
+      req.options.headers.Authorization = `Bearer ${authJWT}`;
+    }
+
+    next();
+  },
+}]);
 const webClient = new ApolloClient({
   initialState: { apollo: window.APOLLO_STATE.apollo },
-  networkInterface: createNetworkInterface({
-    uri: '/graphql',
-  }),
+  networkInterface,
 });
+
 
 const render = (Component) => {
   ReactDOM.hydrate(

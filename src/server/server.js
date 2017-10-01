@@ -1,5 +1,6 @@
 import bodyParser from 'koa-bodyparser';
 import chalk from 'chalk';
+import cookie from 'koa-cookie';
 import cors from 'kcors';
 import fs from 'fs';
 import requestLogger from 'koa-logger-winston';
@@ -44,6 +45,7 @@ export default async function startApp(options = {}) {
   app.use(postgraphile(options.db, 'public', pgqlOpts));
   app.use(cors());
   app.use(bodyParser());
+  app.use(cookie());
 
   // add middleware from the user's app if it exists
   // we need to load it from a different place in "prod" vs "dev"
