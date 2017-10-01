@@ -61,13 +61,7 @@ export default (options, Doc = Document) => {
       ssrMode: true,
       networkInterface,
     });
-    const store = initStore({
-      location: { pathname: ctx.req.url, search: '', hash: '' },
-      session: {
-        isAuthenticated: false, // ctx.isAuthenticated(),
-        user: null, // ctx.state.user,
-      },
-    });
+    const store = initStore({ router: { location: { pathname: ctx.req.url } } });
 
     const app = (
       <App

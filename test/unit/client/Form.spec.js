@@ -19,7 +19,7 @@ describe('Form Component', () => {
         uri: '/graphql',
       }),
     });
-    const store = initStore({ location: { pathname: '/' }, session: {} });
+    const store = initStore({});
 
     const mutation = gql`query {
       __schema {
