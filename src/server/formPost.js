@@ -22,7 +22,11 @@ export default async (ctx) => {
         'Content-Type': 'application/json',
       },
     },
-  ).then(() => {
-    ctx.redirect(301, `${process.env.HOST || ctx.request.origin}/${redirectTo}`);
+  ).then((res) => res.json())
+  // data does get used, redirectTo could use `data` from the gql response
+  .then(({data}) => { // eslint-disable-line
+    // eslint-disable-next-line
+    const redirectPath = eval('`' + redirectTo + '`');
+    ctx.redirect(301, `${process.env.HOST || ctx.request.origin}/${redirectPath}`);
   });
 };
