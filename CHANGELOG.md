@@ -4,7 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.5.7] - 2017-10-10
+### Added
+- Since 0.5.0 we've improved Forms a-lot. This release continues improvemenets. redirectTo in particular is really usefule for leading from 1 gql form to the next page.
+- Ability to use template strings for redirectTo
+- Disabled "no-template-curly-in-string" from default eslint. This was done in order to support template strings for redirectTo
 
 ## [0.5.0] - 2017-09-27
 ### Added

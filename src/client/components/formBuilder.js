@@ -42,7 +42,10 @@ export default (mutation) => {
       })
       .then((res) => {
         if (this.props.redirectOnClient) {
-          this.props.pushAction(this.props.redirectTo);
+          const data = res.data; // eslint-disable-line
+          // This eval is fairly safe, it is always data the server "sanitizes"
+          const redirectPath = eval('`' + this.props.redirectTo + '`'); // eslint-disable-line
+          this.props.pushAction(redirectPath);
         }
 
         this.props.onSuccess(res);
