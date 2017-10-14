@@ -20,16 +20,16 @@ jobs:
 
       - restore_cache:
           keys:
-          - v4-dependencies-{{ checksum "package.json" }}
+          - fervor-dependencies-{{ arch }}-{{ checksum "package.json" }}
           # fallback to using the latest cache if no exact match is found
-          - v4-dependencies-
+          - fervor-dependencies-{{ arch }}
 
       - run: CFLAGS=-std=gnu11 yarn install
 
       - save_cache:
           paths:
             - node_modules
-          key: v4-dependencies-{{ checksum "package.json" }}
+          key: fervor-dependencies-{{ arch }}-{{ checksum "package.json" }}
 
       - run: yarn build
       - run: yarn test
