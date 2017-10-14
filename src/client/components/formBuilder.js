@@ -3,6 +3,8 @@ import React from 'react';
 import { graphql } from 'react-apollo';
 import formToObj from 'form-data-to-object';
 
+import interpolate from '../../shared/utils/interpolate';
+
 export default (mutation) => {
   class Form extends React.PureComponent {
 
@@ -42,9 +44,7 @@ export default (mutation) => {
       })
       .then((res) => {
         if (this.props.redirectOnClient) {
-          const data = res.data; // eslint-disable-line
-          // This eval is fairly safe, it is always data the server "sanitizes"
-          const redirectPath = eval('`' + this.props.redirectTo + '`'); // eslint-disable-line
+          const redirectPath = interpolate(this.props.redirectTo, res.data);
           this.props.pushAction(redirectPath);
         }
 

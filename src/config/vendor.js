@@ -1,4 +1,5 @@
 import 'cookies-js';
+import 'es6-template-strings';
 import 'form-data-to-object';
 import 'history/createBrowserHistory';
 import 'prop-types';

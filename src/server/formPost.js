@@ -1,3 +1,5 @@
+import interpolate from '../shared/utils/interpolate';
+
 export default async (ctx) => {
   const body = ctx.request.body;
 
@@ -23,10 +25,8 @@ export default async (ctx) => {
       },
     },
   ).then((res) => res.json())
-  // data does get used, redirectTo could use `data` from the gql response
-  .then(({data}) => { // eslint-disable-line
-    // eslint-disable-next-line
-    const redirectPath = eval('`' + redirectTo + '`');
+  .then(({ data }) => {
+    const redirectPath = interpolate(redirectTo, data);
     ctx.redirect(301, `${process.env.HOST || ctx.request.origin}/${redirectPath}`);
   });
 };
