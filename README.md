@@ -21,6 +21,7 @@ Major Features:
 7. CLI
 8. Service Worker Caching
 9. Progressive Web App Ready
+10. Code Splitting: Base bundles, routes and common files
 
 How to Start
 ----

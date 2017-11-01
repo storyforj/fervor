@@ -79,4 +79,41 @@ describe('Prod server', () => {
     const response = await superagent.get('http://localhost:3003/appmanifest.json');
     expect(response.text).to.contain('/assets/icon_32x32.png');
   });
+
+  it('builds lazy loaded files', async () => {
+    const manifestRaw = fs.readFileSync(path.join(__dirname, 'testApp', 'build', 'manifest.json'));
+    const manifest = JSON.parse(manifestRaw);
+    const jsFiles = Object.keys(manifest.jsChunks);
+    expect(jsFiles.length).to.equal(4);
+    expect(
+      fs.statSync(path.join(__dirname, 'testApp', 'build', jsFiles[0])).isFile(),
+    ).to.equal(true);
+    expect(
+      fs.statSync(path.join(__dirname, 'testApp', 'build', jsFiles[1])).isFile(),
+    ).to.equal(true);
+    expect(
+      fs.statSync(path.join(__dirname, 'testApp', 'build', jsFiles[2])).isFile(),
+    ).to.equal(true);
+  });
+
+  it('serves lazy loaded bundles', async () => {
+    const manifestRaw = fs.readFileSync(path.join(__dirname, 'testApp', 'build', 'manifest.json'));
+    const manifest = JSON.parse(manifestRaw);
+    const jsFiles = Object.keys(manifest.jsChunks);
+    const response1 = await superagent.get(`http://localhost:3003/build/${jsFiles[0]}`);
+    expect(response1.statusCode).to.be.equal(200);
+    const response2 = await superagent.get(`http://localhost:3003/build/${jsFiles[1]}`);
+    expect(response2.statusCode).to.be.equal(200);
+    const response3 = await superagent.get(`http://localhost:3003/build/${jsFiles[2]}`);
+    expect(response3.statusCode).to.be.equal(200);
+  });
+
+  it('does not serve anything deeply nested in the build folder', async () => {
+    try {
+      const response = await superagent.get('http://localhost:3003/build/apps/Hello.js');
+      expect(response.toString()).to.contain('Not Found');
+    } catch (e) {
+      expect(e.toString()).to.contain('Not Found');
+    }
+  });
 });

@@ -8,7 +8,16 @@ export default (isServer, appLocation, useSrc) => {
       'react',
       'stage-0',
     ],
-    plugins: [],
+    plugins: [
+      [
+        'make-lazy',
+        {
+          // eslint-disable-next-line no-useless-escape
+          paths: ['(src|lib)\/urls\.js$'],
+          moduleExceptions: ['^[^(./|../)]'],
+        },
+      ],
+    ],
   };
 
   if (isServer) {

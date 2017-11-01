@@ -2,6 +2,7 @@ import 'cookies-js';
 import 'es6-template-strings';
 import 'form-data-to-object';
 import 'history/createBrowserHistory';
+import 'path-to-regexp';
 import 'prop-types';
 import 'react-dom';
 import 'react';

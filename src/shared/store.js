@@ -19,7 +19,6 @@ const initStore = (initialState, otherMiddleware) => {
 
   const store = (allMiddleware(createStore))(reducer);
 
-  // include initial data
   store.dispatch({
     type: '@@router/LOCATION_CHANGE',
     payload: initialState,
