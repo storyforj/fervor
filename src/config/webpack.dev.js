@@ -4,6 +4,7 @@ import autoprefixer from 'autoprefixer';
 import flexbugs from 'postcss-flexbugs-fixes';
 import webpack from 'webpack';
 import webpackMiddleware from 'koa-webpack';
+import WorkboxPlugin from 'workbox-webpack-plugin';
 
 import logger from '../shared/utils/logger';
 
@@ -102,11 +103,21 @@ export default (app, options) => {
         // eslint-disable-next-line
         manifest: require('../../lib/fervorVendors-manifest.json'),
       }),
+      new webpack.optimize.CommonsChunkPlugin({
+        async: true,
+        minChunks: 2,
+      }),
       new webpack.optimize.ModuleConcatenationPlugin(),
       new webpack.optimize.OccurrenceOrderPlugin(),
       new webpack.HotModuleReplacementPlugin(),
       new webpack.NoEmitOnErrorsPlugin(),
       new webpack.NamedModulesPlugin(),
+      new WorkboxPlugin({
+        globDirectory: options.appLocation,
+        globPatterns: [],
+        swDest: path.join(options.appLocation, 'build', 'sw.js'),
+        runtimeCaching: [],
+      }),
     ],
   };
 

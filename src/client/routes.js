@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {
     Switch,
@@ -6,13 +7,25 @@ import {
 // eslint-disable-next-line
 import fervorRoutes from 'fervorAppRoutes';
 
-const Routes = () => {
+import Bundle from './components/Bundle';
+
+const loader = (componentLoader, initialPath, startingComponent) => {
+  const BundleLoader = (props) => (
+    <Bundle load={componentLoader} initialPath={initialPath} startingComponent={startingComponent}>
+      {(Component) => (<Component {...props} />)}
+    </Bundle>
+  );
+
+  return BundleLoader;
+};
+
+const Routes = ({ initialPath, startingComponent }) => {
   const routes = Object.keys(fervorRoutes).map((path) => (
     <Route
       exact
       key={path}
       path={path}
-      component={fervorRoutes[path]}
+      component={loader(fervorRoutes[path], initialPath, startingComponent)}
     />
   ));
 
@@ -21,6 +34,11 @@ const Routes = () => {
       {routes}
     </Switch>
   );
+};
+
+Routes.propTypes = {
+  initialPath: PropTypes.string.isRequired,
+  startingComponent: PropTypes.func.isRequired,
 };
 
 export default Routes;

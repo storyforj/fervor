@@ -45,7 +45,7 @@ module.exports = () => {
     output: {
       path: buildDir,
       publicPath: '/build/',
-      filename: '[name]-[hash:6].js',
+      filename: '[name]-[chunkhash:6].js',
     },
     module: {
       loaders: [
@@ -104,7 +104,7 @@ module.exports = () => {
       new ChunkManifestPlugin(),
       new ExtractTextPlugin({
         allChunks: true,
-        filename: 'bundle-[hash:6].css',
+        filename: 'bundle-[chunkhash:6].css',
       }),
       new webpack.DefinePlugin({
         __DEV__: JSON.stringify(false),
@@ -120,6 +120,10 @@ module.exports = () => {
         // eslint-disable-next-line
         manifest: require('../../lib/fervorVendors-manifest.json'),
       }),
+      new webpack.optimize.CommonsChunkPlugin({
+        async: 'common-[chunkhash:6].js',
+        minChunks: 2,
+      }),
       new webpack.optimize.ModuleConcatenationPlugin(),
       new webpack.optimize.OccurrenceOrderPlugin(),
       new webpack.NoEmitOnErrorsPlugin(),
@@ -132,7 +136,7 @@ module.exports = () => {
       new WorkboxPlugin({
         globDirectory: process.cwd(),
         globPatterns: [
-          'build/**/bundle-*.{js,css}',
+          'build/*-*.{js,css}',
           'assets/**/*.{png,jpg,jpeg,gif,woff,woff2,svg,js,css}',
         ],
         swDest: path.join(buildDir, 'sw.js'),

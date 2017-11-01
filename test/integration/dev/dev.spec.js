@@ -29,14 +29,31 @@ describe('Dev server', () => {
     browser.url('http://localhost:3002/');
     browser.waitUntil(() => (
       browser
-        .getCssProperty('div[class*="component"]', 'background')
-        .value.indexOf('rgb(0,0,0)') >= -1
+      .getCssProperty('div[class*="component"]', 'background')
+      .value.indexOf('rgb(0,0,0)') >= -1
     ), 10000);
     browser.waitUntil(() => (
       browser
-        .getCssProperty('div[class*="component"]', 'color')
-        .value.indexOf('rgba(255,255,255,1)') >= -1
+      .getCssProperty('div[class*="component"]', 'color')
+      .value.indexOf('rgba(255,255,255,1)') >= -1
     ), 10000);
+  });
+
+  it('does not render any react warnings on startup', () => {
+    browser.url('http://localhost:3002/');
+    // wait until after the CSS is loaded
+    browser.waitUntil(() => (
+      browser
+      .getCssProperty('div[class*="component"]', 'background')
+      .value.indexOf('rgb(0,0,0)') >= -1
+    ), 10000);
+    expect(() => {
+      browser.log('browser').forEach((logEntry) => {
+        if (logEntry.level === 'WARNING' || logEntry.level === 'SEVERE') {
+          throw new Error(`Log with ${logEntry.level} found`);
+        }
+      });
+    }).to.throw();
   });
 
   it('renders custom middleware', async () => {

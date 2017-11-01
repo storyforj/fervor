@@ -10,7 +10,9 @@ export default function Document({
   state,
   title,
 }) {
-  let scripts = <script src="/build/bundle.js" />;
+  let scripts = [
+    <script key="bundle.js" src="/build/bundle.js" />,
+  ];
   let cssFiles = null;
 
   if (process.env.NODE_ENV.indexOf('prod') > -1) {
@@ -22,9 +24,11 @@ export default function Document({
     cssFiles = Object.keys(manifestJSON.cssChunks).map((cssFile) => (
       <link key={`/build/${cssFile}`} rel="stylesheet" type="text/css" href={`/build/${cssFile}`} />
     ));
-    scripts = Object.keys(manifestJSON.jsChunks).map((jsFile) => (
-      <script key={`/build/${jsFile}`} async defer src={`/build/${jsFile}`} />
-    ));
+    scripts = Object.keys(manifestJSON.jsChunks).reverse().map((jsFile) => (
+      (jsFile.indexOf('bundle') > -1 || jsFile.indexOf('common') > -1) ?
+        <script key={`/build/${jsFile}`} async defer src={`/build/${jsFile}`} /> :
+        null
+    )).filter((value) => value !== null);
     scripts.unshift(
       <script
         dangerouslySetInnerHTML={{
