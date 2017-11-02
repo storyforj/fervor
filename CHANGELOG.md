@@ -4,9 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [0.6.0] - Upcoming
+## [0.6.0] - 2017-11-01
 ### Added
 - Added code splitting at the route level
+- Add .css extension to babel and webpack
 
 ## [0.5.8] - 2017-10-14
 ### Changed
