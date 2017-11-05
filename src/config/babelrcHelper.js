@@ -26,7 +26,7 @@ export default (isServer, appLocation, useSrc) => {
         'css-modules-transform',
         {
           generateScopedName: '[name]__[local]___[hash:base64:5]',
-          extensions: ['.scss', '.css'],
+          extensions: ['.scss'],
         },
       ],
       [
