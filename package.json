@@ -5,6 +5,9 @@
   "main": "lib/fervor",
   "author": "Parris Khachi",
   "license": "MIT",
+  "homepage": "https://github.com/fervorous/fervor",
+  "repository": "git@github.com:fervorous/fervor.git",
+  "url": "https://github.com/fervorous/fervor",
   "scripts": {
     "build:babel": "babel src --ignore src/templates src/templates -d lib",
     "build:clean": "rm -rf lib",
