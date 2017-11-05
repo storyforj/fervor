@@ -5,7 +5,9 @@ Fervor
 
 ![Fervor Logo](https://avatars2.githubusercontent.com/u/26048760?v=4&u=c900b5463478aa9e8937a8422721210d33a9b984&s=200)
 
-**Example App**: https://github.com/fervorous/fervor-todo-mvc
+**Example App**: https://github.com/fervorous/fervor-todo-mvc  
+**Docs**: https://github.com/fervorous/fervor/wiki  
+**Getting Started**: https://github.com/fervorous/fervor/wiki/Getting-Started  
 
 A batteries included, config free, fullstack framework to build modern web apps. Just write your data migrations, throw some components together and we'll handle the rest. We know you want universal rendering, we know you want to *own* your own data, we know you don't really want to write your own APIs that just move some data from one place to another. We've automated all that away, integrated with all the best libraries in the node community.
 
