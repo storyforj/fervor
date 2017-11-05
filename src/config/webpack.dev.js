@@ -39,7 +39,7 @@ export default (app, options) => {
           loader: 'file-loader',
         },
         {
-          test: /\.(scss|css)$/,
+          test: /\.scss$/,
           use: [
             'style-loader',
             {

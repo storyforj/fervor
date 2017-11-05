@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from './hello.scss';
 
-import './simple.jss';
 import './simple.css';
 
 export default () => (
