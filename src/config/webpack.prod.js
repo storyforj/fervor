@@ -59,7 +59,7 @@ module.exports = () => {
           loader: 'file-loader',
         },
         {
-          test: /\.scss$/,
+          test: /\.(scss|css)$/,
           use: ExtractTextPlugin.extract({
             fallback: 'style-loader',
             use: [

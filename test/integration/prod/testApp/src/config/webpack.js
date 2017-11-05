@@ -6,7 +6,7 @@ export default (config) => {
   ]));
 
   config.module.loaders.push({
-    test: /\.css$/,
+    test: /\.jss$/,
     loaders: [
       'style-loader', 'css-loader',
     ],
