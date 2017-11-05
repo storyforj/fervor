@@ -11,7 +11,6 @@ module.exports = (commands, args) => {
       path.join(__dirname, '..', 'commands', `${args._[1]}.js`),
     ).isFile();
   } catch (e) {
-    console.log(e);
     isValidCommand = false;
   }
 
@@ -48,7 +47,7 @@ module.exports = (commands, args) => {
 
   ${commands.map((cmd) => (
     `${cmd.name} - ${cmd.description}`
-  ))}
+  )).join('\n  ')}
 
 `);
   }
