@@ -90,7 +90,7 @@
     "postcss-flexbugs-fixes": "^3.0.0",
     "postcss-loader": "^2.0.6",
     "postcss-scss": "^1.0.2",
-    "postgraphile": "^4.0.0-alpha2.20",
+    "postgraphile": "^4.0.0-alpha2.22",
     "prop-types": "^15.5.10",
     "react": "^16.0.0",
     "react-apollo": "^1.4.16",

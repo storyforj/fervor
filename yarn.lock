@@ -3410,14 +3410,14 @@ graceful-fs@^4.1.0, graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.4,
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/graceful-readlink/-/graceful-readlink-1.0.1.tgz#4cafad76bc62f02fa039b2f94e9a3dd3a391a725"
 
-graphile-build-pg@^0.1.0-alpha.32:
-  version "0.1.0-alpha.32"
-  resolved "https://registry.yarnpkg.com/graphile-build-pg/-/graphile-build-pg-0.1.0-alpha.32.tgz#51daf9da1edd0f26d9068a6223d0f19e4ee09fb2"
+graphile-build-pg@^0.1.0-alpha.35:
+  version "0.1.0-alpha.35"
+  resolved "https://registry.yarnpkg.com/graphile-build-pg/-/graphile-build-pg-0.1.0-alpha.35.tgz#b562f15484bdfb2e1ae04f0b77c29dcc3d450e4f"
   dependencies:
     babel-runtime ">=6 <7"
     chalk "^2.1.0"
     debug ">=2 <3"
-    graphile-build "^0.1.0-alpha.32"
+    graphile-build "0.1.0-alpha.32"
     graphql-iso-date "^3.2.0"
     graphql-type-json "^0.1.4"
     jsonwebtoken "^7.4.1"
@@ -3427,7 +3427,7 @@ graphile-build-pg@^0.1.0-alpha.32:
     pg-sql2 "^1.0.0-beta.3"
     pluralize "^5.0.0"
 
-graphile-build@^0.1.0-alpha.32:
+graphile-build@0.1.0-alpha.32:
   version "0.1.0-alpha.32"
   resolved "https://registry.yarnpkg.com/graphile-build/-/graphile-build-0.1.0-alpha.32.tgz#16d7ebe06101d39d96d145509d2d9117bbeadc9e"
   dependencies:
@@ -6182,17 +6182,17 @@ postcss@^6.0.1, postcss@^6.0.11, postcss@^6.0.2, postcss@^6.0.3:
     source-map "^0.5.7"
     supports-color "^4.4.0"
 
-postgraphile-core@0.1.0-alpha.32:
-  version "0.1.0-alpha.32"
-  resolved "https://registry.yarnpkg.com/postgraphile-core/-/postgraphile-core-0.1.0-alpha.32.tgz#bc5848f0404639ed6d6ed44f9ef78b6c7cef98bf"
+postgraphile-core@0.1.0-alpha.35:
+  version "0.1.0-alpha.35"
+  resolved "https://registry.yarnpkg.com/postgraphile-core/-/postgraphile-core-0.1.0-alpha.35.tgz#3b4c09de6e8998c1feac2f512e4baa61ab500799"
   dependencies:
     babel-runtime ">=6 <7"
-    graphile-build "^0.1.0-alpha.32"
-    graphile-build-pg "^0.1.0-alpha.32"
+    graphile-build "0.1.0-alpha.32"
+    graphile-build-pg "^0.1.0-alpha.35"
 
-postgraphile@^4.0.0-alpha2.20:
-  version "4.0.0-alpha2.20"
-  resolved "https://registry.yarnpkg.com/postgraphile/-/postgraphile-4.0.0-alpha2.20.tgz#d3ea71b077953724e4b6cf9a5c9b841df29c6056"
+postgraphile@^4.0.0-alpha2.22:
+  version "4.0.0-alpha2.22"
+  resolved "https://registry.yarnpkg.com/postgraphile/-/postgraphile-4.0.0-alpha2.22.tgz#4e36de6a35678bb6ca8616dda7747bb06fc6f29c"
   dependencies:
     body-parser "^1.15.2"
     chalk "1.1.3"
@@ -6210,7 +6210,7 @@ postgraphile@^4.0.0-alpha2.20:
     pg-minify "~0.5.3"
     pg-sql2 "^1.0.0-alpha1.0"
     pluralize "^3.0.0"
-    postgraphile-core "0.1.0-alpha.32"
+    postgraphile-core "0.1.0-alpha.35"
     postgres-interval "^1.0.2"
     send "^0.14.1"
     tslib "^1.5.0"
