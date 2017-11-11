@@ -42,3 +42,7 @@ Routes.propTypes = {
 };
 
 export default Routes;
+
+if (module.hot) {
+  module.hot.accept();
+}

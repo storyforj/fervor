@@ -7,23 +7,13 @@ import {
     createNetworkInterface,
 } from 'react-apollo';
 import ReactDOM from 'react-dom';
-import createBrowserHistory from 'history/createBrowserHistory';
-import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
+import { ConnectedRouter } from 'react-router-redux';
 // eslint-disable-next-line
 import fervorRoutes from 'fervorAppRoutes';
 
-import initStore from '../shared/store';
+import browserHistory from './history';
+import store from './store';
 import Routes from './routes';
-
-const browserHistory = createBrowserHistory();
-const pathname = `${document.location.pathname}${document.location.search}`;
-// browserHistory.push(`${document.location.pathname}${document.location.search}`);
-const store = initStore(
-  { router: { location: { pathname } } },
-  [
-    routerMiddleware(browserHistory),
-  ],
-);
 
 const networkInterface = createNetworkInterface({ uri: '/graphql' });
 networkInterface.use([{
@@ -74,6 +64,5 @@ for (const path of Object.keys(fervorRoutes)) {
 startApp();
 
 if (module.hot) {
-  // eslint-disable-next-line global-require
-  module.hot.accept('./routes', () => render(require('./routes').default));
+  module.hot.accept();
 }
