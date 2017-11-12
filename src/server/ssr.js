@@ -101,14 +101,16 @@ export default (options, Doc = Document) => {
       app = <AppWrapper options={appOptions}>{app}</AppWrapper>;
     }
 
-    let additionalDocumentContent;
-    if (getAdditionalDocumentContent) {
-      additionalDocumentContent = getAdditionalDocumentContent(appOptions);
-    }
-
     return getDataFromTree(app).then(() => {
       const state = store.getState();
       state.apollo = serverClient.getInitialState();
+      const content = ReactDOMServer.renderToString(app);
+
+      // Load additional document content after rendering the app. We do this after rendering the app to support hooks compiling the necessary styles to render the app.
+      let additionalDocumentContent;
+      if (getAdditionalDocumentContent) {
+        additionalDocumentContent = getAdditionalDocumentContent(appOptions);
+      }
 
       // TODO: app.props.title is not accessible on the server-side.
       // For now we'll just rely on it getting set client side.
@@ -119,7 +121,7 @@ export default (options, Doc = Document) => {
           appFavicon={options.appFavicon}
           // eslint-disable-next-line
           manifest={require(`${options.appLocation}/src/config/appmanifest.json`)}
-          content={ReactDOMServer.renderToString(app)}
+          content={content}
           state={state}
           title={app.props.title}
           additionalContent={additionalDocumentContent}
