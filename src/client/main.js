@@ -14,7 +14,6 @@ import fervorRoutes from 'fervorAppRoutes';
 import browserHistory from './history';
 import store from './store';
 import Routes from './routes';
-import load from '../shared/utils/load';
 
 const networkInterface = createNetworkInterface({ uri: '/graphql' });
 networkInterface.use([{
@@ -34,20 +33,13 @@ const webClient = new ApolloClient({
   networkInterface,
 });
 
-const rendering = load('config/rendering', {
-  options: {
-    appLocation: process.env.APP_LOCATION,
-  },
-  default: {
-    default: {
-      client: {
-        App: undefined,
-      },
-    },
-  },
-});
-
-const { App: AppWrapper } = rendering.default.client;
+let rendering;
+try {
+  // eslint-disable-next-line
+  rendering = require('fervorConfig/rendering');
+} catch (err) {
+  rendering = { default: { client: { App: undefined } } };
+}
 
 const render = (Component, initialPath, startingComponent) => {
   let app = (
@@ -58,6 +50,7 @@ const render = (Component, initialPath, startingComponent) => {
     </ApolloProvider>
   );
 
+  const { App: AppWrapper } = rendering.default.client;
   if (AppWrapper) {
     app = <AppWrapper>{app}</AppWrapper>;
   }

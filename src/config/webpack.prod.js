@@ -37,6 +37,7 @@ module.exports = () => {
     resolve: {
       alias: {
         fervorAppRoutes: path.resolve(process.cwd(), 'src', 'urls.js'),
+        fervorConfig: path.resolve(process.cwd(), 'src', 'config'),
       },
     },
     entry: {
@@ -112,7 +113,6 @@ module.exports = () => {
           NODE_ENV: JSON.stringify('production'),
           BROWSER: JSON.stringify(true),
           HOST: JSON.stringify(process.env.HOST),
-          APP_LOCATION: JSON.stringify(process.cwd()),
         },
       }),
       new webpack.DllReferencePlugin({
