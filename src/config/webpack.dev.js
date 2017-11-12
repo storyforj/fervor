@@ -90,6 +90,7 @@ export default (app, options) => {
         'process.env': {
           BROWSER: JSON.stringify(true),
           HOST: JSON.stringify(process.env.HOST),
+          APP_LOCATION: JSON.stringify(process.cwd()),
         },
       }),
       new webpack.DllReferencePlugin({
