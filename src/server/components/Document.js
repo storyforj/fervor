@@ -9,6 +9,7 @@ export default function Document({
   manifest,
   state,
   title,
+  additionalContent,
 }) {
   let scripts = [
     <script key="bundle.js" src="/build/bundle.js" />,
@@ -80,6 +81,7 @@ export default function Document({
       </head>
       <body>
         <div id="app" dangerouslySetInnerHTML={{ __html: content }} />
+        <div dangerouslySetInnerHTML={{ __html: additionalContent }} />
         <script
           dangerouslySetInnerHTML={{
             __html: `window.APOLLO_STATE=${JSON.stringify(state).replace(/</g, '\\u003c')};`,
@@ -95,6 +97,7 @@ Document.defaultProps = {
   appFavicon: null,
   manifest: {},
   title: '',
+  additionalContent: '',
 };
 
 Document.propTypes = {
@@ -104,4 +107,5 @@ Document.propTypes = {
   content: PropTypes.string.isRequired,
   state: PropTypes.object.isRequired,
   title: PropTypes.string,
+  additionalContent: PropTypes.string,
 };

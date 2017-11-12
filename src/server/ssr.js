@@ -15,6 +15,7 @@ import {
 } from 'react-router-dom';
 
 import initStore from '../shared/store';
+import load from '../shared/utils/load';
 import Document from './components/Document';
 
 const App = ({ ctx, routes, serverClient, store }) => (
@@ -63,7 +64,18 @@ export default (options, Doc = Document) => {
     });
     const store = initStore({ router: { location: { pathname: ctx.req.url } } });
 
-    const app = (
+    const rendering = load('config/rendering', {
+      options,
+      default: {
+        server: {
+          getAppOptions: undefined,
+          App: undefined,
+          getAdditionalDocumentContent: undefined,
+        },
+      },
+    });
+
+    let app = (
       <App
         ctx={ctx}
         routes={options.routes}
@@ -71,6 +83,25 @@ export default (options, Doc = Document) => {
         serverClient={serverClient}
       />
     );
+
+    const {
+      getAppOptions,
+      App: AppWrapper,
+      getAdditionalDocumentContent,
+    } = rendering.server;
+
+    let appOptions = {};
+    if (getAppOptions) {
+      appOptions = getAppOptions();
+    }
+    if (AppWrapper) {
+      app = <AppWrapper options={appOptions}>{app}</AppWrapper>;
+    }
+
+    let additionalDocumentContent;
+    if (getAdditionalDocumentContent) {
+      additionalDocumentContent = getAdditionalDocumentContent(appOptions);
+    }
 
     return getDataFromTree(app).then(() => {
       const state = store.getState();
@@ -88,6 +119,7 @@ export default (options, Doc = Document) => {
           content={ReactDOMServer.renderToString(app)}
           state={state}
           title={app.props.title}
+          additionalContent={additionalDocumentContent}
         />
       ))}`;
 

@@ -14,6 +14,7 @@ import fervorRoutes from 'fervorAppRoutes';
 import browserHistory from './history';
 import store from './store';
 import Routes from './routes';
+import load from '../shared/utils/load';
 
 const networkInterface = createNetworkInterface({ uri: '/graphql' });
 networkInterface.use([{
@@ -33,17 +34,34 @@ const webClient = new ApolloClient({
   networkInterface,
 });
 
+const rendering = load('config/rendering', {
+  options: {
+    appLocation: process.env.APP_LOCATION,
+  },
+  default: {
+    client: {
+      App: undefined,
+    },
+  },
+});
+
+const { App: AppWrapper } = rendering.client;
+
+
 const render = (Component, initialPath, startingComponent) => {
-  ReactDOM.hydrate(
-    (
-      <ApolloProvider client={webClient} store={store}>
-        <ConnectedRouter history={browserHistory}>
-          <Component initialPath={initialPath} startingComponent={startingComponent} />
-        </ConnectedRouter>
-      </ApolloProvider>
-    ),
-    document.querySelector('#app'),
+  let app = (
+    <ApolloProvider client={webClient} store={store}>
+      <ConnectedRouter history={browserHistory}>
+        <Component initialPath={initialPath} startingComponent={startingComponent} />
+      </ConnectedRouter>
+    </ApolloProvider>
   );
+
+  if (AppWrapper) {
+    app = <AppWrapper>{app}</AppWrapper>;
+  }
+
+  ReactDOM.hydrate(app, document.querySelector('#app'));
 };
 
 let startApp = () => render(Routes);
