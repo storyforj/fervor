@@ -67,10 +67,12 @@ export default (options, Doc = Document) => {
     const rendering = load('config/rendering', {
       options,
       default: {
-        server: {
-          getAppOptions: undefined,
-          App: undefined,
-          getAdditionalDocumentContent: undefined,
+        default: {
+          server: {
+            getAppOptions: undefined,
+            App: undefined,
+            getAdditionalDocumentContent: undefined,
+          },
         },
       },
     });
@@ -88,12 +90,13 @@ export default (options, Doc = Document) => {
       getAppOptions,
       App: AppWrapper,
       getAdditionalDocumentContent,
-    } = rendering.server;
+    } = rendering.default.server;
 
     let appOptions = {};
     if (getAppOptions) {
       appOptions = getAppOptions();
     }
+
     if (AppWrapper) {
       app = <AppWrapper options={appOptions}>{app}</AppWrapper>;
     }

@@ -39,14 +39,15 @@ const rendering = load('config/rendering', {
     appLocation: process.env.APP_LOCATION,
   },
   default: {
-    client: {
-      App: undefined,
+    default: {
+      client: {
+        App: undefined,
+      },
     },
   },
 });
 
-const { App: AppWrapper } = rendering.client;
-
+const { App: AppWrapper } = rendering.default.client;
 
 const render = (Component, initialPath, startingComponent) => {
   let app = (

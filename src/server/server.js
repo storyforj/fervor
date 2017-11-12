@@ -2,7 +2,6 @@ import bodyParser from 'koa-bodyparser';
 import chalk from 'chalk';
 import cookie from 'koa-cookie';
 import cors from 'kcors';
-import fs from 'fs';
 import requestLogger from 'koa-logger-winston';
 import Koa from 'koa';
 import postgraphile from 'postgraphile';
@@ -21,7 +20,9 @@ export default async function startApp(options = {}) {
   const pgqlOpts = { graphiql: false };
 
   // load user defined graphQL options
-  const graphOptions = load('graph', { options, default: {} });
+  const graph = load('graph', { options, default: { default: () => ({}) } });
+  const graphOptions = graph.default();
+
   if (graphOptions.graphqlRoute) {
     logger.warn('Changing the graphqlRoute is disabled. We\'ve reverted it back to /graphql');
   }
@@ -37,7 +38,9 @@ export default async function startApp(options = {}) {
   app.use(cookie());
 
   // load any user defined middleware
-  load('middleware', { args: { app, logger, options }, options });
+  const middleware = load('middleware', { options, default: () => {} });
+  middleware.default({ app, logger, options });
+
   app.use(appManifest(options));
   app.use(ssr(options));
   if (!options.disableWebpack) {
