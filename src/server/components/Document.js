@@ -81,7 +81,7 @@ export default function Document({
       </head>
       <body>
         <div id="app" dangerouslySetInnerHTML={{ __html: content }} />
-        <div dangerouslySetInnerHTML={{ __html: additionalContent }} />
+        { additionalContent }
         <script
           dangerouslySetInnerHTML={{
             __html: `window.APOLLO_STATE=${JSON.stringify(state).replace(/</g, '\\u003c')};`,
@@ -97,7 +97,7 @@ Document.defaultProps = {
   appFavicon: null,
   manifest: {},
   title: '',
-  additionalContent: '',
+  additionalContent: null,
 };
 
 Document.propTypes = {
@@ -107,5 +107,5 @@ Document.propTypes = {
   content: PropTypes.string.isRequired,
   state: PropTypes.object.isRequired,
   title: PropTypes.string,
-  additionalContent: PropTypes.string,
+  additionalContent: PropTypes.node,
 };
