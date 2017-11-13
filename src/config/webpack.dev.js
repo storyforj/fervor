@@ -6,14 +6,18 @@ import webpack from 'webpack';
 import webpackMiddleware from 'koa-webpack';
 import WorkboxPlugin from 'workbox-webpack-plugin';
 
+import hasConfig from '../shared/utils/hasConfig';
 import logger from '../shared/utils/logger';
 
 export default (app, options) => {
+  const hasRenderingConfig = hasConfig(options.appLocation, 'rendering');
   let devConfig = {
     resolve: {
       alias: {
         fervorAppRoutes: path.resolve(options.appLocation, 'src', 'urls.js'),
-        fervorConfig: path.resolve(options.appLocation, 'src', 'config'),
+        fervorConfigRendering: hasRenderingConfig ?
+          path.join(options.appLocation, 'src', 'config', 'rendering.js') :
+          path.join(__dirname, 'renderingConfig.js'),
       },
     },
     entry: [

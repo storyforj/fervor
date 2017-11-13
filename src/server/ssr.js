@@ -106,7 +106,9 @@ export default (options, Doc = Document) => {
       state.apollo = serverClient.getInitialState();
       const content = ReactDOMServer.renderToString(app);
 
-      // Load additional document content after rendering the app. We do this after rendering the app to support hooks compiling the necessary styles to render the app.
+      // Load additional document content after rendering the app.
+      // We do this after rendering the app to support hooks compiling
+      // the necessary styles to render the app.
       let additionalDocumentContent;
       if (getAdditionalDocumentContent) {
         additionalDocumentContent = getAdditionalDocumentContent(appOptions);

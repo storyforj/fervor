@@ -10,6 +10,7 @@ const globToRegExp = require('glob-to-regexp');
 const flexbugs = require('postcss-flexbugs-fixes');
 const webpack = require('webpack');
 const WorkboxPlugin = require('workbox-webpack-plugin');
+const hasConfig = require('../shared/utils/hasConfig');
 const ChunkManifestPlugin = require('./ChunkManifestPlugin');
 const clientSideBabelConfig = require('./babelrcHelper').default(false, process.cwd(), true);
 
@@ -33,11 +34,15 @@ if (process.env.TEST_ENV !== 'integration') {
 }
 
 module.exports = () => {
+  const hasRenderingConfig = hasConfig.default(process.cwd(), 'rendering');
+
   let prodConfig = {
     resolve: {
       alias: {
         fervorAppRoutes: path.resolve(process.cwd(), 'src', 'urls.js'),
-        fervorConfig: path.resolve(process.cwd(), 'src', 'config'),
+        fervorConfigRendering: hasRenderingConfig ?
+          path.join(process.cwd(), 'src', 'config', 'rendering.js') :
+          path.join(__dirname, 'renderingConfig.js'),
       },
     },
     entry: {
