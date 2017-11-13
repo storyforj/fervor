@@ -44,7 +44,7 @@ const render = (Component, initialPath, startingComponent) => {
     </ApolloProvider>
   );
 
-  const { App: AppWrapper } = rendering.default.client;
+  const { App: AppWrapper } = fervorConfigRendering.client;
   if (AppWrapper) {
     app = <AppWrapper>{app}</AppWrapper>;
   }
