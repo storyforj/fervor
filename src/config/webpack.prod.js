@@ -37,6 +37,7 @@ module.exports = () => {
     resolve: {
       alias: {
         fervorAppRoutes: path.resolve(process.cwd(), 'src', 'urls.js'),
+        fervorConfig: path.resolve(process.cwd(), 'src', 'config'),
       },
     },
     entry: {

@@ -15,6 +15,7 @@ import {
 } from 'react-router-dom';
 
 import initStore from '../shared/store';
+import load from '../shared/utils/load';
 import Document from './components/Document';
 
 const App = ({ ctx, routes, serverClient, store }) => (
@@ -63,7 +64,20 @@ export default (options, Doc = Document) => {
     });
     const store = initStore({ router: { location: { pathname: ctx.req.url } } });
 
-    const app = (
+    const rendering = load('config/rendering', {
+      options,
+      default: {
+        default: {
+          server: {
+            getAppOptions: undefined,
+            App: undefined,
+            getAdditionalDocumentContent: undefined,
+          },
+        },
+      },
+    });
+
+    let app = (
       <App
         ctx={ctx}
         routes={options.routes}
@@ -72,9 +86,31 @@ export default (options, Doc = Document) => {
       />
     );
 
+    const {
+      getAppOptions,
+      App: AppWrapper,
+      getAdditionalDocumentContent,
+    } = rendering.default.server;
+
+    let appOptions = {};
+    if (getAppOptions) {
+      appOptions = getAppOptions();
+    }
+
+    if (AppWrapper) {
+      app = <AppWrapper options={appOptions}>{app}</AppWrapper>;
+    }
+
     return getDataFromTree(app).then(() => {
       const state = store.getState();
       state.apollo = serverClient.getInitialState();
+      const content = ReactDOMServer.renderToString(app);
+
+      // Load additional document content after rendering the app. We do this after rendering the app to support hooks compiling the necessary styles to render the app.
+      let additionalDocumentContent;
+      if (getAdditionalDocumentContent) {
+        additionalDocumentContent = getAdditionalDocumentContent(appOptions);
+      }
 
       // TODO: app.props.title is not accessible on the server-side.
       // For now we'll just rely on it getting set client side.
@@ -85,9 +121,10 @@ export default (options, Doc = Document) => {
           appFavicon={options.appFavicon}
           // eslint-disable-next-line
           manifest={require(`${options.appLocation}/src/config/appmanifest.json`)}
-          content={ReactDOMServer.renderToString(app)}
+          content={content}
           state={state}
           title={app.props.title}
+          additionalContent={additionalDocumentContent}
         />
       ))}`;
 

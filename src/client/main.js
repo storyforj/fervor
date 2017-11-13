@@ -33,17 +33,29 @@ const webClient = new ApolloClient({
   networkInterface,
 });
 
+let rendering;
+try {
+  // eslint-disable-next-line
+  rendering = require('fervorConfig/rendering');
+} catch (err) {
+  rendering = { default: { client: { App: undefined } } };
+}
+
 const render = (Component, initialPath, startingComponent) => {
-  ReactDOM.hydrate(
-    (
-      <ApolloProvider client={webClient} store={store}>
-        <ConnectedRouter history={browserHistory}>
-          <Component initialPath={initialPath} startingComponent={startingComponent} />
-        </ConnectedRouter>
-      </ApolloProvider>
-    ),
-    document.querySelector('#app'),
+  let app = (
+    <ApolloProvider client={webClient} store={store}>
+      <ConnectedRouter history={browserHistory}>
+        <Component initialPath={initialPath} startingComponent={startingComponent} />
+      </ConnectedRouter>
+    </ApolloProvider>
   );
+
+  const { App: AppWrapper } = rendering.default.client;
+  if (AppWrapper) {
+    app = <AppWrapper>{app}</AppWrapper>;
+  }
+
+  ReactDOM.hydrate(app, document.querySelector('#app'));
 };
 
 let startApp = () => render(Routes);

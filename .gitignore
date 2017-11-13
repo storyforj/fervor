@@ -42,3 +42,4 @@ errorShots
 test/integration/prod/testApp/build
 test/integration/prodNoJS/testApp/build
 test/unit/cli/build
+.vscode

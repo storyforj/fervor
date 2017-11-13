@@ -13,6 +13,7 @@ export default (app, options) => {
     resolve: {
       alias: {
         fervorAppRoutes: path.resolve(options.appLocation, 'src', 'urls.js'),
+        fervorConfig: path.resolve(options.appLocation, 'src', 'config'),
       },
     },
     entry: [
