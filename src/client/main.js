@@ -10,6 +10,8 @@ import ReactDOM from 'react-dom';
 import { ConnectedRouter } from 'react-router-redux';
 // eslint-disable-next-line
 import fervorRoutes from 'fervorAppRoutes';
+// eslint-disable-next-line
+import fervorConfigRendering from 'fervorConfigRendering';
 
 import browserHistory from './history';
 import store from './store';
@@ -32,14 +34,6 @@ const webClient = new ApolloClient({
   initialState: { apollo: window.APOLLO_STATE.apollo },
   networkInterface,
 });
-
-let rendering;
-try {
-  // eslint-disable-next-line
-  rendering = require('fervorConfig/rendering');
-} catch (err) {
-  rendering = { default: { client: { App: undefined } } };
-}
 
 const render = (Component, initialPath, startingComponent) => {
   let app = (

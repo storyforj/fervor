@@ -60,4 +60,10 @@ describe('Dev server', () => {
     const response = await superagent.get('http://localhost:3002/pizza');
     expect(response.text).to.contain('Pizza World');
   });
+
+  it('takes advantage of a rendering wrapper', async () => {
+    const response = await superagent.get('http://localhost:3002/');
+    expect(response.text).to.contain('Test Wrapper');
+    expect(response.text).to.contain('Additional Content');
+  });
 });
