@@ -17,7 +17,13 @@ export default async function startApp(options = {}) {
 
   app.use(requestLogger(logger));
 
-  const pgqlOpts = { graphiql: false };
+  const pgOpts = {
+    connectionString: options.db,
+    ssl: process.env.DATABASE_USE_SSL === 'true',
+  };
+  const pgqlOpts = {
+    graphiql: false,
+  };
 
   // load user defined graphQL options
   const graph = load('graph', { options, default: { default: () => ({}) } });
@@ -32,7 +38,7 @@ export default async function startApp(options = {}) {
     { graphqlRoute: '/graphql' },
   );
 
-  app.use(postgraphile(options.db, 'public', pgqlOpts));
+  app.use(postgraphile(pgOpts, 'public', pgqlOpts));
   app.use(cors());
   app.use(bodyParser());
   app.use(cookie());
