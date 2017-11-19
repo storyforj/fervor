@@ -65,5 +65,8 @@ describe('Dev server', () => {
     const response = await superagent.get('http://localhost:3002/');
     expect(response.text).to.contain('Test Wrapper');
     expect(response.text).to.contain('Additional Content');
+    expect(response.text).to.contain('hello-js');
+    expect(response.text).to.contain('hello-css');
+    expect(response.text).to.contain('hello-meta');
   });
 });

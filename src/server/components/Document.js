@@ -10,11 +10,14 @@ export default function Document({
   state,
   title,
   additionalContent,
+  processMeta,
+  processCSS,
+  processJS,
 }) {
   let scripts = [
     <script key="bundle.js" src="/build/bundle.js" />,
   ];
-  let cssFiles = null;
+  let cssFiles = [];
 
   if (process.env.NODE_ENV.indexOf('prod') > -1) {
     // requiring the manfiest happens on the server side and only in prod
@@ -74,10 +77,11 @@ export default function Document({
     <html lang="en">
       <head>
         <title>{title}</title>
-        { pwaMeta }
-        <link key="appManifest" rel="manifest" href="/appmanifest.json" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        { cssFiles }
+        { processMeta(pwaMeta.concat([
+          <link key="appManifest" rel="manifest" href="/appmanifest.json" />,
+          <meta key="viewport" name="viewport" content="width=device-width, initial-scale=1" />,
+        ])) }
+        { processCSS(cssFiles) }
       </head>
       <body>
         <div id="app" dangerouslySetInnerHTML={{ __html: content }} />
@@ -87,7 +91,7 @@ export default function Document({
             __html: `window.APOLLO_STATE=${JSON.stringify(state).replace(/</g, '\\u003c')};`,
           }}
         />
-        { scripts }
+        { processJS(scripts) }
       </body>
     </html>
   );
@@ -98,6 +102,9 @@ Document.defaultProps = {
   manifest: {},
   title: '',
   additionalContent: null,
+  processMeta: (tags) => tags,
+  processCSS: (tags) => tags,
+  processJS: (tags) => tags,
 };
 
 Document.propTypes = {
@@ -108,4 +115,7 @@ Document.propTypes = {
   state: PropTypes.object.isRequired,
   title: PropTypes.string,
   additionalContent: PropTypes.node,
+  processMeta: PropTypes.func,
+  processCSS: PropTypes.func,
+  processJS: PropTypes.func,
 };
