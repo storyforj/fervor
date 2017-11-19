@@ -90,6 +90,9 @@ export default (options, Doc = Document) => {
       getAppOptions,
       App: AppWrapper,
       getAdditionalDocumentContent,
+      processJS,
+      processCSS,
+      processMeta,
     } = rendering.default.server;
 
     let appOptions = {};
@@ -127,6 +130,9 @@ export default (options, Doc = Document) => {
           state={state}
           title={app.props.title}
           additionalContent={additionalDocumentContent}
+          processMeta={processMeta}
+          processCSS={processCSS}
+          processJS={processJS}
         />
       ))}`;
 
