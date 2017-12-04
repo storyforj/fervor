@@ -84,7 +84,7 @@ describe('Prod server', () => {
     const manifestRaw = fs.readFileSync(path.join(__dirname, 'testApp', 'build', 'manifest.json'));
     const manifest = JSON.parse(manifestRaw);
     const jsFiles = Object.keys(manifest.jsChunks);
-    expect(jsFiles.length).to.equal(4);
+    expect(jsFiles.length).to.equal(5);
     expect(
       fs.statSync(path.join(__dirname, 'testApp', 'build', jsFiles[0])).isFile(),
     ).to.equal(true);
@@ -115,5 +115,12 @@ describe('Prod server', () => {
     } catch (e) {
       expect(e.toString()).to.contain('Not Found');
     }
+  });
+
+  it('has functioning async/await on the client side', () => {
+    browser.url('http://localhost:3003/test');
+    browser.waitForText('.test-button', 'hello');
+    browser.click('.test-button');
+    browser.waitForText('.test-button', 'world');
   });
 });

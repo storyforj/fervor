@@ -69,4 +69,11 @@ describe('Dev server', () => {
     expect(response.text).to.contain('hello-css');
     expect(response.text).to.contain('hello-meta');
   });
+
+  it('has functioning async/await on the client side', () => {
+    browser.url('http://localhost:3002/test');
+    browser.waitForText('.test-button', 'hello');
+    browser.click('.test-button');
+    browser.waitForText('.test-button', 'world');
+  });
 });
