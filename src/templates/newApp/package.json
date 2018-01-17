@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
-    "fervor": "^0.6.0"
+    "fervor": "^0.6.0",
+    "react-hot-loader": "^3.1.3"
   }
 }
