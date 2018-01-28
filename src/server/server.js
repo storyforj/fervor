@@ -45,7 +45,9 @@ export default async function startApp(options = {}) {
 
   // load any user defined middleware
   const middleware = load('middleware', { options, default: () => {} });
-  middleware.default({ app, logger, options });
+  if (middleware.default) {
+    middleware.default({ app, logger, options });
+  }
 
   app.use(appManifest(options));
   app.use(ssr(options));
