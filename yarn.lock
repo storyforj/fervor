@@ -2161,12 +2161,6 @@ debug@2.6.8:
   dependencies:
     ms "2.0.0"
 
-debug@~2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/debug/-/debug-2.2.0.tgz#f87057e995b1a1f6ae6a4960664137bc56f039da"
-  dependencies:
-    ms "0.7.1"
-
 decamelize@^1.0.0, decamelize@^1.1.1, decamelize@^1.1.2:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/decamelize/-/decamelize-1.2.0.tgz#f6534d15148269b20352e7bee26f501f9a191290"
@@ -2793,10 +2787,6 @@ esutils@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/esutils/-/esutils-2.0.2.tgz#0abf4f1caa5bcb1f7a9d8acc6dea4faaa04bac9b"
 
-etag@~1.7.0:
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/etag/-/etag-1.7.0.tgz#03d30b5f67dd6e632d2945d30d6652731a34d5d8"
-
 etag@~1.8.1:
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
@@ -3042,7 +3032,7 @@ fill-range@^2.1.0:
     repeat-element "^1.1.2"
     repeat-string "^1.5.2"
 
-finalhandler@1.1.0:
+finalhandler@1.1.0, finalhandler@^1.0.6:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/finalhandler/-/finalhandler-1.1.0.tgz#ce0b6855b45853e791b2fcc680046d88253dd7f5"
   dependencies:
@@ -3051,16 +3041,6 @@ finalhandler@1.1.0:
     escape-html "~1.0.3"
     on-finished "~2.3.0"
     parseurl "~1.3.2"
-    statuses "~1.3.1"
-    unpipe "~1.0.0"
-
-finalhandler@^0.5.1:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/finalhandler/-/finalhandler-0.5.1.tgz#2c400d8d4530935bc232549c5fa385ec07de6fcd"
-  dependencies:
-    debug "~2.2.0"
-    escape-html "~1.0.3"
-    on-finished "~2.3.0"
     statuses "~1.3.1"
     unpipe "~1.0.0"
 
@@ -3167,13 +3147,13 @@ forwarded@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.1.2.tgz#98c23dab1175657b8c0573e8ceccd91b0ff18c84"
 
-fresh@0.3.0, fresh@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/fresh/-/fresh-0.3.0.tgz#651f838e22424e7566de161d8358caa199f83d4f"
-
 fresh@0.5.2:
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/fresh/-/fresh-0.5.2.tgz#3d8cadd90d976569fa835ab1f8e4b23a105605a7"
+
+fresh@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/fresh/-/fresh-0.3.0.tgz#651f838e22424e7566de161d8358caa199f83d4f"
 
 fs-exists-sync@^0.1.0:
   version "0.1.0"
@@ -3429,14 +3409,14 @@ graceful-fs@^4.1.0, graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.4,
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/graceful-readlink/-/graceful-readlink-1.0.1.tgz#4cafad76bc62f02fa039b2f94e9a3dd3a391a725"
 
-graphile-build-pg@^0.1.0-alpha.35:
-  version "0.1.0-alpha.35"
-  resolved "https://registry.yarnpkg.com/graphile-build-pg/-/graphile-build-pg-0.1.0-alpha.35.tgz#b562f15484bdfb2e1ae04f0b77c29dcc3d450e4f"
+graphile-build-pg@^0.1.0-alpha.38:
+  version "0.1.0-alpha.38"
+  resolved "https://registry.yarnpkg.com/graphile-build-pg/-/graphile-build-pg-0.1.0-alpha.38.tgz#529b1c80b2d4d230b53dc463ca25d1d4f46148c7"
   dependencies:
     babel-runtime ">=6 <7"
     chalk "^2.1.0"
     debug ">=2 <3"
-    graphile-build "0.1.0-alpha.32"
+    graphile-build "^0.1.0-alpha.38"
     graphql-iso-date "^3.2.0"
     graphql-type-json "^0.1.4"
     jsonwebtoken "^7.4.1"
@@ -3445,10 +3425,11 @@ graphile-build-pg@^0.1.0-alpha.35:
     pg-range-parser "^1.0.0"
     pg-sql2 "^1.0.0-beta.3"
     pluralize "^5.0.0"
+    postgres-interval "1.1.1"
 
-graphile-build@0.1.0-alpha.32:
-  version "0.1.0-alpha.32"
-  resolved "https://registry.yarnpkg.com/graphile-build/-/graphile-build-0.1.0-alpha.32.tgz#16d7ebe06101d39d96d145509d2d9117bbeadc9e"
+graphile-build@^0.1.0-alpha.38:
+  version "0.1.0-alpha.38"
+  resolved "https://registry.yarnpkg.com/graphile-build/-/graphile-build-0.1.0-alpha.38.tgz#f9fcb14a6c8e79d345d6a5f707aa90eca0ec5ae4"
   dependencies:
     babel-runtime ">=6 <7"
     debug ">=2 <3"
@@ -3709,7 +3690,7 @@ http-errors@1.6.2, http-errors@^1.2.8, http-errors@^1.3.1, http-errors@^1.5.1, h
     setprototypeof "1.0.3"
     statuses ">= 1.3.1 < 2"
 
-http-errors@~1.5.0, http-errors@~1.5.1:
+http-errors@~1.5.0:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/http-errors/-/http-errors-1.5.1.tgz#788c0d2c1de2c81b9e6e8c01843b6b97eb920750"
   dependencies:
@@ -5135,10 +5116,6 @@ mime-types@^2.0.7, mime-types@^2.1.12, mime-types@~2.1.15, mime-types@~2.1.16, m
   dependencies:
     mime-db "~1.30.0"
 
-mime@1.3.4:
-  version "1.3.4"
-  resolved "https://registry.yarnpkg.com/mime/-/mime-1.3.4.tgz#115f9e3b6b3daf2959983cb38f149a2d40eb5d53"
-
 mime@1.4.1, mime@^1.3.4:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/mime/-/mime-1.4.1.tgz#121f9ebc49e3766f311a76e1fa1c8003c4b03aa6"
@@ -5230,10 +5207,6 @@ mocha@^3.2.0:
 moment@2.x.x:
   version "2.18.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.18.1.tgz#c36193dd3ce1c2eed2adb7c802dbbc77a81b1c0f"
-
-ms@0.7.1:
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/ms/-/ms-0.7.1.tgz#9cd13c03adbff25b65effde7ce864ee952017098"
 
 ms@0.7.2:
   version "0.7.2"
@@ -6201,24 +6174,24 @@ postcss@^6.0.1, postcss@^6.0.11, postcss@^6.0.2, postcss@^6.0.3:
     source-map "^0.5.7"
     supports-color "^4.4.0"
 
-postgraphile-core@0.1.0-alpha.35:
-  version "0.1.0-alpha.35"
-  resolved "https://registry.yarnpkg.com/postgraphile-core/-/postgraphile-core-0.1.0-alpha.35.tgz#3b4c09de6e8998c1feac2f512e4baa61ab500799"
+postgraphile-core@0.1.0-alpha.38:
+  version "0.1.0-alpha.38"
+  resolved "https://registry.yarnpkg.com/postgraphile-core/-/postgraphile-core-0.1.0-alpha.38.tgz#c250ba4f1f41977e980e1558a8011b1af36004bd"
   dependencies:
     babel-runtime ">=6 <7"
-    graphile-build "0.1.0-alpha.32"
-    graphile-build-pg "^0.1.0-alpha.35"
+    graphile-build "^0.1.0-alpha.38"
+    graphile-build-pg "^0.1.0-alpha.38"
 
-postgraphile@^4.0.0-alpha2.22:
-  version "4.0.0-alpha2.22"
-  resolved "https://registry.yarnpkg.com/postgraphile/-/postgraphile-4.0.0-alpha2.22.tgz#4e36de6a35678bb6ca8616dda7747bb06fc6f29c"
+postgraphile@^4.0.0-alpha2.28:
+  version "4.0.0-alpha2.28"
+  resolved "https://registry.yarnpkg.com/postgraphile/-/postgraphile-4.0.0-alpha2.28.tgz#81de9fffb22e6f54b7a8922b96507a4dc6cbfdd5"
   dependencies:
     body-parser "^1.15.2"
     chalk "1.1.3"
     commander "2.9.0"
     dataloader "^1.2.0"
     debug "^2.3.3"
-    finalhandler "^0.5.1"
+    finalhandler "^1.0.6"
     graphql ">=0.6.0 <1.0.0"
     http-errors "^1.5.1"
     jsonwebtoken "^7.1.9"
@@ -6229,9 +6202,9 @@ postgraphile@^4.0.0-alpha2.22:
     pg-minify "~0.5.3"
     pg-sql2 "^1.0.0-alpha1.0"
     pluralize "^3.0.0"
-    postgraphile-core "0.1.0-alpha.35"
+    postgraphile-core "0.1.0-alpha.38"
     postgres-interval "^1.0.2"
-    send "^0.14.1"
+    send "^0.16.1"
     tslib "^1.5.0"
 
 postgres-array@~1.0.0:
@@ -6246,7 +6219,7 @@ postgres-date@~1.0.0:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/postgres-date/-/postgres-date-1.0.3.tgz#e2d89702efdb258ff9d9cee0fe91bd06975257a8"
 
-postgres-interval@^1.0.2, postgres-interval@^1.1.0:
+postgres-interval@1.1.1, postgres-interval@^1.0.2, postgres-interval@^1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/postgres-interval/-/postgres-interval-1.1.1.tgz#acdb0f897b4b1c6e496d9d4e0a853e1c428f06f0"
   dependencies:
@@ -7080,7 +7053,7 @@ semver@~5.3.0:
   version "5.3.0"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.3.0.tgz#9b2ce5d3de02d17c6012ad326aa6b4d0cf54f94f"
 
-send@0.16.1:
+send@0.16.1, send@^0.16.1:
   version "0.16.1"
   resolved "https://registry.yarnpkg.com/send/-/send-0.16.1.tgz#a70e1ca21d1382c11d0d9f6231deb281080d7ab3"
   dependencies:
@@ -7094,24 +7067,6 @@ send@0.16.1:
     http-errors "~1.6.2"
     mime "1.4.1"
     ms "2.0.0"
-    on-finished "~2.3.0"
-    range-parser "~1.2.0"
-    statuses "~1.3.1"
-
-send@^0.14.1:
-  version "0.14.2"
-  resolved "https://registry.yarnpkg.com/send/-/send-0.14.2.tgz#39b0438b3f510be5dc6f667a11f71689368cdeef"
-  dependencies:
-    debug "~2.2.0"
-    depd "~1.1.0"
-    destroy "~1.0.4"
-    encodeurl "~1.0.1"
-    escape-html "~1.0.3"
-    etag "~1.7.0"
-    fresh "0.3.0"
-    http-errors "~1.5.1"
-    mime "1.3.4"
-    ms "0.7.2"
     on-finished "~2.3.0"
     range-parser "~1.2.0"
     statuses "~1.3.1"
