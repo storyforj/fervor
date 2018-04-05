@@ -4,7 +4,7 @@ import autoprefixer from 'autoprefixer';
 import flexbugs from 'postcss-flexbugs-fixes';
 import webpack from 'webpack';
 import webpackMiddleware from 'koa-webpack';
-import WorkboxPlugin from 'workbox-webpack-plugin';
+import { GenerateSW } from 'workbox-webpack-plugin';
 
 import hasConfig from '../shared/utils/hasConfig';
 import logger from '../shared/utils/logger';
@@ -12,6 +12,7 @@ import logger from '../shared/utils/logger';
 export default (app, options) => {
   const hasRenderingConfig = hasConfig(options.appLocation, 'rendering');
   let devConfig = {
+    mode: 'development',
     resolve: {
       alias: {
         fervorAppRoutes: path.resolve(options.appLocation, 'src', 'urls.js'),
@@ -21,8 +22,6 @@ export default (app, options) => {
       },
     },
     entry: [
-      'react-hot-loader/patch',
-      'webpack-hot-middleware/client',
       path.join(__dirname, '..', 'client', 'main.js'),
     ],
     output: {
@@ -33,7 +32,7 @@ export default (app, options) => {
     },
     devtool: 'inline-source-map',
     module: {
-      loaders: [
+      rules: [
         {
           test: /\.json$/,
           exclude: /node_modules/,
@@ -74,7 +73,6 @@ export default (app, options) => {
         {
           test: /\.js$/,
           use: [
-            { loader: 'react-hot-loader/webpack' },
             {
               loader: 'babel-loader',
               // eslint-disable-next-line global-require
@@ -82,6 +80,7 @@ export default (app, options) => {
                 false,
                 options.appLocation,
                 true,
+                ['react-hot-loader/babel'],
               ),
             },
           ],
@@ -103,22 +102,22 @@ export default (app, options) => {
         // eslint-disable-next-line
         manifest: require('../../lib/fervorVendors-manifest.json'),
       }),
-      new webpack.optimize.CommonsChunkPlugin({
-        async: true,
-        minChunks: 2,
-      }),
       new webpack.optimize.ModuleConcatenationPlugin(),
       new webpack.optimize.OccurrenceOrderPlugin(),
       new webpack.HotModuleReplacementPlugin(),
       new webpack.NoEmitOnErrorsPlugin(),
       new webpack.NamedModulesPlugin(),
-      new WorkboxPlugin({
-        globDirectory: options.appLocation,
-        globPatterns: [],
-        swDest: path.join(options.appLocation, 'build', 'sw.js'),
+      new GenerateSW({
         runtimeCaching: [],
+        swDest: path.join(options.appLocation, 'build', 'sw.js'),
+        importWorkboxFrom: 'cdn',
       }),
     ],
+    optimization: {
+      splitChunks: {
+        minChunks: 2,
+      },
+    },
   };
 
   const customConfigPath = path.join(options.appLocation, 'src', 'config', 'webpack');

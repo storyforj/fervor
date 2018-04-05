@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
+  mode: 'production',
   cache: true,
   entry: {
     fervorVendors: [path.join(__dirname, 'vendor.js')],
@@ -19,10 +20,9 @@ module.exports = {
     }),
     new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      parallel: true,
-      workers: 5,
-      ecma: 8,
-    }),
   ],
+  optimization: { minimize: true },
+  performance: {
+    hints: false,
+  },
 };

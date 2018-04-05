@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-export default (isServer, appLocation, useSrc) => {
+export default (isServer, appLocation, useSrc, plugins = []) => {
   let config = {
     presets: [
       ['env', { targets: { browsers: ['last 2 versions', 'safari >= 7'] } }],
@@ -16,7 +16,7 @@ export default (isServer, appLocation, useSrc) => {
           paths: ['(src|lib)\/urls\.js$'],
           moduleExceptions: ['^[^(./|../)]'],
         },
-      ],
+      ].concat(plugins),
     ],
   };
 
