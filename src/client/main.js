@@ -1,11 +1,12 @@
 import cookie from 'cookies-js';
 import pathToRegExp from 'path-to-regexp';
 import React from 'react';
-import {
-    ApolloClient,
-    ApolloProvider,
-    createNetworkInterface,
-} from 'react-apollo';
+import { ApolloClient } from 'apollo-client';
+import { createHttpLink } from 'apollo-link-http';
+import { setContext } from 'apollo-link-context';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { ApolloProvider } from 'react-apollo';
+import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom';
 import { ConnectedRouter } from 'react-router-redux';
 // eslint-disable-next-line
@@ -17,30 +18,31 @@ import browserHistory from './history';
 import store from './store';
 import Routes from './routes';
 
-const networkInterface = createNetworkInterface({ uri: '/graphql' });
-networkInterface.use([{
-  applyMiddleware(req, next) {
-    if (!req.options.headers) { req.options.headers = {}; }
+const httpLink = createHttpLink({ uri: '/graphql' });
+const middlewareLink = setContext(() => {
+  const authJWT = cookie.get('authJWT');
+  return {
+    headers: {
+      Authorization: `Bearer ${authJWT}`,
+    },
+  };
+});
 
-    const authJWT = cookie.get('authJWT');
-    if (authJWT) {
-      req.options.headers.Authorization = `Bearer ${authJWT}`;
-    }
-
-    next();
-  },
-}]);
+const link = middlewareLink.concat(httpLink);
+const cache = new InMemoryCache({});
 const webClient = new ApolloClient({
-  initialState: { apollo: window.APOLLO_STATE.apollo },
-  networkInterface,
+  cache: cache.restore(window.APOLLO_STATE.apollo),
+  link,
 });
 
 const render = (Component, initialPath, startingComponent) => {
   let app = (
-    <ApolloProvider client={webClient} store={store}>
-      <ConnectedRouter history={browserHistory}>
-        <Component initialPath={initialPath} startingComponent={startingComponent} />
-      </ConnectedRouter>
+    <ApolloProvider client={webClient}>
+      <Provider store={store}>
+        <ConnectedRouter history={browserHistory}>
+          <Component initialPath={initialPath} startingComponent={startingComponent} />
+        </ConnectedRouter>
+      </Provider>
     </ApolloProvider>
   );
 

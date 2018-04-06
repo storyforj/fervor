@@ -1,12 +1,12 @@
 import KoaRouter from 'koa-router';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {
-  ApolloClient,
-  ApolloProvider,
-  createNetworkInterface,
-  getDataFromTree,
-} from 'react-apollo';
+import { ApolloClient } from 'apollo-client';
+import { createHttpLink } from 'apollo-link-http';
+import { setContext } from 'apollo-link-context';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { ApolloProvider, getDataFromTree } from 'react-apollo';
+import { Provider } from 'react-redux';
 import ReactDOMServer from 'react-dom/server';
 import { StaticRouter } from 'react-router';
 import {
@@ -18,20 +18,27 @@ import initStore from '../shared/store';
 import load from '../shared/utils/load';
 import Document from './components/Document';
 
-const App = ({ ctx, routes, serverClient, store }) => (
-  <ApolloProvider client={serverClient} store={store}>
-    <StaticRouter location={ctx.req.url} context={ctx}>
-      <Switch>
-        { Object.keys(routes).map((path) => (
-          <Route
-            key={path}
-            path={path}
-            component={routes[path]}
-            exact
-          />
-        ))}
-      </Switch>
-    </StaticRouter>
+const App = ({
+  ctx,
+  routes,
+  serverClient,
+  store,
+}) => (
+  <ApolloProvider client={serverClient}>
+    <Provider store={store}>
+      <StaticRouter location={ctx.req.url} context={ctx}>
+        <Switch>
+          { Object.keys(routes).map((path) => (
+            <Route
+              key={path}
+              path={path}
+              component={routes[path]}
+              exact
+            />
+          ))}
+        </Switch>
+      </StaticRouter>
+    </Provider>
   </ApolloProvider>
 );
 
@@ -44,23 +51,22 @@ App.propTypes = {
 
 export default (options, Doc = Document) => {
   const processRoute = async (ctx, next) => {
-    const networkInterface = createNetworkInterface({
-      uri: `${process.env.HOST || ctx.request.origin}/graphql`,
+    const httpLink = createHttpLink({ uri: `${process.env.HOST || ctx.request.origin}/graphql` });
+    const middlewareLink = setContext(() => {
+      if (!ctx.cookie || !ctx.cookie.authJWT) { return {}; }
+      const authJWT = ctx.cookie.get('authJWT');
+      return {
+        headers: {
+          Authorization: `Bearer ${authJWT}`,
+        },
+      };
     });
-    networkInterface.use([{
-      applyMiddleware(req, nextNIMiddleware) {
-        if (!req.options.headers) { req.options.headers = {}; }
 
-        if (ctx.cookie && ctx.cookie.authJWT) {
-          req.options.headers.Authorization = `Bearer ${ctx.cookie.authJWT}`;
-        }
-
-        nextNIMiddleware();
-      },
-    }]);
+    const link = middlewareLink.concat(httpLink);
     const serverClient = new ApolloClient({
       ssrMode: true,
-      networkInterface,
+      cache: new InMemoryCache({}),
+      link,
     });
     const store = initStore({ router: { location: { pathname: ctx.req.url } } });
 
@@ -106,7 +112,7 @@ export default (options, Doc = Document) => {
 
     return getDataFromTree(app).then(() => {
       const state = store.getState();
-      state.apollo = serverClient.getInitialState();
+      state.apollo = serverClient.extract();
       const content = ReactDOMServer.renderToString(app);
 
       // Load additional document content after rendering the app.

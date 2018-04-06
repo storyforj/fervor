@@ -33,6 +33,10 @@
     "setupTestFrameworkScriptFile": "./test/unit/beforeEach.js"
   },
   "dependencies": {
+    "apollo-cache-inmemory": "^1.1.12",
+    "apollo-client": "^2.2.8",
+    "apollo-link-context": "^1.0.7",
+    "apollo-link-http": "^1.5.3",
     "apollo-local-query": "^0.3.1",
     "autoprefixer": "^8.2.0",
     "babel-cli": "^6.26.0",
@@ -93,7 +97,7 @@
     "postgraphile": "^4.0.0-beta.5",
     "prop-types": "^15.6.1",
     "react": "^16.3.1",
-    "react-apollo": "^1.4.16",
+    "react-apollo": "^2.1.2",
     "react-dom": "^16.2.0",
     "react-hot-loader": "^4.0.1",
     "react-redux": "^5.0.7",
