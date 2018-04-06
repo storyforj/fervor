@@ -84,7 +84,7 @@ describe('Prod server', () => {
     const manifestRaw = fs.readFileSync(path.join(__dirname, 'testApp', 'build', 'manifest.json'));
     const manifest = JSON.parse(manifestRaw);
     const jsFiles = Object.keys(manifest.jsChunks);
-    expect(jsFiles.length).to.equal(5);
+    expect(jsFiles.length).to.equal(4);
     expect(
       fs.statSync(path.join(__dirname, 'testApp', 'build', jsFiles[0])).isFile(),
     ).to.equal(true);

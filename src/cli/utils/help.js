@@ -26,7 +26,7 @@ module.exports = (commands, args) => {
   Options:
 
   ${command.options.map((opt) => (
-  `  --${opt.name} - ${opt.description}`
+    `  --${opt.name} - ${opt.description}`
   )).join('\n  ')}`;
     }
 

@@ -1,10 +1,10 @@
 import gql from 'graphql-tag';
 import React from 'react';
-import {
-    ApolloClient,
-    ApolloProvider,
-    createNetworkInterface,
-} from 'react-apollo';
+import { ApolloClient } from 'apollo-client';
+import { createHttpLink } from 'apollo-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { ApolloProvider } from 'react-apollo';
+import { Provider } from 'react-redux';
 import { mount } from 'enzyme';
 import initStore from '../../../src/shared/store';
 import Form from '../../../src/client/components/Form';
@@ -15,9 +15,8 @@ describe('Form Component', () => {
 
   beforeEach(() => {
     const webClient = new ApolloClient({
-      networkInterface: createNetworkInterface({
-        uri: '/graphql',
-      }),
+      cache: new InMemoryCache({}),
+      link: createHttpLink({ uri: '/graphql' }),
     });
     const store = initStore({});
 
@@ -30,19 +29,21 @@ describe('Form Component', () => {
       }
     }`;
 
-    mutateStub = jest.fn();
+    mutateStub = jest.fn(() => new Promise((resolve) => resolve()));
 
-    component = mount(
-      <ApolloProvider client={webClient} store={store}>
-        <Form mutation={mutation} mutate={mutateStub}>
-          <div>Hello World</div>
-          <input name="meow[test][wow]" defaultValue="hello" />
-          <input name="oh" defaultValue="world" />
-          <input name="cheese[hello]" defaultValue="a" />
-          <input name="cheese[hello]" defaultValue="b" />
-        </Form>
-      </ApolloProvider>,
-    );
+    component = mount((
+      <ApolloProvider client={webClient}>
+        <Provider store={store}>
+          <Form mutation={mutation} mutate={mutateStub}>
+            <div>Hello World</div>
+            <input name="meow[test][wow]" defaultValue="hello" />
+            <input name="oh" defaultValue="world" />
+            <input name="cheese[hello]" defaultValue="a" />
+            <input name="cheese[hello]" defaultValue="b" />
+          </Form>
+        </Provider>
+      </ApolloProvider>
+    ));
   });
 
   it('renders a form', () => {
@@ -78,9 +79,8 @@ describe('Form Component, when onSuccess is defined', () => {
 
   beforeEach(() => {
     const webClient = new ApolloClient({
-      networkInterface: createNetworkInterface({
-        uri: '/graphql',
-      }),
+      cache: new InMemoryCache({}),
+      link: createHttpLink({ uri: '/graphql' }),
     });
     const store = initStore({});
 
@@ -100,14 +100,16 @@ describe('Form Component, when onSuccess is defined', () => {
       });
     });
 
-    component = mount(
-      <ApolloProvider client={webClient} store={store}>
-        <Form mutation={mutation} mutate={mutateStub} onSuccess={successStub}>
-          <div>Hello World</div>
-          <input name="oh" defaultValue="world" />
-        </Form>
-      </ApolloProvider>,
-    );
+    component = mount((
+      <ApolloProvider client={webClient}>
+        <Provider store={store}>
+          <Form mutation={mutation} mutate={mutateStub} onSuccess={successStub}>
+            <div>Hello World</div>
+            <input name="oh" defaultValue="world" />
+          </Form>
+        </Provider>
+      </ApolloProvider>
+    ));
   });
 
   it('triggers the onSuccess hook', async () => {
@@ -129,9 +131,8 @@ describe('Form Component, when onFailure is specified', () => {
 
   beforeEach(() => {
     const webClient = new ApolloClient({
-      networkInterface: createNetworkInterface({
-        uri: '/graphql',
-      }),
+      cache: new InMemoryCache({}),
+      link: createHttpLink({ uri: '/graphql' }),
     });
     const store = initStore({});
 
@@ -151,14 +152,16 @@ describe('Form Component, when onFailure is specified', () => {
       });
     });
 
-    component = mount(
-      <ApolloProvider client={webClient} store={store}>
-        <Form mutation={mutation} mutate={mutateStub} onFailure={failureStub}>
-          <div>Hello World</div>
-          <input name="oh" defaultValue="world" />
-        </Form>
-      </ApolloProvider>,
-    );
+    component = mount((
+      <ApolloProvider client={webClient}>
+        <Provider store={store}>
+          <Form mutation={mutation} mutate={mutateStub} onFailure={failureStub}>
+            <div>Hello World</div>
+            <input name="oh" defaultValue="world" />
+          </Form>
+        </Provider>
+      </ApolloProvider>
+    ));
   });
 
   it('triggers the onFailure hook', async () => {

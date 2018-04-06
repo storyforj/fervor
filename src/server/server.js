@@ -50,12 +50,12 @@ export default async function startApp(options = {}) {
   }
 
   app.use(appManifest(options));
-  app.use(ssr(options));
   if (!options.disableWebpack) {
     // eslint-disable-next-line global-require
     require('../config/webpack.dev').default(app, options);
   }
   app.use(staticAssets(options));
+  app.use(ssr(options));
 
   await app.listen(options.port);
   logger.info(chalk.green(`Server started on: ${options.host}`));

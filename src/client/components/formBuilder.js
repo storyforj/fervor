@@ -42,17 +42,17 @@ export default (mutation) => {
         ),
         refetchQueries: this.props.refetchQueries,
       })
-      .then((res) => {
-        if (this.props.redirectOnClient) {
-          const redirectPath = interpolate(this.props.redirectTo, res.data);
-          this.props.pushAction(redirectPath);
-        }
+        .then((res) => {
+          if (this.props.redirectOnClient) {
+            const redirectPath = interpolate(this.props.redirectTo, res.data);
+            this.props.pushAction(redirectPath);
+          }
 
-        this.props.onSuccess(res);
-      })
-      .catch((res) => {
-        this.props.onFailure(res);
-      });
+          this.props.onSuccess(res);
+        })
+        .catch((res) => {
+          this.props.onFailure(res);
+        });
       this.props.onSubmit(e);
     }
 

@@ -1,5 +1,6 @@
 import clientCookies from 'cookies-js';
-import { compose, gql as apolloGQL, graphql } from 'react-apollo';
+import { compose, Query, Mutation, graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -13,16 +14,24 @@ module.exports = {
   clientCookies,
   compose,
   connect,
-  historyActions: { push, replace, go, goBack, goForward },
+  historyActions: {
+    push,
+    replace,
+    go,
+    goBack,
+    goForward,
+  },
   // NOTE: I don't like this function living here.
   // If it happens again let's find it a new home.
   gql: (str) => {
-    const ast = apolloGQL(str);
+    const ast = gql(str);
     ast.query = str;
     return ast;
   },
-  graphql,
+  Query,
+  Mutation,
   Link,
+  graphql,
   PropTypes,
   React,
 

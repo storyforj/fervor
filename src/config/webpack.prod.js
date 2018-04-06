@@ -5,11 +5,14 @@ require('babel-register')(require('./babelrcHelper').default(true, false));
 const fs = require('fs');
 const path = require('path');
 const autoprefixer = require('autoprefixer');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 const globToRegExp = require('glob-to-regexp');
 const flexbugs = require('postcss-flexbugs-fixes');
 const webpack = require('webpack');
-const WorkboxPlugin = require('workbox-webpack-plugin');
+const { GenerateSW } = require('workbox-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+
 const hasConfig = require('../shared/utils/hasConfig');
 const ChunkManifestPlugin = require('./ChunkManifestPlugin');
 const clientSideBabelConfig = require('./babelrcHelper').default(false, process.cwd(), true);
@@ -37,6 +40,7 @@ module.exports = () => {
   const hasRenderingConfig = hasConfig.default(process.cwd(), 'rendering');
 
   let prodConfig = {
+    mode: 'production',
     resolve: {
       alias: {
         fervorAppRoutes: path.resolve(process.cwd(), 'src', 'urls.js'),
@@ -54,7 +58,7 @@ module.exports = () => {
       filename: '[name]-[chunkhash:6].js',
     },
     module: {
-      loaders: [
+      rules: [
         {
           test: /\.json$/,
           exclude: /node_modules/,
@@ -66,33 +70,31 @@ module.exports = () => {
         },
         {
           test: /\.scss$/,
-          use: ExtractTextPlugin.extract({
-            fallback: 'style-loader',
-            use: [
-              {
-                loader: 'css-loader',
-                options: {
-                  modules: true,
-                  importLoaders: 2,
-                  localIdentName: '[name]__[local]___[hash:base64:5]',
+          use: [
+            MiniCSSExtractPlugin.loader,
+            {
+              loader: 'css-loader',
+              options: {
+                modules: true,
+                importLoaders: 2,
+                localIdentName: '[name]__[local]___[hash:base64:5]',
+              },
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                plugins() {
+                  return [autoprefixer, flexbugs];
                 },
               },
-              {
-                loader: 'postcss-loader',
-                options: {
-                  plugins() {
-                    return [autoprefixer, flexbugs];
-                  },
-                },
+            },
+            {
+              loader: 'sass-loader',
+              options: {
+                outputStyle: 'compressed',
               },
-              {
-                loader: 'sass-loader',
-                options: {
-                  outputStyle: 'compressed',
-                },
-              },
-            ],
-          }),
+            },
+          ],
         },
         {
           test: /\.js$/,
@@ -108,8 +110,7 @@ module.exports = () => {
     },
     plugins: [
       new ChunkManifestPlugin(),
-      new ExtractTextPlugin({
-        allChunks: true,
+      new MiniCSSExtractPlugin({
         filename: 'bundle-[chunkhash:6].css',
       }),
       new webpack.DefinePlugin({
@@ -126,29 +127,28 @@ module.exports = () => {
         // eslint-disable-next-line
         manifest: require('../../lib/fervorVendors-manifest.json'),
       }),
-      new webpack.optimize.CommonsChunkPlugin({
-        async: 'common-[chunkhash:6].js',
-        minChunks: 2,
-      }),
       new webpack.optimize.ModuleConcatenationPlugin(),
       new webpack.optimize.OccurrenceOrderPlugin(),
       new webpack.NoEmitOnErrorsPlugin(),
       new webpack.NamedModulesPlugin(),
-      new webpack.optimize.UglifyJsPlugin({
-        parallel: true,
-        workers: 5,
-        ecma: 8,
-      }),
-      new WorkboxPlugin({
-        globDirectory: process.cwd(),
-        globPatterns: [
-          'build/*-*.{js,css}',
-          'assets/**/*.{png,jpg,jpeg,gif,woff,woff2,svg,js,css}',
-        ],
+      new GenerateSW({
         swDest: path.join(buildDir, 'sw.js'),
+        importWorkboxFrom: 'cdn',
         runtimeCaching,
       }),
     ],
+    optimization: {
+      minimizer: [
+        new UglifyJsPlugin({
+          cache: true,
+          parallel: true,
+        }),
+        new OptimizeCSSAssetsPlugin({}),
+      ],
+      splitChunks: {
+        minChunks: 2,
+      },
+    },
   };
 
   const customConfigPath = path.join(process.cwd(), 'src', 'config', 'webpack');

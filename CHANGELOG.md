@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.0.0] - 2018-04-06
+### Added
+- Server side hot reload - you no longer need to restart the server in dev as frequently
+- Exposed Apollo 2's Query and Mutation components
+### Changed
+- Upgraded to webpack 4 - IMPORTANT: If you made a custom webpack config, you'll need to change it
+- Upgraded to apollo 2 while maintaining backwards compatibility with old apps
+- Upgraded every package to the latest builds
+- Replaced webpack-text-extract-plugin for mini-css-extract-plugin
+- Webpack 4 chunking/optimizations have now taken over for the most part
+### Removed
+- Support for NPM is flakey, please use yarn for now
+
 ## [0.7.2] - 2017-11-16
 ### Added
 - Experimental - Added processCSS, processJS and processMeta rendering config options
