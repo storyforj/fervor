@@ -17,6 +17,8 @@ import initStore from '../shared/store';
 import load from '../shared/utils/load';
 import Document from './components/Document';
 
+const GenericNotFound = () => (<div>Not Found</div>);
+
 const App = ({
   ctx,
   routes,
@@ -35,6 +37,7 @@ const App = ({
               exact
             />
           ))}
+          <Route component={routes['404'] || GenericNotFound} />
         </Switch>
       </StaticRouter>
     </Provider>

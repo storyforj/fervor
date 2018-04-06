@@ -19,6 +19,7 @@ const loader = (componentLoader, initialPath, startingComponent) => {
   return BundleLoader;
 };
 
+const GenericNotFound = () => (<div>Not Found</div>);
 const Routes = ({ initialPath, startingComponent }) => {
   const routes = Object.keys(fervorRoutes).map((path) => (
     <Route
@@ -32,6 +33,12 @@ const Routes = ({ initialPath, startingComponent }) => {
   return (
     <Switch>
       {routes}
+      <Route component={
+        routes['404'] ?
+          loader(fervorRoutes['404'], initialPath, startingComponent) :
+          GenericNotFound
+      }
+      />
     </Switch>
   );
 };
