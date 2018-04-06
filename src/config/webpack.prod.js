@@ -5,11 +5,14 @@ require('babel-register')(require('./babelrcHelper').default(true, false));
 const fs = require('fs');
 const path = require('path');
 const autoprefixer = require('autoprefixer');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 const globToRegExp = require('glob-to-regexp');
 const flexbugs = require('postcss-flexbugs-fixes');
 const webpack = require('webpack');
 const { GenerateSW } = require('workbox-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+
 const hasConfig = require('../shared/utils/hasConfig');
 const ChunkManifestPlugin = require('./ChunkManifestPlugin');
 const clientSideBabelConfig = require('./babelrcHelper').default(false, process.cwd(), true);
@@ -67,33 +70,31 @@ module.exports = () => {
         },
         {
           test: /\.scss$/,
-          use: ExtractTextPlugin.extract({
-            fallback: 'style-loader',
-            use: [
-              {
-                loader: 'css-loader',
-                options: {
-                  modules: true,
-                  importLoaders: 2,
-                  localIdentName: '[name]__[local]___[hash:base64:5]',
+          use: [
+            MiniCSSExtractPlugin.loader,
+            {
+              loader: 'css-loader',
+              options: {
+                modules: true,
+                importLoaders: 2,
+                localIdentName: '[name]__[local]___[hash:base64:5]',
+              },
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                plugins() {
+                  return [autoprefixer, flexbugs];
                 },
               },
-              {
-                loader: 'postcss-loader',
-                options: {
-                  plugins() {
-                    return [autoprefixer, flexbugs];
-                  },
-                },
+            },
+            {
+              loader: 'sass-loader',
+              options: {
+                outputStyle: 'compressed',
               },
-              {
-                loader: 'sass-loader',
-                options: {
-                  outputStyle: 'compressed',
-                },
-              },
-            ],
-          }),
+            },
+          ],
         },
         {
           test: /\.js$/,
@@ -109,8 +110,7 @@ module.exports = () => {
     },
     plugins: [
       new ChunkManifestPlugin(),
-      new ExtractTextPlugin({
-        allChunks: true,
+      new MiniCSSExtractPlugin({
         filename: 'bundle-[chunkhash:6].css',
       }),
       new webpack.DefinePlugin({
@@ -138,7 +138,13 @@ module.exports = () => {
       }),
     ],
     optimization: {
-      minimize: true,
+      minimizer: [
+        new UglifyJsPlugin({
+          cache: true,
+          parallel: true,
+        }),
+        new OptimizeCSSAssetsPlugin({}),
+      ],
       splitChunks: {
         minChunks: 2,
       },

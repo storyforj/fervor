@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   mode: 'production',
@@ -21,7 +22,14 @@ module.exports = {
     new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
   ],
-  optimization: { minimize: true },
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+      }),
+    ],
+  },
   performance: {
     hints: false,
   },
