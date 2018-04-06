@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {
-    Switch,
-    Route,
+  Switch,
+  Route,
 } from 'react-router-dom';
 // eslint-disable-next-line
 import fervorRoutes from 'fervorAppRoutes';
