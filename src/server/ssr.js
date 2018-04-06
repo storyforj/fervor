@@ -54,10 +54,10 @@ export default (options, Doc = Document) => {
     const httpLink = createHttpLink({ uri: `${process.env.HOST || ctx.request.origin}/graphql` });
     const middlewareLink = setContext(() => {
       if (!ctx.cookie || !ctx.cookie.authJWT) { return {}; }
-      const authJWT = ctx.cookie.get('authJWT');
+
       return {
         headers: {
-          Authorization: `Bearer ${authJWT}`,
+          Authorization: `Bearer ${ctx.cookie.authJWT}`,
         },
       };
     });
