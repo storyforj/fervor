@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import autoprefixer from 'autoprefixer';
 import flexbugs from 'postcss-flexbugs-fixes';
+import MiniCSSExtractPlugin from 'mini-css-extract-plugin';
 import webpack from 'webpack';
 import webpackMiddleware from 'koa-webpack';
 import { GenerateSW } from 'workbox-webpack-plugin';
@@ -45,7 +46,7 @@ export default (app, options) => {
         {
           test: /\.scss$/,
           use: [
-            'style-loader',
+            MiniCSSExtractPlugin.loader,
             {
               loader: 'css-loader',
               options: {
@@ -89,6 +90,9 @@ export default (app, options) => {
       ],
     },
     plugins: [
+      new MiniCSSExtractPlugin({
+        filename: 'bundle-[chunkhash:6].css',
+      }),
       new webpack.DefinePlugin({
         __DEV__: JSON.stringify(JSON.parse(process.env.BUILD_DEV || true)),
         'process.env': {
