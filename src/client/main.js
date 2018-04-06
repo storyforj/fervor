@@ -21,6 +21,7 @@ import Routes from './routes';
 const httpLink = createHttpLink({ uri: '/graphql' });
 const middlewareLink = setContext(() => {
   const authJWT = cookie.get('authJWT');
+  if (!authJWT) { return undefined; }
   return {
     headers: {
       Authorization: `Bearer ${authJWT}`,

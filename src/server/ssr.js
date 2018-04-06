@@ -53,7 +53,7 @@ export default (options, Doc = Document) => {
   const processRoute = async (ctx, next) => {
     const httpLink = createHttpLink({ uri: `${process.env.HOST || ctx.request.origin}/graphql` });
     const middlewareLink = setContext(() => {
-      if (!ctx.cookie || !ctx.cookie.authJWT) { return {}; }
+      if (!ctx.cookie || !ctx.cookie.authJWT) { return undefined; }
 
       return {
         headers: {
