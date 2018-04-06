@@ -8,11 +8,6 @@ export default (options) => {
     async (ctx) => koaSend(ctx, '/build/sw.js', { gzip: true, root: options.appLocation }),
   );
   router.get(
-    '/workbox-sw.prod.v2.0.3.js',
-    async (ctx) =>
-      koaSend(ctx, '/build/workbox-sw.prod.v2.0.3.js', { gzip: true, root: options.appLocation }),
-  );
-  router.get(
     '/build/common.js',
     async (ctx) => koaSend(ctx, ctx.path, { gzip: true, root: options.appLocation }),
   );

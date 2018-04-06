@@ -1,6 +1,6 @@
 class ChunkManifestPlugin {
   apply(compiler) {
-    compiler.plugin('emit', (compilation, callback) => {
+    compiler.hooks.emit.tap('ChunkManifest', (compilation) => {
       const manifest = {
         jsChunks: {},
         cssChunks: {},
@@ -24,8 +24,6 @@ class ChunkManifestPlugin {
           return output.length;
         },
       };
-
-      callback();
     });
   }
 }
