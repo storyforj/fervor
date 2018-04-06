@@ -61,6 +61,7 @@ let startApp = () => render(Routes);
 // state where an empty div is rendered
 // eslint-disable-next-line
 for (const path of Object.keys(fervorRoutes)) {
+  /* eslint-disable no-restricted-globals */
   if (pathToRegExp(path).test(location.pathname)) {
     startApp = () => fervorRoutes[path]((mod) => render(
       Routes,

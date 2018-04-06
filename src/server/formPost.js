@@ -24,9 +24,10 @@ export default async (ctx) => {
         'Content-Type': 'application/json',
       },
     },
-  ).then((res) => res.json())
-  .then(({ data }) => {
-    const redirectPath = interpolate(redirectTo, data);
-    ctx.redirect(301, `${process.env.HOST || ctx.request.origin}/${redirectPath}`);
-  });
+  )
+    .then((res) => res.json())
+    .then(({ data }) => {
+      const redirectPath = interpolate(redirectTo, data);
+      ctx.redirect(301, `${process.env.HOST || ctx.request.origin}/${redirectPath}`);
+    });
 };

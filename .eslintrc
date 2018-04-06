@@ -11,7 +11,10 @@
     "rules": {
         "arrow-parens": ["error", "always"],
         "indent": ["error", 2],
+        "function-paren-newline": [0],
+        "max-len": ["error", 120],
         "no-param-reassign": ["error", { "props": false }],
+        "prefer-destructuring": [0],
         "react/jsx-filename-extension": [1, { "extensions": [".js"] }],
         "react/jsx-indent": [2, 2],
         "react/jsx-indent-props": [2, 2],

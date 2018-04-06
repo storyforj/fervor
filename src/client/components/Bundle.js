@@ -32,6 +32,7 @@ class Bundle extends React.PureComponent {
   }
 
   render() {
+    // eslint-disable-next-line no-restricted-globals
     if (this.props.initialPath === location.pathname) {
       return this.props.children(this.props.startingComponent);
     }
