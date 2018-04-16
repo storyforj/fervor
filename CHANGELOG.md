@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2018-05-15
+### Changed
+- Use style-loader again for dev
+- Removed a double invocation of hot-module-loading
+- Upgrade webpack css loaders
+- Merged all .scss files again
+
 ## [1.0.0] - 2018-04-06
 ### Added
 - Server side hot reload - you no longer need to restart the server in dev as frequently
