@@ -46,7 +46,7 @@ export default (app, options) => {
         {
           test: /\.scss$/,
           use: [
-            MiniCSSExtractPlugin.loader,
+            { loader: 'style-loader' },
             {
               loader: 'css-loader',
               options: {
@@ -58,9 +58,9 @@ export default (app, options) => {
             {
               loader: 'postcss-loader',
               options: {
-                plugins() {
-                  return [autoprefixer, flexbugs];
-                },
+                plugins: () => (
+                  [autoprefixer(), flexbugs()]
+                ),
               },
             },
             {
