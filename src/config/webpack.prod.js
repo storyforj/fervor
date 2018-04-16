@@ -147,6 +147,14 @@ module.exports = () => {
       ],
       splitChunks: {
         minChunks: 2,
+        cacheGroups: {
+          styles: {
+            name: 'styles',
+            test: /\.css|\.scss$/,
+            chunks: 'all',
+            enforce: true,
+          },
+        },
       },
     },
   };
