@@ -1,5 +1,6 @@
 import clientCookies from 'cookies-js';
 import { compose, Query, Mutation, graphql } from 'react-apollo';
+import { Helmet } from 'react-helmet';
 import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -36,5 +37,6 @@ module.exports = {
   React,
 
   Document,
+  Meta: Helmet,
   Form,
 };

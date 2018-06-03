@@ -5,6 +5,7 @@ import { createHttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloProvider, getDataFromTree } from 'react-apollo';
+import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import ReactDOMServer from 'react-dom/server';
 import { StaticRouter } from 'react-router';
@@ -115,6 +116,7 @@ export default async (options, ctx, next, Doc = Document) => {
     const state = store.getState();
     state.apollo = serverClient.extract();
     const content = ReactDOMServer.renderToString(app);
+    const helmet = Helmet.renderStatic();
 
     // Load additional document content after rendering the app.
     // We do this after rendering the app to support hooks compiling
@@ -124,9 +126,6 @@ export default async (options, ctx, next, Doc = Document) => {
       additionalDocumentContent = getAdditionalDocumentContent(appOptions);
     }
 
-    // TODO: app.props.title is not accessible on the server-side.
-    // For now we'll just rely on it getting set client side.
-
     ctx.body = `<!doctype html>\n${ReactDOMServer.renderToStaticMarkup((
       <Doc
         appLocation={options.appLocation}
@@ -134,6 +133,7 @@ export default async (options, ctx, next, Doc = Document) => {
         // eslint-disable-next-line
         manifest={require(`${options.appLocation}/src/config/appmanifest.json`)}
         content={content}
+        helmet={helmet}
         state={state}
         title={app.props.title}
         additionalContent={additionalDocumentContent}

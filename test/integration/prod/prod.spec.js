@@ -35,6 +35,7 @@ describe('Prod server', () => {
   it('renders server side', async () => {
     const response = await superagent.get('http://localhost:3003/');
     expect(response.text).to.contain('Hello World');
+    expect(response.text).to.contain('Testing</title>');
   });
 
   it('renders client side with CSS', () => {

@@ -1,8 +1,12 @@
-import { Document, React, PropTypes } from 'fervor/lib';
+import { Meta, React, PropTypes } from 'fervor/lib';
 import styles from './styles/template.scss';
 
 const Template = ({ children, title }) => (
-  <Document title={title}>
+  <React.Fragment>
+    <Meta>
+      <title>{title}</title>
+      <meta key="viewport" name="viewport" content="width=device-width, initial-scale=1" />,
+    </Meta>
     <div className={styles.demoapp}>
       <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet" />
       <header>
@@ -12,7 +16,7 @@ const Template = ({ children, title }) => (
         {children}
       </div>
     </div>
-  </Document>
+  </React.Fragment>
 );
 
 Template.propTypes = {
