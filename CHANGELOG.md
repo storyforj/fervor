@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2018-06-02
+### Added
+- Added react-helmet and our "Meta" facade for it. You can now use it as superior alternative to our original "Document" component.
+- Titles are now renderable server side :boom:
+- All meta data on the page is editable
+### Changed
+- Our "Document" component is deprecated and will be removed in the future
+### Removed
+- IMPORTANT (breaking change): We no longer automatically add the "viewport" meta tag. If you were using this previously you should manually add it to your site. You can add it like this in your templates or for any app.
+  <Meta>
+    <meta key="viewport" name="viewport" content="width=device-width, initial-scale=1" />
+  </Meta>
+
 ## [1.0.1] - 2018-05-15
 ### Changed
 - Use style-loader again for dev

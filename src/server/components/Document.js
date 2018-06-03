@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
 /* eslint-disable react/no-danger */
 export default function Document({
   appFavicon,
   appLocation,
   content,
+  helmet,
   manifest,
   state,
   title,
@@ -73,17 +75,22 @@ export default function Document({
     pwaMeta.push(<meta key="appThemeColor" name="theme-color" content={manifest.theme_color} />);
   }
 
+  const htmlAttrs = helmet.htmlAttributes.toComponent();
+  const bodyAttrs = helmet.bodyAttributes.toComponent();
+
   return (
-    <html lang="en">
+    <html lang="en" {...htmlAttrs}>
       <head>
-        <title>{title}</title>
+        {title ? <title>{title}</title> : null}
+        {helmet.title.toComponent()}
+        {helmet.meta.toComponent()}
         { processMeta(pwaMeta.concat([
           <link key="appManifest" rel="manifest" href="/appmanifest.json" />,
-          <meta key="viewport" name="viewport" content="width=device-width, initial-scale=1" />,
-        ])) }
+        ]))}
+        {helmet.link.toComponent()}
         { processCSS(cssFiles) }
       </head>
-      <body>
+      <body {...bodyAttrs}>
         <div id="app" dangerouslySetInnerHTML={{ __html: content }} />
         { additionalContent }
         <script
@@ -112,6 +119,7 @@ Document.propTypes = {
   appFavicon: PropTypes.string,
   manifest: PropTypes.object,
   content: PropTypes.string.isRequired,
+  helmet: PropTypes.object.isRequired,
   state: PropTypes.object.isRequired,
   title: PropTypes.string,
   additionalContent: PropTypes.node,
