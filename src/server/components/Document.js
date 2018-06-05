@@ -89,6 +89,9 @@ export default function Document({
         ]))}
         {helmet.link.toComponent()}
         { processCSS(cssFiles) }
+        {helmet.style.toComponent()}
+        {helmet.script.toComponent()}
+        {helmet.noscript.toComponent()}
       </head>
       <body {...bodyAttrs}>
         <div id="app" dangerouslySetInnerHTML={{ __html: content }} />
