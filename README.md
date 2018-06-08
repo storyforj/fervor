@@ -32,7 +32,7 @@ How to Start
 
 1. PostgreSQL installed and running ([OSX guide](https://www.codementor.io/devops/tutorial/getting-started-postgresql-server-mac-osx), [Linux guide](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-16-04))
 2. NodeJS installed - take a look at [NVM](https://github.com/creationix/nvm)
-3. Optionally - [Install Yarn](https://yarnpkg.com/en/docs/install)
+3. [Install Yarn](https://yarnpkg.com/en/docs/install) (Required - for now)
 
 ### Create a new app
 
