@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2018-09-09
+### Added
+- Apollo link state - the file src/graph/client.js and folder src/graph/client are now reserved for client side
+  state management via apollo link state. See the "Client State" wiki page for more details
+### Changed
+- A refactor of the form component to prevent HOC re-rendering issues
+- Upgraded React/Apollo and friends
+
 ## [1.1.0] - 2018-06-02
 ### Added
 - Added react-helmet and our "Meta" facade for it. You can now use it as superior alternative to our original "Document" component.
