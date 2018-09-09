@@ -67,8 +67,7 @@
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.10.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-react": "^7.7.0",
-    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "eslint-plugin-react": "^7.11.1",
     "form-data-to-object": "^0.2.0",
     "glob-to-regexp": "^0.4.0",
     "graphql": "^0.13.2",
@@ -101,14 +100,14 @@
     "postcss-scss": "^1.0.5",
     "postgraphile": "^4.0.0-beta.5",
     "prop-types": "^15.6.1",
-    "react": "^16.3.1",
+    "react": "^16.5.0",
     "react-apollo": "^2.1.11",
-    "react-dom": "^16.2.0",
+    "react-dom": "^16.5.0",
     "react-helmet": "^5.2.0",
     "react-hot-loader": "^4.0.1",
     "react-redux": "^5.0.7",
-    "react-router": "^4.2.0",
-    "react-router-dom": "^4.2.2",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
     "react-router-redux": "^5.0.0-alpha.8",
     "redux": "^3.7.2",
     "redux-act": "^1.7.4",
@@ -124,16 +123,17 @@
     "workbox-webpack-plugin": "^3.0.1"
   },
   "devDependencies": {
+    "apollo-test-utils": "^0.3.2",
     "babel-jest": "^22.4.3",
     "chai": "^4.1.2",
-    "enzyme": "^3.3.0",
-    "enzyme-adapter-react-16": "^1.1.1",
+    "enzyme": "^3.6.0",
+    "enzyme-adapter-react-16": "^1.5.0",
+    "graphql-tools": "^3.1.1",
     "jest": "^22.4.3",
     "jest-environment-node-debug": "^2.0.0",
     "jest-fetch-mock": "^1.5.0",
     "lodash": "^4.17.5",
-    "react-addons-test-utils": "^15.6.2",
-    "react-test-renderer": "^16.3.1",
+    "react-test-renderer": "^16.5.0",
     "superagent": "^3.8.2",
     "wdio": "^0.3.3",
     "wdio-mocha-framework": "^0.5.10",
@@ -143,6 +143,6 @@
   },
   "resolutions": {
     "graphql": "^0.13.2",
-    "enzyme": "^3.3.0"
+    "enzyme": "^3.6.0"
   }
 }

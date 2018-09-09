@@ -5,12 +5,13 @@ import styles from './hello.scss';
 import Form from '../../../../../../lib/client/components/Form';
 
 export default () => {
-  const query = gql`
-    query {
-      nodeId,
-      random
+  const query = gql`mutation IncrementCounter {
+    incrementCounter @client {
+      counter @client {
+        value
+      }
     }
-  `;
+  }`;
   return (
     <div className={styles.component}>
       <span>Hello World</span>
