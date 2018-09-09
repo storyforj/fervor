@@ -1,9 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import lodashMerge from 'lodash.merge';
 import { ApolloClient } from 'apollo-client';
+import { ApolloLink } from 'apollo-link';
 import { createHttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+import { withClientState } from 'apollo-link-state';
 import { ApolloProvider, getDataFromTree } from 'react-apollo';
 import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
@@ -53,7 +56,23 @@ App.propTypes = {
 };
 
 export default async (options, ctx, next, Doc = Document) => {
+  const cache = new InMemoryCache({});
   const httpLink = createHttpLink({ uri: `${process.env.HOST || ctx.request.origin}/graphql` });
+  let clientResolvers = load('graph/client', {
+    options,
+    default: [{ // load accepts a "default" to fallback to
+      defaults: {}, // the default state
+      resolvers: {},
+    }],
+  });
+
+  // normalizing for es6 import purposes
+  clientResolvers = clientResolvers.default ? clientResolvers.default : clientResolvers;
+
+  const clientStateLink = withClientState({
+    ...lodashMerge(...clientResolvers),
+    cache,
+  });
   const middlewareLink = setContext(() => {
     if (!ctx.cookie || !ctx.cookie.authJWT) { return undefined; }
 
@@ -64,10 +83,10 @@ export default async (options, ctx, next, Doc = Document) => {
     };
   });
 
-  const link = middlewareLink.concat(httpLink);
+  const link = ApolloLink.from([clientStateLink, middlewareLink, httpLink]);
   const serverClient = new ApolloClient({
     ssrMode: true,
-    cache: new InMemoryCache({}),
+    cache,
     link,
   });
   const store = initStore({ router: { location: { pathname: ctx.req.url } } });

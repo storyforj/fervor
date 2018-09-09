@@ -8,10 +8,12 @@ import webpackMiddleware from 'koa-webpack';
 import { GenerateSW } from 'workbox-webpack-plugin';
 
 import hasConfig from '../shared/utils/hasConfig';
+import hasClientResolvers from '../shared/utils/hasClientResolvers';
 import logger from '../shared/utils/logger';
 
 export default (app, options) => {
   const hasRenderingConfig = hasConfig(options.appLocation, 'rendering');
+
   let devConfig = {
     mode: 'development',
     resolve: {
@@ -20,6 +22,9 @@ export default (app, options) => {
         fervorConfigRendering: hasRenderingConfig ?
           path.join(options.appLocation, 'src', 'config', 'rendering.js') :
           path.join(__dirname, 'renderingConfig.js'),
+        fervorClientResolvers: hasClientResolvers(options.appLocation) ?
+          path.resolve(options.appLocation, 'src', 'graph', 'client.js') :
+          path.join(__dirname, 'defaultResolvers.js'),
       },
     },
     entry: [

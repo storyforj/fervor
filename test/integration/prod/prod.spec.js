@@ -85,7 +85,7 @@ describe('Prod server', () => {
     const manifestRaw = fs.readFileSync(path.join(__dirname, 'testApp', 'build', 'manifest.json'));
     const manifest = JSON.parse(manifestRaw);
     const jsFiles = Object.keys(manifest.jsChunks);
-    expect(jsFiles.length).to.equal(5);
+    expect(jsFiles.length).to.equal(6);
     expect(
       fs.statSync(path.join(__dirname, 'testApp', 'build', jsFiles[0])).isFile(),
     ).to.equal(true);
@@ -123,5 +123,14 @@ describe('Prod server', () => {
     browser.waitForText('.test-button', 'hello');
     browser.click('.test-button');
     browser.waitForText('.test-button', 'world');
+  });
+
+  it('works with client resolvers', () => {
+    browser.url('http://localhost:3003/counter');
+    browser.waitForText('.counter-text', '0');
+    browser.click('.counter-button');
+    browser.waitForText('.counter-text', '1');
+    browser.click('.counter-button');
+    browser.waitForText('.counter-text', '2');
   });
 });
