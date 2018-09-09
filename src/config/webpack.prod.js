@@ -14,6 +14,7 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const hasConfig = require('../shared/utils/hasConfig');
+const hasClientResolvers = require('../shared/utils/hasClientResolvers');
 const ChunkManifestPlugin = require('./ChunkManifestPlugin');
 const clientSideBabelConfig = require('./babelrcHelper').default(false, process.cwd(), true);
 
@@ -47,6 +48,9 @@ module.exports = () => {
         fervorConfigRendering: hasRenderingConfig ?
           path.join(process.cwd(), 'src', 'config', 'rendering.js') :
           path.join(__dirname, 'renderingConfig.js'),
+        fervorClientResolvers: hasClientResolvers.default(process.cwd()) ?
+          path.resolve(process.cwd(), 'src', 'graph', 'client.js') :
+          path.join(__dirname, 'defaultResolvers.js'),
       },
     },
     entry: {

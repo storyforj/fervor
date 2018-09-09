@@ -1,22 +1,29 @@
 import cookie from 'cookies-js';
 import pathToRegExp from 'path-to-regexp';
+import lodashMerge from 'lodash.merge';
 import React from 'react';
 import { ApolloClient } from 'apollo-client';
+import { ApolloLink } from 'apollo-link';
 import { createHttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloProvider } from 'react-apollo';
+import { withClientState } from 'apollo-link-state';
 import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom';
 import { ConnectedRouter } from 'react-router-redux';
 // eslint-disable-next-line
 import fervorRoutes from 'fervorAppRoutes';
 // eslint-disable-next-line
+import fervorClientResolvers from 'fervorClientResolvers';
+// eslint-disable-next-line
 import fervorConfigRendering from 'fervorConfigRendering';
 
 import browserHistory from './history';
 import store from './store';
 import Routes from './routes';
+
+const cache = (new InMemoryCache({})).restore(window.APOLLO_STATE.apollo);
 
 const httpLink = createHttpLink({ uri: '/graphql' });
 const middlewareLink = setContext(() => {
@@ -29,10 +36,14 @@ const middlewareLink = setContext(() => {
   };
 });
 
-const link = middlewareLink.concat(httpLink);
-const cache = new InMemoryCache({});
+const stateLink = withClientState({
+  ...lodashMerge(...fervorClientResolvers),
+  cache,
+});
+
+const link = ApolloLink.from([stateLink, middlewareLink, httpLink]);
 const webClient = new ApolloClient({
-  cache: cache.restore(window.APOLLO_STATE.apollo),
+  cache,
   link,
 });
 

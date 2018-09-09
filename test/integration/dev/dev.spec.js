@@ -29,13 +29,13 @@ describe('Dev server', () => {
     browser.url('http://localhost:3002/');
     browser.waitUntil(() => (
       browser
-      .getCssProperty('div[class*="component"]', 'background')
-      .value.indexOf('rgb(0,0,0)') >= -1
+        .getCssProperty('div[class*="component"]', 'background')
+        .value.indexOf('rgb(0,0,0)') >= -1
     ), 10000);
     browser.waitUntil(() => (
       browser
-      .getCssProperty('div[class*="component"]', 'color')
-      .value.indexOf('rgba(255,255,255,1)') >= -1
+        .getCssProperty('div[class*="component"]', 'color')
+        .value.indexOf('rgba(255,255,255,1)') >= -1
     ), 10000);
   });
 
@@ -44,8 +44,8 @@ describe('Dev server', () => {
     // wait until after the CSS is loaded
     browser.waitUntil(() => (
       browser
-      .getCssProperty('div[class*="component"]', 'background')
-      .value.indexOf('rgb(0,0,0)') >= -1
+        .getCssProperty('div[class*="component"]', 'background')
+        .value.indexOf('rgb(0,0,0)') >= -1
     ), 10000);
     expect(() => {
       browser.log('browser').forEach((logEntry) => {
@@ -75,5 +75,14 @@ describe('Dev server', () => {
     browser.waitForText('.test-button', 'hello');
     browser.click('.test-button');
     browser.waitForText('.test-button', 'world');
+  });
+
+  it('works with client resolvers', () => {
+    browser.url('http://localhost:3002/counter');
+    browser.waitForText('.counter-text', '0');
+    browser.click('.counter-button');
+    browser.waitForText('.counter-text', '1');
+    browser.click('.counter-button');
+    browser.waitForText('.counter-text', '2');
   });
 });
