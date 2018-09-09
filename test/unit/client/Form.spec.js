@@ -1,48 +1,63 @@
-import gql from 'graphql-tag';
 import React from 'react';
-import { ApolloClient } from 'apollo-client';
-import { createHttpLink } from 'apollo-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { ApolloProvider } from 'react-apollo';
+import { MockedProvider } from 'react-apollo/test-utils';
 import { Provider } from 'react-redux';
 import { mount } from 'enzyme';
+
+import gql from '../../../src/shared/gqltag';
 import initStore from '../../../src/shared/store';
-import Form from '../../../src/client/components/Form';
+import Form, { FormTest } from '../../../src/client/components/Form';
+
+const mockResult = {
+  data: {
+    incrementCounter: {
+      counter: {
+        value: 0,
+        __typename: 'Counter',
+      },
+      __typename: 'IncrementCounterPayload',
+    },
+  },
+};
 
 describe('Form Component', () => {
-  let mutateStub;
   let component;
+  let pushAction;
 
   beforeEach(() => {
-    const webClient = new ApolloClient({
-      cache: new InMemoryCache({}),
-      link: createHttpLink({ uri: '/graphql' }),
-    });
-    const store = initStore({});
-
-    const mutation = gql`query {
-      __schema {
-        types {
-          name
-          description
+    const mutation = gql`mutation IncrementCounter {
+      incrementCounter @client {
+        counter @client {
+          value
         }
       }
     }`;
 
-    mutateStub = jest.fn(() => new Promise((resolve) => resolve()));
+    const mock = {
+      request: {
+        query: mutation,
+        variables: {
+          meow: { test: { wow: 'hellow' } },
+          oh: 'world',
+          cheese: { hello: 'b' },
+          redirectTo: '/',
+          query: mutation.query,
+        },
+      },
+      result: mockResult,
+    };
+
+    pushAction = jest.fn();
 
     component = mount((
-      <ApolloProvider client={webClient}>
-        <Provider store={store}>
-          <Form mutation={mutation} mutate={mutateStub}>
-            <div>Hello World</div>
-            <input name="meow[test][wow]" defaultValue="hello" />
-            <input name="oh" defaultValue="world" />
-            <input name="cheese[hello]" defaultValue="a" />
-            <input name="cheese[hello]" defaultValue="b" />
-          </Form>
-        </Provider>
-      </ApolloProvider>
+      <MockedProvider mocks={[mock]}>
+        <FormTest mutation={mutation} currentPathname="/" redirectTo="/otherPage" pushAction={pushAction}>
+          <div>Hello World</div>
+          <input name="meow[test][wow]" defaultValue="hello" />
+          <input name="oh" defaultValue="world" />
+          <input name="cheese[hello]" defaultValue="a" />
+          <input name="cheese[hello]" defaultValue="b" />
+        </FormTest>
+      </MockedProvider>
     ));
   });
 
@@ -52,100 +67,96 @@ describe('Form Component', () => {
   });
 
   describe('on submit', () => {
-    beforeEach(() => {
-      try {
-        component.find('form').simulate('submit');
-      } catch (e) {
-        // remove try catch, once enzyme 3 is released
-      }
-    });
+    it('redirects on form submit', async () => {
+      const mutate = jest.fn(() => Promise.resolve({ data: {} }));
+      const formInstance = component.find('Form').instance();
+      // we need stub serializeForm since it is expecting to operate on some HTML
+      formInstance.serializeForm = jest.fn(() => ({}));
+      await formInstance.handleSubmit(
+        { preventDefault: () => {}, },
+        mutate,
+      );
 
-    it('serializes the form and submits the mutation', async () => {
-      expect(mutateStub.mock.calls.length).toEqual(1);
-      const formData = mutateStub.mock.calls[0][0].variables;
-      expect(formData.meow.test.wow).toEqual('hello');
-      expect(formData.oh).toEqual('world');
-      expect(formData.cheese.hello[0]).toEqual('a');
-      expect(formData.cheese.hello[1]).toEqual('b');
+      expect(pushAction.mock.calls.length).toBe(1);
+      expect(pushAction.mock.calls[0][0]).toBe('/otherPage');
     });
   });
 });
 
 describe('Form Component, when onSuccess is defined', () => {
-  let mutateStub;
   let successStub;
   let completeStub;
   let component;
 
   beforeEach(() => {
-    const webClient = new ApolloClient({
-      cache: new InMemoryCache({}),
-      link: createHttpLink({ uri: '/graphql' }),
-    });
     const store = initStore({});
 
-    const mutation = gql`query {
-      __schema {
-        types {
-          name
-          description
+    const mutation = gql`mutation IncrementCounter {
+      incrementCounter @client {
+        counter @client {
+          value
         }
       }
     }`;
 
-    mutateStub = jest.fn(() => new Promise((resolve) => resolve()));
     completeStub = new Promise((resolve) => {
       successStub = jest.fn(() => {
         resolve();
       });
     });
 
+    const mock = {
+      request: {
+        query: mutation,
+        variables: {
+          meow: { test: { wow: 'hello' } },
+          oh: 'world',
+          cheese: { hello: ['a', 'b'] },
+          redirectTo: '/',
+          query: mutation.query,
+        },
+      },
+      result: mockResult,
+    };
+
     component = mount((
-      <ApolloProvider client={webClient}>
+      <MockedProvider mocks={[mock]}>
         <Provider store={store}>
-          <Form mutation={mutation} mutate={mutateStub} onSuccess={successStub}>
+          <Form mutation={mutation} onSuccess={successStub}>
             <div>Hello World</div>
+            <input name="meow[test][wow]" defaultValue="hello" />
             <input name="oh" defaultValue="world" />
+            <input name="cheese[hello]" defaultValue="a" />
+            <input name="cheese[hello]" defaultValue="b" />
           </Form>
         </Provider>
-      </ApolloProvider>
+      </MockedProvider>
     ));
   });
 
   it('triggers the onSuccess hook', async () => {
-    try {
-      component.find('form').simulate('submit');
-    } catch (e) {
-      // remove try catch, once enzyme 3 is released
-    }
+    component.find('form').simulate('submit');
     await completeStub;
     expect(successStub.mock.calls.length).toEqual(1);
   });
 });
 
 describe('Form Component, when onFailure is specified', () => {
-  let mutateStub;
   let failureStub;
   let completeStub;
   let component;
 
   beforeEach(() => {
-    const webClient = new ApolloClient({
-      cache: new InMemoryCache({}),
-      link: createHttpLink({ uri: '/graphql' }),
-    });
     const store = initStore({});
 
-    const mutation = gql`query {
-      __schema {
-        types {
-          name
-          description
+    const mutation = gql`mutation IncrementCounter {
+      incrementCounter @client {
+        counter @client {
+          value
         }
       }
     }`;
 
-    mutateStub = jest.fn(() => new Promise((resolve) => resolve()));
     completeStub = new Promise((resolve) => {
       failureStub = jest.fn(() => {
         resolve();
@@ -153,23 +164,19 @@ describe('Form Component, when onFailure is specified', () => {
     });
 
     component = mount((
-      <ApolloProvider client={webClient}>
+      <MockedProvider mocks={[]}>
         <Provider store={store}>
-          <Form mutation={mutation} mutate={mutateStub} onFailure={failureStub}>
+          <Form mutation={mutation} onFailure={failureStub}>
             <div>Hello World</div>
             <input name="oh" defaultValue="world" />
           </Form>
         </Provider>
-      </ApolloProvider>
+      </MockedProvider>
     ));
   });
 
   it('triggers the onFailure hook', async () => {
-    try {
-      component.find('form').simulate('submit');
-    } catch (e) {
-      // remove try catch, once enzyme 3 is released
-    }
+    component.find('form').simulate('submit');
     await completeStub;
     expect(failureStub.mock.calls.length).toEqual(1);
   });
