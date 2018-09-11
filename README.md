@@ -1,7 +1,7 @@
 Fervor
 ----
 
-[![Join the chat at https://gitter.im/fervorous/fervor](https://badges.gitter.im/fervorous/fervor.svg)](https://gitter.im/fervorous/fervor?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) ![Build Status](https://circleci.com/gh/fervorous/fervor.svg?style=shield)
+[![Join the chat at https://gitter.im/fervorous/fervor](https://badges.gitter.im/fervorous/fervor.svg)](https://gitter.im/fervorous/fervor?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) ![Build Status](https://circleci.com/gh/storyforj/fervor.svg?style=shield)
 
 ![Fervor Logo](https://avatars2.githubusercontent.com/u/26048760?v=4&u=c900b5463478aa9e8937a8422721210d33a9b984&s=200)
 
