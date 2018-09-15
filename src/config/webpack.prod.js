@@ -20,25 +20,45 @@ const clientSideBabelConfig = require('./babelrcHelper').default(false, process.
 
 const buildDir = path.join(process.cwd(), 'build');
 
-const runtimeCaching = [];
-// If you'd like to cache URLs HTML hits with service works this is what
-// I was doing previously. Problems: doesn't account for urls ending with
-// / and not / (whatever urls file says right now). In addtion, there
-// were many issues caching HTML. It really gets stuck in a users browser.
-//
-// function generateCacheSettings(globUrl) {
-//   return {
-//     urlPattern: globToRegExp(globUrl),
-//     // opt'ing to not cache for right now
-//     // perhaps we should allow routes to define this
-//     handler: 'networkFirst',
-//   };
-// }
-// if (process.env.TEST_ENV !== 'integration') {
-//   // eslint-disable-next-line import/no-dynamic-require, global-require
-//   const urls = require(`${process.cwd()}/src/urls`).default;
-//   runtimeCaching = Object.keys(urls).map(generateCacheSettings);
-// }
+function generateCacheSettings(globUrl) {
+  return {
+    urlPattern: globToRegExp(globUrl),
+    // opt'ing to not cache for right now
+    // perhaps we should allow routes to define this
+    handler: 'networkFirst',
+  };
+}
+
+let runtimeCaching = [];
+
+if (process.env.TEST_ENV !== 'integration') {
+  // eslint-disable-next-line import/no-dynamic-require, global-require
+  const urls = require(`${process.cwd()}/src/urls`).default;
+  const cleanedURLs = Object.keys(urls)
+    .map((url) => url.replace(/\/:.*/, '/*'))
+    .map((url) => {
+      // except for just a slash
+      if (url === '/') {
+        return null;
+      }
+
+      if (url.lastIndexOf('/') + 1 === url.length) {
+        return url.substring(0, url.length - 1);
+      }
+
+      return url;
+    })
+    .filter((val) => val !== null);
+
+  runtimeCaching = [].concat(
+    cleanedURLs.map((url) => generateCacheSettings(`*${url}`)),
+    cleanedURLs.map((url) => generateCacheSettings(`*${url}/`)),
+    [
+      generateCacheSettings(''),
+      generateCacheSettings('/'),
+    ],
+  );
+}
 
 module.exports = () => {
   const hasRenderingConfig = hasConfig.default(process.cwd(), 'rendering');
