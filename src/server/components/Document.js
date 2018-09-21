@@ -1,6 +1,19 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Helmet } from 'react-helmet';
+
+let prodPublicPath = '';
+
+// This will not work in dev mode, especially during integration tests
+if (process.env.NODE_ENV === 'production') {
+  // eslint-disable-next-line global-require
+  const prodWebpackConfigGenerator = require('../../config/webpack.prod');
+  const prodWebpackConfig = prodWebpackConfigGenerator();
+  prodPublicPath = prodWebpackConfig.output.publicPath;
+
+  if (prodPublicPath.substr(prodPublicPath.length - 1) !== '/') {
+    prodPublicPath += '/';
+  }
+}
 
 /* eslint-disable react/no-danger */
 export default function Document({
@@ -28,11 +41,11 @@ export default function Document({
     const manifestJSON = require(`${appLocation}/build/manifest.json`);
 
     cssFiles = Object.keys(manifestJSON.cssChunks).map((cssFile) => (
-      <link key={`/build/${cssFile}`} rel="stylesheet" type="text/css" href={`/build/${cssFile}`} />
+      <link key={`${prodPublicPath}${cssFile}`} rel="stylesheet" type="text/css" href={`${prodPublicPath}${cssFile}`} />
     ));
     scripts = Object.keys(manifestJSON.jsChunks).reverse().map((jsFile) => (
       (jsFile.indexOf('bundle') > -1 || jsFile.indexOf('common') > -1) ?
-        <script key={`/build/${jsFile}`} async defer src={`/build/${jsFile}`} /> :
+        <script key={`${prodPublicPath}${jsFile}`} async defer src={`${prodPublicPath}${jsFile}`} /> :
         null
     )).filter((value) => value !== null);
     scripts.unshift(
