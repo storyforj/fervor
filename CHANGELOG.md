@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2018-11-16
+The main catalyst for the release was to update Postgraphile in order to get:
+1) speed improvements
+2) enhanced functionality around custom resolvers
+
+### Changed
+- Upgraded postgraphile, koa, react and friends. These changes should result in no breaking changes.
+
 ## [1.3.0] - 2018-09-21
 ### Added
 - Support to change publicPath in prod. This allows for the ability to have remote static assets.
