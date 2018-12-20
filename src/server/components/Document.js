@@ -17,14 +17,15 @@ if (process.env.NODE_ENV === 'production') {
 
 /* eslint-disable react/no-danger */
 export default function Document({
+  additionalContent,
   appFavicon,
   appLocation,
   content,
+  documentHeadEndContent,
   helmet,
   manifest,
   state,
   title,
-  additionalContent,
   processMeta,
   processCSS,
   processJS,
@@ -105,6 +106,7 @@ export default function Document({
         {helmet.style.toComponent()}
         {helmet.script.toComponent()}
         {helmet.noscript.toComponent()}
+        { documentHeadEndContent }
       </head>
       <body {...bodyAttrs}>
         <div id="app" dangerouslySetInnerHTML={{ __html: content }} />
@@ -121,24 +123,26 @@ export default function Document({
 }
 
 Document.defaultProps = {
+  additionalContent: null,
   appFavicon: null,
   manifest: {},
   title: '',
-  additionalContent: null,
+  documentHeadEndContent: null,
   processMeta: (tags) => tags,
   processCSS: (tags) => tags,
   processJS: (tags) => tags,
 };
 
 Document.propTypes = {
+  additionalContent: PropTypes.node,
   appLocation: PropTypes.string.isRequired,
   appFavicon: PropTypes.string,
-  manifest: PropTypes.object,
   content: PropTypes.string.isRequired,
+  documentHeadEndContent: PropTypes.node,
+  manifest: PropTypes.object,
   helmet: PropTypes.object.isRequired,
   state: PropTypes.object.isRequired,
   title: PropTypes.string,
-  additionalContent: PropTypes.node,
   processMeta: PropTypes.func,
   processCSS: PropTypes.func,
   processJS: PropTypes.func,
