@@ -117,6 +117,7 @@ export default async (options, ctx, next, Doc = Document) => {
     getAppOptions,
     App: AppWrapper,
     getAdditionalDocumentContent,
+    getDocumentHeadEndContent,
     processJS,
     processCSS,
     processMeta,
@@ -144,6 +145,10 @@ export default async (options, ctx, next, Doc = Document) => {
     if (getAdditionalDocumentContent) {
       additionalDocumentContent = getAdditionalDocumentContent(appOptions);
     }
+    let documentHeadEndContent;
+    if (getDocumentHeadEndContent) {
+      documentHeadEndContent = getDocumentHeadEndContent(appOptions);
+    }
 
     ctx.body = `<!doctype html>\n${ReactDOMServer.renderToStaticMarkup((
       <Doc
@@ -156,6 +161,7 @@ export default async (options, ctx, next, Doc = Document) => {
         state={state}
         title={app.props.title}
         additionalContent={additionalDocumentContent}
+        documentHeadEndContent={documentHeadEndContent}
         processMeta={processMeta}
         processCSS={processCSS}
         processJS={processJS}
