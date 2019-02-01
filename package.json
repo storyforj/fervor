@@ -30,7 +30,9 @@
       "./test/unit/helpers/rAF.js",
       "./test/unit/jestSetup.js"
     ],
-    "setupTestFrameworkScriptFile": "./test/unit/beforeEach.js"
+    "setupFilesAfterEnv": [
+      "./test/unit/beforeEach.js"
+    ]
   },
   "dependencies": {
     "@babel/cli": "^7.2.3",
@@ -72,7 +74,7 @@
     "form-data-to-object": "^0.2.0",
     "glob-to-regexp": "^0.4.0",
     "graphql": "^0.13.2",
-    "graphql-tag": "^2.8.0",
+    "graphql-tag": "^2.10.1",
     "history": "^4.7.2",
     "is-node": "^1.0.2",
     "isomorphic-fetch": "^2.2.1",
@@ -125,17 +127,19 @@
   },
   "devDependencies": {
     "@wdio/cli": "^5.4.9",
+    "@wdio/dot-reporter": "^5.4.3",
     "@wdio/local-runner": "^5.4.9",
     "@wdio/mocha-framework": "^5.4.8",
     "@wdio/selenium-standalone-service": "^5.2.2",
+    "@wdio/spec-reporter": "^5.4.3",
     "@wdio/sync": "^5.4.6",
     "apollo-test-utils": "^0.3.2",
-    "babel-jest": "^22.4.3",
-    "chai": "^4.1.2",
+    "babel-jest": "^24.0.0",
+    "chai": "^4.2.0",
     "enzyme": "^3.6.0",
     "enzyme-adapter-react-16": "^1.5.0",
     "graphql-tools": "^4.0.3",
-    "jest": "^22.4.3",
+    "jest": "^24.0.0",
     "jest-environment-node-debug": "^2.0.0",
     "jest-fetch-mock": "^1.5.0",
     "lodash": "^4.17.5",
@@ -146,6 +150,7 @@
   "resolutions": {
     "enzyme": "^3.6.0",
     "fsevents": "^1.2.7",
+    "graphql-tag": "^2.10.1",
     "upath": "^1.1.0"
   }
 }

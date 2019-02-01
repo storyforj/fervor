@@ -165,6 +165,7 @@ export default async (options, ctx, next, Doc = Document) => {
         processMeta={processMeta}
         processCSS={processCSS}
         processJS={processJS}
+        webpackWatcherDisabled={options.disableWebpack}
       />
     ))}`;
 

@@ -41,18 +41,18 @@ describe('Prod server', () => {
   it('renders client side with CSS', () => {
     browser.url('http://localhost:3003/');
     browser.waitUntil(() => (
-      browser
-        .getCssProperty('div[class*="component"]', 'background')
+      browser.$('div[class*="component"]')
+        .getCSSProperty('background')
         .value.indexOf('rgb(0,0,0)') >= -1
     ), 20000);
     browser.waitUntil(() => (
-      browser
-        .getCssProperty('div[class*="component"]', 'color')
+      browser.$('div[class*="component"]')
+        .getCSSProperty('color')
         .value.indexOf('rgba(255,255,255,1)') >= -1
     ), 20000);
     browser.waitUntil(() => (
-      browser
-        .getCssProperty('body', 'background')
+      browser.$('body')
+        .getCSSProperty('background')
         .value.indexOf('rgba(0,255,0,1)') >= -1
     ), 20000);
   });
@@ -120,17 +120,25 @@ describe('Prod server', () => {
 
   it('has functioning async/await on the client side', () => {
     browser.url('http://localhost:3003/test');
-    browser.waitForText('.test-button', 'hello');
-    browser.click('.test-button');
-    browser.waitForText('.test-button', 'world');
+    browser.waitUntil(() => (
+      browser.$('.test-button').getText() === 'hello'
+    ), 20000);
+    browser.$('.test-button').click();
+    browser.waitUntil(() => (
+      browser.$('.test-button').getText() === 'world'
+    ), 20000);
   });
 
   it('works with client resolvers', () => {
     browser.url('http://localhost:3003/counter');
-    browser.waitForText('.counter-text', '0');
-    browser.click('.counter-button');
-    browser.waitForText('.counter-text', '1');
-    browser.click('.counter-button');
-    browser.waitForText('.counter-text', '2');
+    expect(browser.$('.counter-text').getText() === '0').to.equal(true);
+    browser.$('.counter-button').click();
+    browser.waitUntil(() => (
+      browser.$('.counter-text').getText() === '1'
+    ), 20000);
+    browser.$('.counter-button').click();
+    browser.waitUntil(() => (
+      browser.$('.counter-text').getText() === '2'
+    ), 20000);
   });
 });

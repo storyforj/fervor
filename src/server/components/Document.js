@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-let prodPublicPath = '';
+let prodPublicPath = '/build/';
 
 // This will not work in dev mode, especially during integration tests
 if (process.env.NODE_ENV === 'production') {
@@ -29,13 +29,14 @@ export default function Document({
   processMeta,
   processCSS,
   processJS,
+  webpackWatcherDisabled,
 }) {
   let scripts = [
     <script key="bundle.js" src="/build/bundle.js" />,
   ];
   let cssFiles = [];
 
-  if (process.env.NODE_ENV.indexOf('prod') > -1) {
+  if (webpackWatcherDisabled) {
     // requiring the manfiest happens on the server side and only in prod
     // this means a dynamic require is fine
     // eslint-disable-next-line global-require, import/no-dynamic-require
@@ -51,6 +52,7 @@ export default function Document({
     )).filter((value) => value !== null);
     scripts.unshift(
       <script
+        key="service-worker"
         dangerouslySetInnerHTML={{
           __html: 'if ("serviceWorker" in navigator) {navigator.serviceWorker.register("/sw.js") }',
         }}
@@ -131,6 +133,7 @@ Document.defaultProps = {
   processMeta: (tags) => tags,
   processCSS: (tags) => tags,
   processJS: (tags) => tags,
+  webpackWatcherDisabled: false,
 };
 
 Document.propTypes = {
@@ -146,4 +149,5 @@ Document.propTypes = {
   processMeta: PropTypes.func,
   processCSS: PropTypes.func,
   processJS: PropTypes.func,
+  webpackWatcherDisabled: PropTypes.bool,
 };
