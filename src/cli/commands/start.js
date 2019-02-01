@@ -1,7 +1,7 @@
 const dotenv = require('dotenv');
 const path = require('path');
 require('isomorphic-fetch');
-require('babel-polyfill');
+require('@babel/polyfill');
 const startApp = require('../../../lib/server/server').default;
 
 module.exports = () => {

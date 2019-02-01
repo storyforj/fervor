@@ -13,7 +13,7 @@ describe('Prod server', () => {
     rimraf.sync(path.join(__dirname, 'testApp', 'build'));
     dotenv.config({ path: path.join(process.cwd(), 'test', 'integration', 'prod', 'testApp', '.env') });
     await buildApp({
-      babel: path.join(process.cwd(), 'node_modules', 'babel-cli', 'bin', 'babel.js'),
+      babel: path.join(process.cwd(), 'node_modules', '@babel/cli', 'bin', 'babel.js'),
       directory: path.join(__dirname, 'testApp'),
       fervorDir: process.cwd(),
       webpack: path.join(process.cwd(), 'node_modules', 'webpack', 'bin', 'webpack.js'),

@@ -4,9 +4,8 @@ import path from 'path';
 export default (isServer, appLocation, useSrc, plugins = []) => {
   let config = {
     presets: [
-      ['env', { targets: { browsers: ['last 2 versions', 'safari >= 7'] } }],
-      'react',
-      'stage-0',
+      ['@babel/preset-env', { targets: { browsers: ['last 2 versions', 'safari >= 7'] } }],
+      '@babel/preset-react',
     ],
     plugins: [
       [
@@ -30,7 +29,7 @@ export default (isServer, appLocation, useSrc, plugins = []) => {
         },
       ],
       [
-        'transform-runtime',
+        '@babel/plugin-transform-runtime',
       ],
     ];
   }

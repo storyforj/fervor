@@ -5,7 +5,7 @@ const babelrcHelper = require('../../config/babelrcHelper').default;
 
 module.exports = ({
   directory = process.cwd(),
-  babel = path.join(directory, 'node_modules', 'babel-cli', 'bin', 'babel.js'),
+  babel = path.join(directory, 'node_modules', '@babel/cli', 'bin', 'babel.js'),
   webpack = path.join(directory, 'node_modules', 'webpack-cli', 'bin', 'webpack.js'),
   isIntegrationTest = false,
 }) => {
