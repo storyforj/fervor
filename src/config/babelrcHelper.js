@@ -8,6 +8,10 @@ export default (isServer, appLocation, useSrc, plugins = []) => {
       '@babel/preset-react',
     ],
     plugins: [
+      ['@babel/plugin-transform-runtime'],
+      ['@babel/plugin-proposal-class-properties', { loose: true }],
+      ['@babel/plugin-proposal-pipeline-operator', { proposal: 'minimal' }],
+      ['@babel/plugin-proposal-decorators', { decoratorsBeforeExport: true }],
       [
         'make-lazy',
         {
@@ -28,9 +32,10 @@ export default (isServer, appLocation, useSrc, plugins = []) => {
           extensions: ['.scss'],
         },
       ],
-      [
-        '@babel/plugin-transform-runtime',
-      ],
+      ['@babel/plugin-transform-runtime'],
+      ['@babel/plugin-proposal-class-properties', { loose: true }],
+      ['@babel/plugin-proposal-pipeline-operator', { proposal: 'minimal' }],
+      ['@babel/plugin-proposal-decorators', { decoratorsBeforeExport: true }],
     ];
   }
 
