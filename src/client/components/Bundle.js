@@ -2,49 +2,42 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 class Bundle extends React.PureComponent {
+  static propTypes = {
+    children: PropTypes.func.isRequired,
+    componentLoader: PropTypes.func.isRequired,
+    StatusComponents: PropTypes.object.isRequired,
+  };
+
   constructor(props) {
     super(props);
     this.state = {
-      module: null,
+      Component: null,
+      loaderError: null,
     };
   }
 
   componentWillMount() {
-    this.load(this.props);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.load !== this.props.load) {
-      this.load(nextProps);
-    }
-  }
-
-  load(props) {
-    this.setState({
-      module: null,
-    });
-    props.load((module) => {
+    this.props.componentLoader().then((...args) => {
+      const module = args[0];
+      if (!module) {
+        return Promise.reject(new Error('Component Failed to Load', args));
+      }
       this.setState({
-        // handle both es imports and cjs
-        module: module.default ? module.default : module,
+        Component: module.default ? module.default : module,
+      });
+
+      return null;
+    }).catch((e) => {
+      this.setState({
+        Component: this.props.StatusComponents.e500.default || this.props.StatusComponents.e500,
+        loaderError: e,
       });
     });
   }
 
   render() {
-    // eslint-disable-next-line no-restricted-globals
-    if (this.props.initialPath === location.pathname) {
-      return this.props.children(this.props.startingComponent);
-    }
-    return this.state.module ? this.props.children(this.state.module) : null;
+    return this.state.Component ? this.props.children(this.state.Component, this.state.loaderError) : null;
   }
 }
-
-Bundle.propTypes = {
-  children: PropTypes.func.isRequired,
-  load: PropTypes.func.isRequired,
-  initialPath: PropTypes.string.isRequired,
-  startingComponent: PropTypes.func.isRequired,
-};
 
 export default Bundle;

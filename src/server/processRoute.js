@@ -21,13 +21,16 @@ import initStore from '../shared/store';
 import load from '../shared/utils/load';
 import Document from './components/Document';
 
+const GenericLoading = () => (null);
 const GenericNotFound = () => (<div>Not Found</div>);
+const GenericError = () => (<div>Error</div>);
 
 const App = ({
   ctx,
   routes,
   serverClient,
   store,
+  statusComponents,
 }) => (
   <ApolloProvider client={serverClient}>
     <Provider store={store}>
@@ -41,7 +44,7 @@ const App = ({
               exact
             />
           ))}
-          <Route component={routes['404'] || GenericNotFound} />
+          <Route component={statusComponents.e404 || GenericNotFound} />
         </Switch>
       </StaticRouter>
     </Provider>
@@ -52,6 +55,7 @@ App.propTypes = {
   ctx: PropTypes.object.isRequired,
   routes: PropTypes.object.isRequired,
   serverClient: PropTypes.object.isRequired,
+  statusComponents: PropTypes.object.isRequired,
   store: PropTypes.object.isRequired,
 };
 
@@ -104,12 +108,32 @@ export default async (options, ctx, next, Doc = Document) => {
     },
   });
 
+  const routePromises = Object.keys(options.routes).map(async (path) => {
+    if (['e404', 'e500', 'loading'].includes(path)) {
+      return { path, Component: options.routes[path] };
+    }
+    const module = await options.routes[path]();
+    return { path, Component: module.default || module };
+  });
+  const resolvedRoutes = await Promise.all(routePromises);
+  const resolvedRouteMap = resolvedRoutes.reduce((routeMap, route) => {
+    if (!['e404', 'e500', 'loading'].includes(route.path)) {
+      routeMap[route.path] = route.Component;
+    }
+    return routeMap;
+  }, {});
+
   let app = (
     <App
       ctx={ctx}
-      routes={options.routes}
+      routes={resolvedRouteMap}
       store={store}
       serverClient={serverClient}
+      statusComponents={{
+        e404: options.routes.e404 || GenericNotFound,
+        e500: options.routes.e500 || GenericError,
+        loading: options.routes.loading || GenericLoading,
+      }}
     />
   );
 

@@ -9,18 +9,11 @@ export default (isServer, appLocation, useSrc, plugins = []) => {
     ],
     plugins: [
       ['@babel/plugin-transform-runtime'],
+      ['@babel/plugin-syntax-dynamic-import'],
       ['@babel/plugin-proposal-class-properties', { loose: true }],
       ['@babel/plugin-proposal-pipeline-operator', { proposal: 'minimal' }],
       ['@babel/plugin-proposal-decorators', { decoratorsBeforeExport: true }],
-      [
-        'make-lazy',
-        {
-          // eslint-disable-next-line no-useless-escape
-          paths: ['(src|lib)\/urls\.js$'],
-          moduleExceptions: ['^[^(./|../)]'],
-        },
-      ].concat(plugins),
-    ],
+    ].concat(plugins),
   };
 
   if (isServer) {
@@ -33,10 +26,12 @@ export default (isServer, appLocation, useSrc, plugins = []) => {
         },
       ],
       ['@babel/plugin-transform-runtime'],
+      ['@babel/plugin-syntax-dynamic-import'],
+      ['babel-plugin-dynamic-import-node'],
       ['@babel/plugin-proposal-class-properties', { loose: true }],
       ['@babel/plugin-proposal-pipeline-operator', { proposal: 'minimal' }],
       ['@babel/plugin-proposal-decorators', { decoratorsBeforeExport: true }],
-    ];
+    ].concat(plugins);
   }
 
   if (appLocation === false) {
