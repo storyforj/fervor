@@ -31,15 +31,17 @@ module.exports = (args) => {
   });
 
   const port = process.env.PORT || 3000;
+  const host = (process.env.HOST || '').replace('3000', process.env.PORT);
 
   return startApp({
     appName: process.env.APP_NAME,
     appShortName: process.env.APP_SHORT_NAME || process.env.APP_NAME,
     appFavicon: process.env.FAVICON,
     db: process.env.DATABASE_URL,
-    host: process.env.HOST || `http://localhost:${port}`,
+    host: host || `http://localhost:${port}`,
     port,
     appLocation: process.cwd(),
+    disableWebpack: true,
     get routes() {
       if (args._[1]) {
         // eslint-disable-next-line global-require, import/no-dynamic-require
