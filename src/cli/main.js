@@ -34,7 +34,7 @@ runCommands([
   {
     name: 'start',
     options: null, // can be an array of objects containing name and description
-    description: 'Starts the fervor prod server.',
+    description: 'Starts the full fervor prod server.',
   },
   {
     name: 'startDev',
@@ -42,7 +42,12 @@ runCommands([
     description: 'Starts the fervor dev server. Run this while you are building your app to have hot reloading feature for client and server code.',
   },
   {
-    name: 'startDevBackend',
+    name: 'startBackendOnly',
+    options: null, // can be an array of objects containing name and description
+    description: 'Starts a backend only server.',
+  },
+  {
+    name: 'startDevBackendOnly',
     options: null, // can be an array of objects containing name and description
     description: 'Starts a backend only fervor dev server. Useful for quickly testing and developing server side code.',
   },
