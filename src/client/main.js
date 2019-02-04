@@ -18,7 +18,8 @@ const render = (props) => {
 };
 
 /* eslint-disable no-restricted-globals, no-restricted-syntax */
-let foundModule = fervorRoutes['404'];
+const errorModule = window.fervor && window.fervor.documentStatus && window.fervor.documentStatus === '500' ? fervorRoutes.e500 : fervorRoutes.e404;
+let foundModule = () => Promise.resolve(errorModule);
 const locationPathName = location.pathname;
 
 for (const path of Object.keys(fervorRoutes)) {
@@ -29,7 +30,7 @@ for (const path of Object.keys(fervorRoutes)) {
 }
 
 foundModule().then((PageLoadComponent) => {
-  render({ Routes, locationPathName, PageLoadComponent });
+  render({ Routes, locationPathName, PageLoadComponent, errorModule });
 });
 
 if (module.hot) {

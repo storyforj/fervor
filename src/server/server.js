@@ -6,6 +6,7 @@ import requestLogger from 'koa-logger-winston';
 import Koa from 'koa';
 import postgraphile from 'postgraphile';
 
+import handleErrors from './middleware/handleErrors';
 import { setPGQLOpts } from './graphql/pgqlOpts';
 import { createPgPool } from './graphql/pgPool';
 import appManifest from './appManifest';
@@ -19,6 +20,7 @@ export default async function startApp(options = {}) {
   const app = new Koa();
 
   app.use(requestLogger(logger));
+  app.use(handleErrors(options));
 
   const pgqlOpts = setPGQLOpts(options);
   const pgPool = createPgPool(options, pgqlOpts);

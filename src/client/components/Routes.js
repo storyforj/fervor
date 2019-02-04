@@ -47,7 +47,7 @@ const Routes = ({ initialPath, PageLoadComponent }) => {
   return (
     <Switch>
       {routes}
-      <Route component={routes.e404 ? fervorRoutes.e404 : GenericNotFound} />
+      <Route component={fervorRoutes.e404 ? fervorRoutes.e404.default || fervorRoutes.e404 : GenericNotFound} />
     </Switch>
   );
 };

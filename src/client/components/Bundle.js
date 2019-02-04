@@ -17,6 +17,14 @@ class Bundle extends React.PureComponent {
   }
 
   componentWillMount() {
+    this.setState({ loaded: false });
+    window.setTimeout(() => {
+      if (!this.state.loaded) {
+        this.setState({
+          Component: this.props.StatusComponents.loading.default || this.props.StatusComponents.loading,
+        });
+      }
+    }, 200);
     this.props.componentLoader().then((...args) => {
       const module = args[0];
       if (!module) {
@@ -24,6 +32,7 @@ class Bundle extends React.PureComponent {
       }
       this.setState({
         Component: module.default ? module.default : module,
+        loaded: true,
       });
 
       return null;
