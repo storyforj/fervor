@@ -15,6 +15,7 @@ describe('Dev server', () => {
       db: process.env.DATABASE_URL_TEST,
       host: 'http://localhost:3002',
       port: 3002,
+      isDev: true,
       appLocation: path.join(process.cwd(), 'test', 'integration', 'dev', 'testApp'),
       routes,
     });

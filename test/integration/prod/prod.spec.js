@@ -16,7 +16,7 @@ describe('Prod server', () => {
       babel: path.join(process.cwd(), 'node_modules', '@babel/cli', 'bin', 'babel.js'),
       directory: path.join(__dirname, 'testApp'),
       fervorDir: process.cwd(),
-      webpack: path.join(process.cwd(), 'node_modules', 'webpack', 'bin', 'webpack.js'),
+      webpack: path.join(process.cwd(), 'node_modules', 'webpack-cli', 'bin', 'cli.js'),
       isIntegrationTest: true,
     });
     // eslint-disable-next-line
@@ -28,6 +28,7 @@ describe('Prod server', () => {
       port: 3003,
       appLocation: path.join(process.cwd(), 'test', 'integration', 'prod', 'testApp'),
       disableWebpack: true,
+      isDev: false,
       routes,
     });
   });
