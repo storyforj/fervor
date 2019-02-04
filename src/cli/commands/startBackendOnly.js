@@ -3,7 +3,6 @@ const path = require('path');
 const dotenv = require('dotenv');
 require('isomorphic-fetch');
 require('@babel/polyfill');
-require('@babel/register')(require('../../config/babelrcHelper').default(true, process.cwd(), true));
 const startApp = require('../../server/server').default;
 
 module.exports = (args) => {

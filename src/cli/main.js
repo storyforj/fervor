@@ -10,6 +10,13 @@ runCommands([
     description: 'Creates a built version of the app for web/node use.',
   },
   {
+    name: 'buildBackendOnly',
+    options: {
+      directory: 'Defaults to process.cwd(). This is the directory for your app, it expects a `src` directory at it\'s root.',
+    },
+    description: 'Creates a built version of the app for node only use.',
+  },
+  {
     name: 'create',
     options: {
       directory: 'If a directory is specifed, the project will be created in that directory, otherwise it will be created in the current directory.',
