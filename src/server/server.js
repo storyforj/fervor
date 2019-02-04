@@ -5,10 +5,13 @@ import cors from 'kcors';
 import requestLogger from 'koa-logger-winston';
 import Koa from 'koa';
 import postgraphile from 'postgraphile';
-import appManifest from './appManifest';
 
+import { setPGQLOpts } from './graphql/pgqlOpts';
+import { createPgPool } from './graphql/pgPool';
+import appManifest from './appManifest';
 import logger from '../shared/utils/logger';
 import load from '../shared/utils/load';
+import { startSchemaWatcher } from './graphql/schemaWatcher';
 import ssr from './ssr';
 import staticAssets from './static';
 
@@ -17,28 +20,11 @@ export default async function startApp(options = {}) {
 
   app.use(requestLogger(logger));
 
-  const pgOpts = {
-    connectionString: options.db,
-    ssl: process.env.DATABASE_USE_SSL === 'true',
-  };
-  const pgqlOpts = {
-    graphiql: false,
-  };
+  const pgqlOpts = setPGQLOpts(options);
+  const pgPool = createPgPool(options, pgqlOpts);
+  await startSchemaWatcher(pgPool, 'public', pgqlOpts);
+  app.use(postgraphile(pgPool, 'public', pgqlOpts));
 
-  // load user defined graphQL options
-  const graph = load('graph', { options, default: { default: () => ({}) } });
-  const graphOptions = graph.default();
-
-  if (graphOptions.graphqlRoute) {
-    logger.warn('Changing the graphqlRoute is disabled. We\'ve reverted it back to /graphql');
-  }
-  Object.assign(
-    pgqlOpts,
-    graphOptions,
-    { graphqlRoute: '/graphql' },
-  );
-
-  app.use(postgraphile(pgOpts, 'public', pgqlOpts));
   app.use(cors());
   app.use(bodyParser());
   app.use(cookie());

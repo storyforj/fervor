@@ -21,6 +21,7 @@ export default function Document({
   appFavicon,
   appLocation,
   content,
+  disableClient,
   documentHeadEndContent,
   helmet,
   manifest,
@@ -34,9 +35,10 @@ export default function Document({
   let scripts = [
     <script key="bundle.js" src="/build/bundle.js" />,
   ];
+  if (disableClient) { scripts = []; }
   let cssFiles = [];
 
-  if (webpackWatcherDisabled) {
+  if (!disableClient && webpackWatcherDisabled) {
     // requiring the manfiest happens on the server side and only in prod
     // this means a dynamic require is fine
     // eslint-disable-next-line global-require, import/no-dynamic-require
@@ -127,6 +129,7 @@ export default function Document({
 Document.defaultProps = {
   additionalContent: null,
   appFavicon: null,
+  disableClient: false,
   manifest: {},
   title: '',
   documentHeadEndContent: null,
@@ -141,6 +144,7 @@ Document.propTypes = {
   appLocation: PropTypes.string.isRequired,
   appFavicon: PropTypes.string,
   content: PropTypes.string.isRequired,
+  disableClient: PropTypes.bool,
   documentHeadEndContent: PropTypes.node,
   manifest: PropTypes.object,
   helmet: PropTypes.object.isRequired,

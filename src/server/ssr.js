@@ -1,4 +1,5 @@
 import KoaRouter from 'koa-router';
+
 import processRoute from './processRoute';
 
 export default (options) => {

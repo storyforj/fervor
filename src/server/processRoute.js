@@ -3,7 +3,6 @@ import React from 'react';
 import lodashMerge from 'lodash.merge';
 import { ApolloClient } from 'apollo-client';
 import { ApolloLink } from 'apollo-link';
-import { createHttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { withClientState } from 'apollo-link-state';
@@ -17,6 +16,7 @@ import {
   Route,
 } from 'react-router-dom';
 
+import createPostgraphileLink from './graphql/apolloPostgraphileLink';
 import initStore from '../shared/store';
 import load from '../shared/utils/load';
 import Document from './components/Document';
@@ -61,7 +61,7 @@ App.propTypes = {
 
 export default async (options, ctx, next, Doc = Document) => {
   const cache = new InMemoryCache({});
-  const httpLink = createHttpLink({ uri: `${process.env.HOST || ctx.request.origin}/graphql` });
+  const schemaLink = createPostgraphileLink();
   let clientResolvers = load('graph/client', {
     options,
     default: [{ // load accepts a "default" to fallback to
@@ -81,13 +81,13 @@ export default async (options, ctx, next, Doc = Document) => {
     if (!ctx.cookie || !ctx.cookie.authJWT) { return undefined; }
 
     return {
-      headers: {
-        Authorization: `Bearer ${ctx.cookie.authJWT}`,
+      authorization: {
+        jwtToken: ctx.cookie.authJWT,
       },
     };
   });
 
-  const link = ApolloLink.from([clientStateLink, middlewareLink, httpLink]);
+  const link = ApolloLink.from([clientStateLink, middlewareLink, schemaLink]);
   const serverClient = new ApolloClient({
     ssrMode: true,
     cache,
@@ -184,6 +184,7 @@ export default async (options, ctx, next, Doc = Document) => {
         helmet={helmet}
         state={state}
         title={app.props.title}
+        disableClient={options.disableClient}
         additionalContent={additionalDocumentContent}
         documentHeadEndContent={documentHeadEndContent}
         processMeta={processMeta}
