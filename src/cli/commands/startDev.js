@@ -41,6 +41,7 @@ module.exports = (args) => {
     db: process.env.DATABASE_URL,
     host: process.env.HOST || `http://localhost:${port}`,
     port,
+    isDev: true,
     appLocation: process.cwd(),
     get routes() {
       if (args._[1]) {
