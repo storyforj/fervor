@@ -45,6 +45,7 @@ module.exports = (args) => {
     appLocation: process.cwd(),
     disableWebpack: true,
     disableClient: true,
+    isDev: true,
     get routes() {
       if (args._[1]) {
         // eslint-disable-next-line global-require, import/no-dynamic-require

@@ -31,6 +31,7 @@ module.exports = (args) => {
     appLocation: process.cwd(),
     disableWebpack: true,
     disableClient: true,
+    isDev: false,
     routes,
   });
 };
