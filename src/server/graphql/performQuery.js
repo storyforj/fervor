@@ -44,12 +44,12 @@ export default async function performQuery(
         operationName,
       ).then((data) => {
         const totalTime = Date.now() - startTime;
-        logger.info(`${chalk.green('0 error(s)')} as ${role} in ${totalTime}ms :: ${queryCondensed}`);
+        logger.info(`${chalk.green('0 error(s)')} as ${chalk.magenta(role)} in ${chalk.grey(`${totalTime}ms`)} :: ${queryCondensed}`);
         return data;
       }).catch((e) => {
         const totalTime = Date.now() - startTime;
         const errorCount = chalk.red(`${e.errors.length} error(s)`);
-        logger.error(`${errorCount} as ${role} in ${totalTime}ms :: ${queryCondensed}`);
+        logger.error(`${errorCount} as ${chalk.magenta(role)} in ${chalk.grey(`${totalTime}ms`)} :: ${queryCondensed}`);
       });
 
       return result;
