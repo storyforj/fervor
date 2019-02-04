@@ -10,6 +10,7 @@ module.exports = () => {
 
   if (process.env.DISABLE_DOT_ENV !== 'true') {
     dotenv.config({ path: path.join(process.cwd(), '.env') });
+    dotenv.config({ path: path.join(process.cwd(), '.env.personal') });
   }
 
   return startApp({

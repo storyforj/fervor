@@ -14,10 +14,12 @@ module.exports = (args) => {
     // eslint-disable-next-line global-require, import/no-dynamic-require
     watcher = chokidar.watch(`${process.cwd()}/${args._[1]}`);
     dotenv.config({ path: path.join(process.cwd(), args._[1], '.env') });
+    dotenv.config({ path: path.join(process.cwd(), args._[1], '.env.personal') });
   } else {
     // eslint-disable-next-line global-require, import/no-dynamic-require
     watcher = chokidar.watch(`${process.cwd()}`);
     dotenv.config({ path: path.join(process.cwd(), '.env') });
+    dotenv.config({ path: path.join(process.cwd(), '.env.personal') });
   }
 
   watcher.on('ready', () => {
