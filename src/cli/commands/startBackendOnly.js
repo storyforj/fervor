@@ -7,6 +7,9 @@ require('@babel/register')(require('../../config/babelrcHelper').default(true, p
 const startApp = require('../../server/server').default;
 
 module.exports = (args) => {
+  // eslint-disable-next-line global-require, import/no-dynamic-require
+  const routes = require(`${process.cwd()}/build/urls`).default;
+
   if (args._[1]) {
     dotenv.config({ path: path.join(process.cwd(), args._[1], '.env') });
     dotenv.config({ path: path.join(process.cwd(), args._[1], '.env.personal') });
@@ -28,14 +31,6 @@ module.exports = (args) => {
     appLocation: process.cwd(),
     disableWebpack: true,
     disableClient: true,
-    get routes() {
-      if (args._[1]) {
-        // eslint-disable-next-line global-require, import/no-dynamic-require
-        return require(`${process.cwd()}/${args._[1]}/src/urls`).default;
-      }
-
-      // eslint-disable-next-line global-require, import/no-dynamic-require
-      return require(`${process.cwd()}/src/urls`).default;
-    },
+    routes,
   });
 };
