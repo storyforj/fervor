@@ -155,12 +155,9 @@
   },
   "resolutions": {
     "enzyme": "^3.6.0",
-    "fsevents": "^1.2.7",
+    "//": "when doing a clean install make sure you get fsevents ^1.2.7",
     "graphql-tag": "^2.10.1",
     "graphql": "^14.1.1",
     "upath": "^1.1.0"
-  },
-  "optionalDependencies": {
-    "fsevents": "^1.2.7"
   }
 }
