@@ -4,6 +4,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2019-02-04
+Lots of dev experience, error/loading state improvements and performance improvements.
+In addition, we now support newer versions of Node. Currently tested using Node 11.
+
+### Changed
+- Server side graphql calls are now resolved without a round trip
+- We changed the way URLs are registered. We now using dynamic import statements. Dynamic
+  imports can be used anywhere in the app now!
+- Upgraded to Babel 7
+- Upgraded Webpack
+- Upgrade React to latest (16.7.0)
+- Upgraded Apollo to latest
+- Upgraded SCSS/CSS loaders and friends
+- Upgraded wdio for more stable acceptance tests within Fervor
+- Customized the template for migrations
+- Fixed a bug where we pointing to built backend folders even in development
+
+### Added
+- Dynamic imports (server and client compatible)
+- Decorators
+- Minimal Pipeline operator
+- Global Loading, 404 and 500 error pages
+
+### Removed
+- Reliance on the "make-lazy" Babel plugin (internal to Fervor)
+
 ## [1.5.0] - 2018-12-20
 Small change - allowed for adding content to the end of the document HEAD via the rendering.js file. This let's us avoid FOUC.
 
