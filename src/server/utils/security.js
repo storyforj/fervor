@@ -1,4 +1,4 @@
-import getAttr from 'lodash';
+import getAttr from 'lodash/get';
 import crypto from 'crypto';
 import jsonwebtoken from 'jsonwebtoken';
 
