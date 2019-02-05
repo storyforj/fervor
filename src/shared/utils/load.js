@@ -3,14 +3,19 @@ export default function load(
   { options = {}, default: _default = null },
 ) {
   let module;
-  try {
-    // eslint-disable-next-line global-require, import/no-dynamic-require
-    module = require(`${options.appLocation}/build/${name}`);
-  } catch (buildErr) {
+
+  if (options.isDev) {
     try {
       // eslint-disable-next-line global-require, import/no-dynamic-require
       module = require(`${options.appLocation}/src/${name}`);
     } catch (srcErr) {
+      module = _default;
+    }
+  } else {
+    try {
+      // eslint-disable-next-line global-require, import/no-dynamic-require
+      module = require(`${options.appLocation}/build/${name}`);
+    } catch (buildErr) {
       module = _default;
     }
   }

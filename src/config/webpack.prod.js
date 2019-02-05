@@ -1,6 +1,6 @@
 require('isomorphic-fetch');
-require('babel-polyfill');
-require('babel-register')(require('./babelrcHelper').default(true, false));
+require('@babel/polyfill');
+require('@babel/register')(require('./babelrcHelper').default(true, false));
 
 const fs = require('fs');
 const path = require('path');

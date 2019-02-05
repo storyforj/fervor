@@ -1,9 +1,5 @@
-import Counter from './apps/Counter';
-import Hello from './apps/Hello';
-import Test from './apps/Test';
-
 export default {
-  '/': Hello,
-  '/counter': Counter,
-  '/test': Test,
+  '/': () => import('./apps/Hello'),
+  '/counter': () => import('./apps/Counter'),
+  '/test': () => import('./apps/Test'),
 };

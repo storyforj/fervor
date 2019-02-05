@@ -3,19 +3,15 @@ import { getDataFromTree } from 'react-apollo';
 import { Helmet } from 'react-helmet';
 import ReactDOMServer from 'react-dom/server';
 
-import load from '../shared/utils/load';
-import resolveRoutes from './utils/resolveRoutes';
-import requestStateBuilder from './utils/requestStateBuilder';
-import Document from './components/Document';
-import App from './components/App';
+import load from '../../shared/utils/load';
+import requestStateBuilder from '../utils/requestStateBuilder';
+import Document from '../components/Document';
+import App from '../components/SinglePageApp';
 
-const GenericLoading = () => (null);
-const GenericNotFound = () => (<div>Not Found</div>);
-const GenericError = () => (<div>Error</div>);
+const GenericError = () => (<div>Internal Server Error</div>);
 
-export default async (options, ctx, next, Doc = Document) => {
+async function renderError(options, ctx) {
   const { serverClient, store } = requestStateBuilder(options, ctx);
-  const routes = await resolveRoutes(options);
 
   const rendering = load('config/rendering', {
     options,
@@ -30,17 +26,18 @@ export default async (options, ctx, next, Doc = Document) => {
     },
   });
 
+  /* eslint-disable react/no-danger */
   let app = (
     <App
-      ctx={ctx}
-      routes={routes}
+      Component={options.routes.e500 ? options.routes.e500.default || options.routes.e500 : GenericError}
       store={store}
       serverClient={serverClient}
-      statusComponents={{
-        e404: options.routes.e404 || GenericNotFound,
-        e500: options.routes.e500 || GenericError,
-        loading: options.routes.loading || GenericLoading,
-      }}
+      extra={
+        <script dangerouslySetInnerHTML={{
+          __html: '(function() { window.fervor = window.fervor || {}; window.fervor.documentStatus = \'500\'; }())',
+        }}
+        />
+      }
     />
   );
 
@@ -81,8 +78,8 @@ export default async (options, ctx, next, Doc = Document) => {
       documentHeadEndContent = getDocumentHeadEndContent(appOptions);
     }
 
-    ctx.body = `<!doctype html>\n${ReactDOMServer.renderToStaticMarkup((
-      <Doc
+    return `<!doctype html>\n${ReactDOMServer.renderToStaticMarkup((
+      <Document
         appLocation={options.appLocation}
         appFavicon={options.appFavicon}
         // eslint-disable-next-line
@@ -100,7 +97,24 @@ export default async (options, ctx, next, Doc = Document) => {
         webpackWatcherDisabled={options.disableWebpack}
       />
     ))}`;
-
-    next();
   });
+}
+
+export default (options) => async (ctx, next) => {
+  try {
+    await next();
+  } catch (err) {
+    ctx.status = err.status || 500;
+    if (ctx.response.type === 'application/json') {
+      ctx.body = { error: 'Internal Server Error' };
+    } else {
+      // try to render the 500 error, if its not possible fallback to the generic style app error
+      try {
+        ctx.body = await renderError(options, ctx);
+      } catch (e) {
+        ctx.body = 'Internal Server Error';
+      }
+    }
+    ctx.app.emit('error', err, ctx);
+  }
 };

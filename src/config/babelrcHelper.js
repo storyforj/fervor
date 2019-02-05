@@ -4,20 +4,16 @@ import path from 'path';
 export default (isServer, appLocation, useSrc, plugins = []) => {
   let config = {
     presets: [
-      ['env', { targets: { browsers: ['last 2 versions', 'safari >= 7'] } }],
-      'react',
-      'stage-0',
+      ['@babel/preset-env', { targets: { browsers: ['last 2 versions', 'safari >= 7'] } }],
+      '@babel/preset-react',
     ],
     plugins: [
-      [
-        'make-lazy',
-        {
-          // eslint-disable-next-line no-useless-escape
-          paths: ['(src|lib)\/urls\.js$'],
-          moduleExceptions: ['^[^(./|../)]'],
-        },
-      ].concat(plugins),
-    ],
+      ['@babel/plugin-transform-runtime'],
+      ['@babel/plugin-syntax-dynamic-import'],
+      ['@babel/plugin-proposal-class-properties', { loose: true }],
+      ['@babel/plugin-proposal-pipeline-operator', { proposal: 'minimal' }],
+      ['@babel/plugin-proposal-decorators', { decoratorsBeforeExport: true }],
+    ].concat(plugins),
   };
 
   if (isServer) {
@@ -29,10 +25,13 @@ export default (isServer, appLocation, useSrc, plugins = []) => {
           extensions: ['.scss'],
         },
       ],
-      [
-        'transform-runtime',
-      ],
-    ];
+      ['@babel/plugin-transform-runtime'],
+      ['@babel/plugin-syntax-dynamic-import'],
+      ['babel-plugin-dynamic-import-node'],
+      ['@babel/plugin-proposal-class-properties', { loose: true }],
+      ['@babel/plugin-proposal-pipeline-operator', { proposal: 'minimal' }],
+      ['@babel/plugin-proposal-decorators', { decoratorsBeforeExport: true }],
+    ].concat(plugins);
   }
 
   if (appLocation === false) {

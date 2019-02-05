@@ -1,12 +1,14 @@
-const dotenv = require('dotenv');
+const { execSync } = require('child_process');
 const path = require('path');
 
 module.exports = (args) => {
-  if (process.env.DISABLE_DOT_ENV !== 'true') {
-    dotenv.config({ path: path.join(process.cwd(), '.env') });
-  }
-  // eslint-disable-next-line global-require
-  const knex = require('../../config/knex');
-  const directory = path.join(process.cwd(), 'src', 'migrations');
-  knex.migrate.make(args._[1], { directory }).then(() => process.exit(0)).catch(() => process.exit(1));
+  let today = (new Date()).toISOString().replace('T', '').replace('Z', '').replace(/-/g, '').replace(/:/g, '').replace('.', '');
+  today = today.substring(0, today.length - 7);
+  const random = Math.floor(1000 + (Math.random() * 9000));
+
+  const fileName = `${today}${random}_${args._[1]}.js`;
+  const destination = path.join(process.cwd(), 'src', 'migrations', fileName);
+  const source = path.join(__dirname, '..', '..', 'templates', 'migration.js');
+
+  execSync(`cp ${source} ${destination}`);
 };

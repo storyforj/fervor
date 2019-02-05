@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:8.11.0
+      - image: circleci/node:11.9.0
         environment:
           DATABASE_URL_TEST: postgres://test_user@localhost:5432/test_db
           IS_CIRCLE_CI: true
@@ -11,7 +11,7 @@ jobs:
           POSTGRES_USER: test_user
           POSTGRES_DB: test_db
           POSTGRES_PASSWORD: ""
-      - image: selenium/standalone-chrome:3.5.2
+      - image: selenium/standalone-chrome:latest
 
     working_directory: ~/repo
 

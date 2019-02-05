@@ -1,4 +1,6 @@
-import { gql } from 'graphql-tag';
+import gql from 'graphql-tag';
+
+const getCounterQuery = gql`query GetCounter { counter @client { value } }`;
 
 export default [{
   typeDefs: `
@@ -21,18 +23,11 @@ export default [{
   resolvers: {
     Mutation: {
       incrementCounter: (_, _2, { cache }) => {
-        const query = gql`
-          query { counter @client {
-            value
-          }}
-        `;
-
-        const previous = cache.readQuery({ query });
+        const previous = cache.readQuery({ query: getCounterQuery });
         const counter = { value: previous.counter.value + 1, __typename: 'Counter' };
         const data = { counter };
 
-        // you can also do cache.writeData({ data }) here if you prefer
-        cache.writeQuery({ query, data });
+        cache.writeQuery({ query: getCounterQuery, data });
         return counter;
       },
     },
