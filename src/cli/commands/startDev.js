@@ -13,13 +13,17 @@ module.exports = (args) => {
   if (args._[1]) {
     // eslint-disable-next-line global-require, import/no-dynamic-require
     watcher = chokidar.watch(`${process.cwd()}/${args._[1]}`);
-    dotenv.config({ path: path.join(process.cwd(), args._[1], '.env') });
-    dotenv.config({ path: path.join(process.cwd(), args._[1], '.env.personal') });
+    if (process.env.DISABLE_DOT_ENV !== 'true') {
+      dotenv.config({ path: path.join(process.cwd(), args._[1], '.env.personal') });
+      dotenv.config({ path: path.join(process.cwd(), args._[1], '.env') });
+    }
   } else {
     // eslint-disable-next-line global-require, import/no-dynamic-require
     watcher = chokidar.watch(`${process.cwd()}`);
-    dotenv.config({ path: path.join(process.cwd(), '.env') });
-    dotenv.config({ path: path.join(process.cwd(), '.env.personal') });
+    if (process.env.DISABLE_DOT_ENV !== 'true') {
+      dotenv.config({ path: path.join(process.cwd(), '.env.personal') });
+      dotenv.config({ path: path.join(process.cwd(), '.env') });
+    }
   }
 
   watcher.on('ready', () => {

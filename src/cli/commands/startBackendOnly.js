@@ -9,12 +9,14 @@ module.exports = (args) => {
   // eslint-disable-next-line global-require, import/no-dynamic-require
   const routes = require(`${process.cwd()}/build/urls`).default;
 
-  if (args._[1]) {
-    dotenv.config({ path: path.join(process.cwd(), args._[1], '.env') });
-    dotenv.config({ path: path.join(process.cwd(), args._[1], '.env.personal') });
-  } else {
-    dotenv.config({ path: path.join(process.cwd(), '.env') });
-    dotenv.config({ path: path.join(process.cwd(), '.env.personal') });
+  if (process.env.DISABLE_DOT_ENV !== 'true') {
+    if (args._[1]) {
+      dotenv.config({ path: path.join(process.cwd(), args._[1], '.env.personal') });
+      dotenv.config({ path: path.join(process.cwd(), args._[1], '.env') });
+    } else {
+      dotenv.config({ path: path.join(process.cwd(), '.env.personal') });
+      dotenv.config({ path: path.join(process.cwd(), '.env') });
+    }
   }
 
   const port = process.env.PORT || 3000;

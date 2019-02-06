@@ -5,6 +5,7 @@ require('@babel/register')(require('./babelrcHelper').default(true, false));
 const fs = require('fs');
 const path = require('path');
 const autoprefixer = require('autoprefixer');
+const dotenv = require('dotenv');
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 const globToRegExp = require('glob-to-regexp');
 const flexbugs = require('postcss-flexbugs-fixes');
@@ -17,6 +18,11 @@ const hasConfig = require('../shared/utils/hasConfig');
 const hasClientResolvers = require('../shared/utils/hasClientResolvers');
 const ChunkManifestPlugin = require('./ChunkManifestPlugin');
 const clientSideBabelConfig = require('./babelrcHelper').default(false, process.cwd(), true);
+
+if (process.env.DISABLE_DOT_ENV !== 'true') {
+  dotenv.config({ path: path.join(process.cwd(), '.env.personal') });
+  dotenv.config({ path: path.join(process.cwd(), '.env') });
+}
 
 const buildDir = path.join(process.cwd(), 'build');
 
