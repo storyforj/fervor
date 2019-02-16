@@ -2,6 +2,7 @@ import React from 'react';
 import { MockedProvider } from 'react-apollo/test-utils';
 import { Provider } from 'react-redux';
 import { mount } from 'enzyme';
+import { createMemoryHistory } from 'history';
 
 import gql from '../../../src/shared/gqltag';
 import initStore from '../../../src/shared/store';
@@ -89,7 +90,7 @@ describe('Form Component, when onSuccess is defined', () => {
   let component;
 
   beforeEach(() => {
-    const store = initStore({});
+    const store = initStore({}, [], createMemoryHistory({ initialEntries: ['/'] }));
 
     const mutation = gql`mutation IncrementCounter {
       incrementCounter @client {
@@ -147,7 +148,7 @@ describe('Form Component, when onFailure is specified', () => {
   let component;
 
   beforeEach(() => {
-    const store = initStore({});
+    const store = initStore({}, [], createMemoryHistory({ initialEntries: ['/'] }));
 
     const mutation = gql`mutation IncrementCounter {
       incrementCounter @client {

@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
 import {
   Switch,
   Route,
@@ -29,6 +31,7 @@ const GenericError = () => (<div>Error</div>);
 class Routes extends React.PureComponent {
   static propTypes = {
     componentCache: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
   };
 
   render() {
@@ -60,7 +63,7 @@ class Routes extends React.PureComponent {
     });
 
     return (
-      <Switch>
+      <Switch location={this.props.location}>
         {routes}
         <Route component={fervorRoutes.e404 ? fervorRoutes.e404.default || fervorRoutes.e404 : GenericNotFound} />
       </Switch>
@@ -68,4 +71,10 @@ class Routes extends React.PureComponent {
   }
 }
 
-export default Routes;
+export default compose(
+  connect(
+    (state) => ({
+      location: state.router.location,
+    }),
+  ),
+)(Routes);

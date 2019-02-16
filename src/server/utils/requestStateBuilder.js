@@ -4,6 +4,8 @@ import { ApolloLink } from 'apollo-link';
 import { setContext } from 'apollo-link-context';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { withClientState } from 'apollo-link-state';
+import { createMemoryHistory } from 'history';
+import { routerMiddleware } from 'connected-react-router';
 
 import createPostgraphileLink from '../graphql/apolloPostgraphileLink';
 import initStore from '../../shared/store';
@@ -43,7 +45,12 @@ export default (options, ctx) => {
     cache,
     link,
   });
-  const store = initStore({ router: { location: { pathname: ctx.req.url } } });
+  const history = createMemoryHistory({ initialEntries: [ctx.req.url] });
+  const store = initStore(
+    { router: { location: { pathname: ctx.req.url } } },
+    [routerMiddleware(history)],
+    history,
+  );
 
   return {
     serverClient,
