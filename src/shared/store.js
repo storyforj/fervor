@@ -1,5 +1,5 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux';
-import { routerReducer } from 'react-router-redux';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import { connectRouter } from 'connected-react-router';
 
 // import middleware
 import thunkMiddleware from 'redux-thunk';
@@ -8,21 +8,19 @@ import logger from './utils/reduxLogger';
 const middleware = [thunkMiddleware, logger];
 const applied = applyMiddleware(...middleware);
 
-const initStore = (initialState, otherMiddleware) => {
+const initStore = (initialState, otherMiddleware, history) => {
   const reducer = combineReducers({
-    router: routerReducer,
+    router: connectRouter(history),
   });
   let allMiddleware = applied;
   if (otherMiddleware) {
     allMiddleware = applyMiddleware(...middleware, ...otherMiddleware);
   }
-
-  const store = (allMiddleware(createStore))(reducer);
-
-  store.dispatch({
-    type: '@@router/LOCATION_CHANGE',
-    payload: initialState,
-  });
+  const store = createStore(
+    reducer,
+    initialState,
+    compose(allMiddleware),
+  );
 
   return store;
 };

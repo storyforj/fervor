@@ -5,7 +5,7 @@ import { Link, Switch, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Provider, connect } from 'react-redux';
-import { push, replace, go, goBack, goForward } from 'react-router-redux';
+import { push, replace, go, goBack, goForward } from 'connected-react-router';
 
 import gqltag from './shared/gqltag';
 import Document from './client/components/Document';

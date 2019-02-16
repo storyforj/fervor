@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { ApolloProvider } from 'react-apollo';
 import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'react-router-redux';
+import { ConnectedRouter, routerMiddleware } from 'connected-react-router';
 import { ApolloClient } from 'apollo-client';
 import { ApolloLink } from 'apollo-link';
 import { createHttpLink } from 'apollo-link-http';
@@ -11,13 +11,20 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { withClientState } from 'apollo-link-state';
 import cookie from 'cookies-js';
 import lodashMerge from 'lodash.merge';
+import createBrowserHistory from 'history/createBrowserHistory';
 // eslint-disable-next-line
 import fervorClientResolvers from 'fervorClientResolvers';
 // eslint-disable-next-line
 import fervorConfigRendering from 'fervorConfigRendering';
 
-import browserHistory from '../history';
-import store from '../store';
+import initStore from '../../shared/store';
+
+const browserHistory = createBrowserHistory();
+const store = initStore(
+  {},
+  [routerMiddleware(browserHistory)],
+  browserHistory,
+);
 
 const cache = (new InMemoryCache({})).restore(window.APOLLO_STATE.apollo);
 
