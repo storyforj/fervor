@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] - 2019-02-15
+Improve dynamic routing + optimize route rendering
+
+### Changed
+- Routes now render using PureComponents for better accuracy
+- Routes also render using the render method supplied by React Router. This means, we can better support dynamic routing.
+- Changed caching of Javascript modules. Previousl we only cached the first module loaded on the page.
+  We now cache all modules. This helps with subsequent loads of the same module. This in addition, helps
+  render SPAs.
+
 ## [2.0.2] - 2019-02-05
 Small bug fix. We changed the load order of .env.personal and .env. .env.personal should
 override .env.
