@@ -49,11 +49,7 @@ class App extends React.PureComponent {
       PropTypes.func,
       PropTypes.object,
     ]).isRequired,
-    locationPathName: PropTypes.string.isRequired,
-    PageLoadComponent: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.object,
-    ]).isRequired,
+    componentCache: PropTypes.object.isRequired,
   };
   render() {
     const { App: AppWrapper } = fervorConfigRendering.client;
@@ -65,7 +61,7 @@ class App extends React.PureComponent {
         <ApolloProvider client={webClient}>
           <Provider store={store}>
             <ConnectedRouter history={browserHistory}>
-              <RoutesComponent initialPath={this.props.locationPathName} PageLoadComponent={this.props.PageLoadComponent} />
+              <RoutesComponent componentCache={this.props.componentCache} />
             </ConnectedRouter>
           </Provider>
         </ApolloProvider>
