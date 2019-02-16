@@ -1,10 +1,10 @@
 import clientCookies from 'cookies-js';
 import { compose, Query, Mutation, graphql } from 'react-apollo';
 import { Helmet } from 'react-helmet';
-import { Link } from 'react-router-dom';
+import { Link, Switch, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { connect } from 'react-redux';
+import { Provider, connect } from 'react-redux';
 import { push, replace, go, goBack, goForward } from 'react-router-redux';
 
 import gqltag from './shared/gqltag';
@@ -27,7 +27,10 @@ module.exports = {
   gql: gqltag,
   Query,
   Mutation,
+  Provider,
   Link,
+  Route,
+  Switch,
   graphql,
   PropTypes,
   React,

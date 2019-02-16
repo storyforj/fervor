@@ -25,8 +25,7 @@ const App = ({
             <Route
               key={path}
               path={path}
-              component={routes[path]}
-              exact
+              {...routes[path]}
             />
           ))}
           <Route component={statusComponents.e404 || GenericNotFound} />
