@@ -50,6 +50,11 @@ const webClient = new ApolloClient({
   link,
 });
 
+const appOptions = (
+  fervorConfigRendering.client &&
+  typeof fervorConfigRendering.client.getAppOptions === 'function'
+) ? fervorConfigRendering.client.getAppOptions() : {};
+
 class App extends React.PureComponent {
   static propTypes = {
     Routes: PropTypes.oneOfType([
@@ -64,7 +69,7 @@ class App extends React.PureComponent {
     const RoutesComponent = this.props.Routes;
 
     return (
-      <Wrapper>
+      <Wrapper appOptions={appOptions}>
         <ApolloProvider client={webClient}>
           <Provider store={store}>
             <ConnectedRouter history={browserHistory}>
