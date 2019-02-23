@@ -30,7 +30,7 @@ export default async (options, ctx, next, Doc = Document) => {
     },
   });
 
-  let app = (
+  const renderApp = () => (
     <App
       ctx={ctx}
       routes={routes}
@@ -59,14 +59,22 @@ export default async (options, ctx, next, Doc = Document) => {
     appOptions = getAppOptions();
   }
 
+  let app = renderApp();
+  const AppWraperComponent = AppWrapper || React.Fragment;
   if (AppWrapper) {
-    app = <AppWrapper options={appOptions}>{app}</AppWrapper>;
+    app = (
+      <AppWraperComponent options={appOptions} disableStylesGeneration>{app}</AppWraperComponent>
+    );
   }
 
   return getDataFromTree(app).then(() => {
     const state = store.getState();
     state.apollo = serverClient.extract();
-    const content = ReactDOMServer.renderToString(app);
+    const content = ReactDOMServer.renderToString(
+      <AppWraperComponent options={appOptions}>
+        {renderApp()}
+      </AppWraperComponent>,
+    );
     const helmet = Helmet.renderStatic();
 
     // Load additional document content after rendering the app.
