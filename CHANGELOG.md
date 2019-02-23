@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [2.1.3] - 2019-02-23
+Added another fix for material-ui/react-jss apps
+
+### Changed
+- Pass a disableStylesGeneration option into server side AppWrappers. This allows for, MuiThemeProviders to not generate class names until apollo has finished extracting code.
+
 ## [2.1.2] - 2019-02-19
 Added/fixed issues with rendering react-jss. Added an extra appOptions field
 for client config.
