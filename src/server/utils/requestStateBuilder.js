@@ -47,7 +47,7 @@ export default (options, ctx) => {
   });
   const history = createMemoryHistory({ initialEntries: [ctx.req.url] });
   const store = initStore(
-    { router: { location: { pathname: ctx.req.url } } },
+    {},
     [routerMiddleware(history)],
     history,
   );
