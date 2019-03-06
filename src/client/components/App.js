@@ -10,7 +10,7 @@ import { setContext } from 'apollo-link-context';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { withClientState } from 'apollo-link-state';
 import cookie from 'cookies-js';
-import lodashMerge from 'lodash.merge';
+import lodashMerge from 'lodash.mergewith';
 import createBrowserHistory from 'history/createBrowserHistory';
 // eslint-disable-next-line
 import fervorClientResolvers from 'fervorClientResolvers';
@@ -40,7 +40,12 @@ const middlewareLink = setContext(() => {
 });
 
 const stateLink = withClientState({
-  ...lodashMerge(...fervorClientResolvers),
+  ...lodashMerge({}, ...fervorClientResolvers, (objValue, srcValue) => {
+    if (objValue instanceof Array || typeof objValue === 'string') {
+      return objValue.concat(srcValue);
+    }
+    return undefined;
+  }),
   cache,
 });
 
