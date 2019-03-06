@@ -1,4 +1,4 @@
-import lodashMerge from 'lodash.merge';
+import lodashMerge from 'lodash.mergewith';
 import { ApolloClient } from 'apollo-client';
 import { ApolloLink } from 'apollo-link';
 import { setContext } from 'apollo-link-context';
@@ -24,9 +24,15 @@ export default (options, ctx) => {
 
   // normalizing for es6 import purposes
   clientResolvers = clientResolvers.default ? clientResolvers.default : clientResolvers;
+  const mergedResolvers = lodashMerge({}, ...clientResolvers, (objValue, srcValue) => {
+    if (objValue instanceof Array || typeof objValue === 'string') {
+      return objValue.concat(srcValue);
+    }
+    return undefined;
+  });
 
   const clientStateLink = withClientState({
-    ...lodashMerge(...clientResolvers),
+    ...mergedResolvers,
     cache,
   });
   const middlewareLink = setContext(() => {
