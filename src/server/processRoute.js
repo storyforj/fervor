@@ -60,10 +60,9 @@ export default async (options, ctx, next, Doc = Document) => {
   }
 
   let app = renderApp();
-  const AppWraperComponent = AppWrapper || React.Fragment;
   if (AppWrapper) {
     app = (
-      <AppWraperComponent options={appOptions} disableStylesGeneration>{app}</AppWraperComponent>
+      <AppWrapper options={appOptions} disableStylesGeneration>{app}</AppWrapper>
     );
   }
 
@@ -71,9 +70,15 @@ export default async (options, ctx, next, Doc = Document) => {
     const state = store.getState();
     state.apollo = serverClient.extract();
     const content = ReactDOMServer.renderToString(
-      <AppWraperComponent options={appOptions}>
-        {renderApp()}
-      </AppWraperComponent>,
+      AppWrapper ? (
+        <AppWrapper options={appOptions} disableStylesGeneration={false}>
+          {renderApp()}
+        </AppWrapper>
+      ) : (
+        <React.Fragment>
+          {renderApp()}
+        </React.Fragment>
+      ),
     );
     const helmet = Helmet.renderStatic();
 

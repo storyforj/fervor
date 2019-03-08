@@ -23,15 +23,15 @@ describe('Webpack Dev Config, without a custom config', () => {
 describe('Webpack Dev Config, with a custom config', () => {
   beforeEach(() => {
     fs.writeFileSync(
-    path.join(__dirname, 'src', 'config', 'webpack.js'),
-    `
-      import CopyPlugin from 'copy-webpack-plugin';
+      path.join(__dirname, 'src', 'config', 'webpack.js'),
+      `
+        import CopyPlugin from 'copy-webpack-plugin';
 
-      export default (config) => {
-        config.plugins.push(CopyPlugin([]));
-        return config;
-      };
-    `);
+        export default (config) => {
+          config.plugins.push(CopyPlugin([]));
+          return config;
+        };
+      `);
   });
 
   afterEach(() => {
