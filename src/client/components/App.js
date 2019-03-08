@@ -8,7 +8,6 @@ import { ApolloLink } from 'apollo-link';
 import { createHttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { withClientState } from 'apollo-link-state';
 import cookie from 'cookies-js';
 import lodashMerge from 'lodash.mergewith';
 import createBrowserHistory from 'history/createBrowserHistory';
@@ -39,21 +38,21 @@ const middlewareLink = setContext(() => {
   };
 });
 
-const stateLink = withClientState({
-  ...lodashMerge({}, ...fervorClientResolvers, (objValue, srcValue) => {
-    if (objValue instanceof Array || typeof objValue === 'string') {
-      return objValue.concat(srcValue);
-    }
-    return undefined;
-  }),
-  cache,
+const { defaults, typeDefs, ...otherApolloSettings } = lodashMerge({}, ...fervorClientResolvers, (objValue, srcValue) => {
+  if (objValue instanceof Array || typeof objValue === 'string') {
+    return objValue.concat(srcValue);
+  }
+  return undefined;
 });
 
-const link = ApolloLink.from([stateLink, middlewareLink, httpLink]);
+const link = ApolloLink.from([middlewareLink, httpLink]);
 const webClient = new ApolloClient({
   cache,
   link,
+  ...otherApolloSettings,
+  typeDefs,
 });
+cache.writeData({ data: defaults || {} });
 
 const appOptions = (
   fervorConfigRendering.client &&
