@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] - 2019-03-08
+Upgrade to Apollo 2.5
+
+### Changed
+- Upgraded Apollo to 2.5. This means we can now code split resolvers. This *should* result in no breaking changes for applications. Fervor still supports defaults even though Apollo's API changed. In addition, I wanted to add this because async resolver support is a bit better.
+- Updated dependencies to address github vulnerability report
+
 ## [2.1.5] - 2019-03-06
 Fixed a bug where client resolvers weren't properly merging.
 

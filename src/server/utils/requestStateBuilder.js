@@ -3,7 +3,6 @@ import { ApolloClient } from 'apollo-client';
 import { ApolloLink } from 'apollo-link';
 import { setContext } from 'apollo-link-context';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { withClientState } from 'apollo-link-state';
 import { createMemoryHistory } from 'history';
 import { routerMiddleware } from 'connected-react-router';
 
@@ -31,10 +30,8 @@ export default (options, ctx) => {
     return undefined;
   });
 
-  const clientStateLink = withClientState({
-    ...mergedResolvers,
-    cache,
-  });
+  const { defaults, typeDefs, ...otherApolloSettings } = mergedResolvers;
+
   const middlewareLink = setContext(() => {
     if (!ctx.cookie || !ctx.cookie.authJWT) { return undefined; }
 
@@ -45,12 +42,15 @@ export default (options, ctx) => {
     };
   });
 
-  const link = ApolloLink.from([clientStateLink, middlewareLink, schemaLink]);
+  const link = ApolloLink.from([middlewareLink, schemaLink]);
   const serverClient = new ApolloClient({
     ssrMode: true,
     cache,
     link,
+    ...otherApolloSettings,
+    typeDefs,
   });
+  cache.writeData({ data: defaults || {} });
   const history = createMemoryHistory({ initialEntries: [ctx.req.url] });
   const store = initStore(
     {},
