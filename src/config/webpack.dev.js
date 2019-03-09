@@ -9,9 +9,8 @@ import { GenerateSW } from 'workbox-webpack-plugin';
 
 import hasConfig from '../shared/utils/hasConfig';
 import hasClientResolvers from '../shared/utils/hasClientResolvers';
-import logger from '../shared/utils/logger';
 
-export default (app, options) => {
+export default async (app, options) => {
   const hasRenderingConfig = hasConfig(options.appLocation, 'rendering');
 
   let devConfig = {
@@ -136,21 +135,17 @@ export default (app, options) => {
   }
 
   const devSetup = {
-    dev: {
+    devMiddleware: {
       publicPath: '/build/',
       headers: { 'Content-Type': 'text/html; charset=utf-8' },
       stats: { colors: true },
       quiet: false,
       noInfo: true,
     },
-    hot: {
-      log: logger.info,
-      path: '/__webpack_hmr',
-      heartbeat: 10 * 1000,
-    },
     config: devConfig,
   };
 
   const wpMiddleware = options.webpackMiddleware || webpackMiddleware;
-  app.use(wpMiddleware(devSetup));
+  const middleware = await wpMiddleware(devSetup);
+  app.use(middleware);
 };

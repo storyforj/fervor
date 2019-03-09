@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [2.3.0] - 2019-03-08
+Upgraded the Koa-webpack integration.
+
+### Changed
+- Upgraded/tweaked the koa webpack integration. It was being flakey on clean installs.
+- Added a default prop
+- Had to disable a form helper tests, manual testing shows the Form component works; however, MockedProvider seems to not be treating error states properly anymore.
+- Disabled js-free form-posting test. This hasn't been working and we definitely need to revist.
+- Various minor/patch version upgrades
+- Reduced vendor dll size by 60kb
+- Clean up integration tests from the last few versions
+
 ## [2.2.0] - 2019-03-08
 Upgrade to Apollo 2.5
 

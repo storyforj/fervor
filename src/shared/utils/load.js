@@ -11,7 +11,9 @@ export default function load(
       // eslint-disable-next-line global-require, import/no-dynamic-require
       module = require(`${options.appLocation}/src/${name}`);
     } catch (srcErr) {
-      logger.error(srcErr);
+      if (!srcErr.message.includes('Cannot find module')) {
+        logger.error(srcErr);
+      }
       module = _default;
     }
   } else {
@@ -19,7 +21,9 @@ export default function load(
       // eslint-disable-next-line global-require, import/no-dynamic-require
       module = require(`${options.appLocation}/build/${name}`);
     } catch (buildErr) {
-      logger.error(buildErr);
+      if (!buildErr.message.includes('Cannot find module')) {
+        logger.error(buildErr);
+      }
       module = _default;
     }
   }

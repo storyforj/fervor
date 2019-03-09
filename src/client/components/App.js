@@ -69,11 +69,24 @@ class App extends React.PureComponent {
   };
   render() {
     const { App: AppWrapper } = fervorConfigRendering.client;
-    const Wrapper = AppWrapper || React.Fragment;
     const RoutesComponent = this.props.Routes;
 
+    if (AppWrapper) {
+      return (
+        <AppWrapper appOptions={appOptions}>
+          <ApolloProvider client={webClient}>
+            <Provider store={store}>
+              <ConnectedRouter history={browserHistory}>
+                <RoutesComponent componentCache={this.props.componentCache} />
+              </ConnectedRouter>
+            </Provider>
+          </ApolloProvider>
+        </AppWrapper>
+      );
+    }
+
     return (
-      <Wrapper appOptions={appOptions}>
+      <React.Fragment>
         <ApolloProvider client={webClient}>
           <Provider store={store}>
             <ConnectedRouter history={browserHistory}>
@@ -81,7 +94,7 @@ class App extends React.PureComponent {
             </ConnectedRouter>
           </Provider>
         </ApolloProvider>
-      </Wrapper>
+      </React.Fragment>
     );
   }
 }
