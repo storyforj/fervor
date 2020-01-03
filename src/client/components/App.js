@@ -6,7 +6,9 @@ import { ConnectedRouter, routerMiddleware } from 'connected-react-router';
 import { ApolloClient } from 'apollo-client';
 import { ApolloLink } from 'apollo-link';
 import { createHttpLink } from 'apollo-link-http';
+import { WebSocketLink } from 'apollo-link-ws';
 import { setContext } from 'apollo-link-context';
+import { getMainDefinition } from 'apollo-utilities';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import cookie from 'cookies-js';
 import lodashMerge from 'lodash.mergewith';
@@ -28,6 +30,22 @@ const store = initStore(
 const cache = (new InMemoryCache({})).restore(window.APOLLO_STATE.apollo);
 
 const httpLink = createHttpLink({ uri: '/graphql' });
+const location = window.location;
+const wsLink = new WebSocketLink({
+  uri: `ws${location.protocol === 'https:' ? 's' : ''}://${location.hostname}${
+    location.port !== 80 && location.port !== 443 ? `:${location.port}` : ''
+  }/graphql`,
+  options: {
+    reconnect: true,
+  },
+});
+const protocolSelectorLink = ({ query }) => {
+  const definition = getMainDefinition(query);
+  return (
+    definition.kind === 'OperationDefinition' &&
+    definition.operation === 'subscription'
+  );
+};
 const middlewareLink = setContext(() => {
   const authJWT = cookie.get('authJWT');
   if (!authJWT) { return undefined; }
@@ -44,8 +62,7 @@ const { defaults, typeDefs, ...otherApolloSettings } = lodashMerge({}, ...fervor
   }
   return undefined;
 });
-
-const link = ApolloLink.from([middlewareLink, httpLink]);
+const link = ApolloLink.from([protocolSelectorLink, middlewareLink, httpLink, wsLink]);
 const webClient = new ApolloClient({
   cache,
   link,
