@@ -12,7 +12,7 @@ import { getMainDefinition } from 'apollo-utilities';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import cookie from 'cookies-js';
 import lodashMerge from 'lodash.mergewith';
-import createBrowserHistory from 'history/createBrowserHistory';
+import { createBrowserHistory } from 'history';
 // eslint-disable-next-line
 import fervorClientResolvers from 'fervorClientResolvers';
 // eslint-disable-next-line
