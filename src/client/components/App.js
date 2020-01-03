@@ -4,7 +4,7 @@ import { ApolloProvider } from 'react-apollo';
 import { Provider } from 'react-redux';
 import { ConnectedRouter, routerMiddleware } from 'connected-react-router';
 import { ApolloClient } from 'apollo-client';
-import { ApolloLink } from 'apollo-link';
+import { ApolloLink, split } from 'apollo-link';
 import { createHttpLink } from 'apollo-link-http';
 import { WebSocketLink } from 'apollo-link-ws';
 import { setContext } from 'apollo-link-context';
@@ -39,13 +39,14 @@ const wsLink = new WebSocketLink({
     reconnect: true,
   },
 });
-const protocolSelectorLink = ({ query }) => {
+const protocolSelector = ({ query }) => {
   const definition = getMainDefinition(query);
   return (
     definition.kind === 'OperationDefinition' &&
     definition.operation === 'subscription'
   );
 };
+const connectionLink = split(protocolSelector, wsLink, httpLink);
 const middlewareLink = setContext(() => {
   const authJWT = cookie.get('authJWT');
   if (!authJWT) { return undefined; }
@@ -62,7 +63,7 @@ const { defaults, typeDefs, ...otherApolloSettings } = lodashMerge({}, ...fervor
   }
   return undefined;
 });
-const link = ApolloLink.from([protocolSelectorLink, middlewareLink, httpLink, wsLink]);
+const link = ApolloLink.from([middlewareLink, connectionLink]);
 const webClient = new ApolloClient({
   cache,
   link,
