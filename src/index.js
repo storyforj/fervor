@@ -1,7 +1,8 @@
 import clientCookies from 'cookies-js';
-import { compose, Query, Mutation, graphql } from 'react-apollo';
+import compose from 'lodash.flowright';
+import { Query, Mutation, Subscription, graphql } from 'react-apollo';
 import { Helmet } from 'react-helmet';
-import { Link, Switch, Route } from 'react-router-dom';
+import { Link, Switch, Redirect, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Provider, connect } from 'react-redux';
@@ -27,8 +28,10 @@ module.exports = {
   gql: gqltag,
   Query,
   Mutation,
+  Subscription,
   Provider,
   Link,
+  Redirect,
   Route,
   Switch,
   graphql,

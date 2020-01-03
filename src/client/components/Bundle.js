@@ -22,10 +22,12 @@ class Bundle extends React.PureComponent {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     if (this.state.Component) { return; }
 
-    this.setState({ loaded: false });
+    window.setTimeout(() => {
+      this.setState({ loaded: false });
+    }, 0);
 
     window.setTimeout(() => {
       if (!this.state.loaded) {

@@ -1,36 +1,47 @@
 import fs from 'fs';
 import path from 'path';
 
+import presetEnv from '@babel/preset-env';
+import presetReact from '@babel/preset-react';
+import pluginTransformRuntime from '@babel/plugin-transform-runtime';
+import pluginSyntaxDynamicImport from '@babel/plugin-syntax-dynamic-import';
+import pluginProposalClassProperties from '@babel/plugin-proposal-class-properties';
+import pluginProposalPipelineOperator from '@babel/plugin-proposal-pipeline-operator';
+import pluginProposalDecorators from '@babel/plugin-proposal-decorators';
+import pluginDynamicImportNode from 'babel-plugin-dynamic-import-node';
+
+/* eslint-disable global-require */
+
 export default (isServer, appLocation, useSrc, plugins = []) => {
   let config = {
     presets: [
-      ['@babel/preset-env', { targets: { browsers: ['last 2 versions', 'safari >= 7'] } }],
-      '@babel/preset-react',
+      [presetEnv, { targets: { browsers: ['last 2 versions', 'safari >= 7'] } }],
+      presetReact,
     ],
     plugins: [
-      ['@babel/plugin-transform-runtime'],
-      ['@babel/plugin-syntax-dynamic-import'],
-      ['@babel/plugin-proposal-class-properties', { loose: true }],
-      ['@babel/plugin-proposal-pipeline-operator', { proposal: 'minimal' }],
-      ['@babel/plugin-proposal-decorators', { decoratorsBeforeExport: true }],
+      pluginTransformRuntime,
+      pluginSyntaxDynamicImport,
+      [pluginProposalClassProperties, { loose: true }],
+      [pluginProposalPipelineOperator, { proposal: 'minimal' }],
+      [pluginProposalDecorators, { decoratorsBeforeExport: true }],
     ].concat(plugins),
   };
 
   if (isServer) {
     config.plugins = [
       [
-        'css-modules-transform',
+        require('babel-plugin-css-modules-transform').default,
         {
           generateScopedName: '[name]__[local]___[hash:base64:5]',
           extensions: ['.scss'],
         },
       ],
-      ['@babel/plugin-transform-runtime'],
-      ['@babel/plugin-syntax-dynamic-import'],
-      ['babel-plugin-dynamic-import-node'],
-      ['@babel/plugin-proposal-class-properties', { loose: true }],
-      ['@babel/plugin-proposal-pipeline-operator', { proposal: 'minimal' }],
-      ['@babel/plugin-proposal-decorators', { decoratorsBeforeExport: true }],
+      pluginTransformRuntime,
+      pluginSyntaxDynamicImport,
+      pluginDynamicImportNode,
+      [pluginProposalClassProperties, { loose: true }],
+      [pluginProposalPipelineOperator, { proposal: 'minimal' }],
+      [pluginProposalDecorators, { decoratorsBeforeExport: true }],
     ].concat(plugins);
   }
 

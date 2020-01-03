@@ -4,13 +4,15 @@ import { ApolloProvider } from 'react-apollo';
 import { Provider } from 'react-redux';
 import { ConnectedRouter, routerMiddleware } from 'connected-react-router';
 import { ApolloClient } from 'apollo-client';
-import { ApolloLink } from 'apollo-link';
+import { ApolloLink, split } from 'apollo-link';
 import { createHttpLink } from 'apollo-link-http';
+import { WebSocketLink } from 'apollo-link-ws';
 import { setContext } from 'apollo-link-context';
+import { getMainDefinition } from 'apollo-utilities';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import cookie from 'cookies-js';
 import lodashMerge from 'lodash.mergewith';
-import createBrowserHistory from 'history/createBrowserHistory';
+import { createBrowserHistory } from 'history';
 // eslint-disable-next-line
 import fervorClientResolvers from 'fervorClientResolvers';
 // eslint-disable-next-line
@@ -28,6 +30,23 @@ const store = initStore(
 const cache = (new InMemoryCache({})).restore(window.APOLLO_STATE.apollo);
 
 const httpLink = createHttpLink({ uri: '/graphql' });
+const location = window.location;
+const wsLink = new WebSocketLink({
+  uri: `ws${location.protocol === 'https:' ? 's' : ''}://${location.hostname}${
+    location.port !== 80 && location.port !== 443 ? `:${location.port}` : ''
+  }/graphql`,
+  options: {
+    reconnect: true,
+  },
+});
+const protocolSelector = ({ query }) => {
+  const definition = getMainDefinition(query);
+  return (
+    definition.kind === 'OperationDefinition' &&
+    definition.operation === 'subscription'
+  );
+};
+const connectionLink = split(protocolSelector, wsLink, httpLink);
 const middlewareLink = setContext(() => {
   const authJWT = cookie.get('authJWT');
   if (!authJWT) { return undefined; }
@@ -44,8 +63,7 @@ const { defaults, typeDefs, ...otherApolloSettings } = lodashMerge({}, ...fervor
   }
   return undefined;
 });
-
-const link = ApolloLink.from([middlewareLink, httpLink]);
+const link = ApolloLink.from([middlewareLink, connectionLink]);
 const webClient = new ApolloClient({
   cache,
   link,
